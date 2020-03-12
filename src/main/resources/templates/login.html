@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/components::head(title='Login')">
+</head>
+<style>
+    .login-form {
+        width: 400px;
+        height: auto;
+        top: 50%;
+        margin-top: -160px;
+    }
+</style>
+<body class="h-vh-100 bg-brandColor2">
+<div th:if="${param.error}">
+    Invalid ID and password.
+</div>
+<form th:action="@{/login}" method="post" class="login-form bg-white p-6 mx-auto border bd-default win-shadow" data-clear-invalid="2000">
+    <h2 class="text-light">Login to E2Portal System </h2>
+    <hr class="thin mt-4 mb-4 bg-white">
+    <div class="form-group">
+        <label>ID</label>
+        <input name="id" type="text" data-role="input" placeholder="Enter your id..." data-validate="required">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input name="password" type="password" data-role="input" placeholder="Enter your password..." data-validate="required minlength=6">
+    </div>
+    <div class="form-group mt-10">
+        <div class="place-right">
+            <input type="checkbox" data-role="checkbox">
+            <label>Remember me</label>
+        </div>
+        <button type="submit" class="button primary">Login</button>
+    </div>
+</form>
+<th:block th:replace="fragments/components::script"></th:block>
+</body>
+</html>
