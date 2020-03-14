@@ -1,6 +1,8 @@
 package se.iuh.e2portal.model;
 
 import lombok.Data;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import java.util.List;

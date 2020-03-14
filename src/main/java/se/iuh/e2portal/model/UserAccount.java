@@ -14,10 +14,10 @@ public class UserAccount{
     @Id
     private long accountId;
     private String password;
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @MapsId
-//    @JoinColumn(name="accountId", referencedColumnName = "personId")
-//    private Person person;
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
+    @JoinColumn(name="accountId", referencedColumnName = "personId")
+    private Person person;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userAccount_Role", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles;

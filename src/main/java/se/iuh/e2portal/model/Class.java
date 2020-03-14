@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 public class Class {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
     private String acronymName;
     private String className;
     private String status;

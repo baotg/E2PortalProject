@@ -1,6 +1,7 @@
 package se.iuh.e2portal.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,10 @@ import javax.persistence.Id;
 @Data
 public class Semester {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GenericGenerator(name = "sequence_int_id", strategy = "se.iuh.e2portal.generator.IntegerGenerator")
+    @GeneratedValue(generator = "sequence_int_id")
     private int semesterId;
+    private int semester;
     private int year;
 }
+

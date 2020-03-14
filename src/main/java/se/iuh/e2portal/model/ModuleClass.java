@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 public class ModuleClass {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
     private String moduleClassId;
     private String moduleClassName;
     private Date startDate;
@@ -26,4 +25,6 @@ public class ModuleClass {
     private Semester semester;
     @ManyToMany(mappedBy = "moduleClasses")
     private List<Student> students;
+    @OneToMany(mappedBy = "moduleClass")
+    private List<TimeTable> timeTables;
 }

@@ -17,10 +17,7 @@ import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.UserAccountRepository;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserAccountService implements UserDetailsService {

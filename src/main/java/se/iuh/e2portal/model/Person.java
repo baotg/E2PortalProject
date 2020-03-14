@@ -8,8 +8,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long personId;
+    private long personId;
     private String fullName;
     private String status;
     private boolean gender;
@@ -18,8 +17,8 @@ public class Person {
     private String phoneNumber;
     private String email;
     private String imageProfile;
-//    @OneToOne(mappedBy = "person")
-//    @PrimaryKeyJoinColumn
-//    private UserAccount userAccount;
+    @OneToOne(mappedBy = "person")
+    @PrimaryKeyJoinColumn
+    private UserAccount userAccount;
 
 }

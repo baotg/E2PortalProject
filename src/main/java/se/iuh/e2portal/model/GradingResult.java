@@ -10,7 +10,6 @@ import javax.persistence.*;
 @IdClass(GradingResultPK.class)
 public class GradingResult {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
     @ManyToOne
     @JoinColumn(name = "studentId", referencedColumnName = "studentId")
     private Student student;

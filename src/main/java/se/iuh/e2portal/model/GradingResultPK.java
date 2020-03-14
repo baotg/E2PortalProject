@@ -10,7 +10,7 @@ import java.util.Objects;
 @Data
 public class GradingResultPK implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String student;
+    private long student;
     private String moduleClass;
 
     @Override

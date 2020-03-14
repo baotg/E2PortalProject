@@ -2,6 +2,7 @@ package se.iuh.e2portal.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 
 import javax.persistence.*;
@@ -12,8 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private int roldeId;
+    @GenericGenerator(name = "sequence_int_id", strategy = "se.iuh.e2portal.generator.IntegerGenerator")
+    @GeneratedValue(generator = "sequence_int_id")
+    private int roleId;
     private String roleName;
     @ManyToMany(mappedBy = "roles")
     private List<UserAccount> userAccounts;
