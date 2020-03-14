@@ -2,6 +2,7 @@ package se.iuh.e2portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.iuh.e2portal.model.Class;
 import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.repository.StudentRepository;
 
@@ -50,5 +51,8 @@ public class StudentService implements GenericTemplate<Student, Long> {
     @Override
     public void delete(Student object) {
         studentRepository.delete(object);
+    }
+    public List<Student> findByClass(Class aClass){
+        return studentRepository.findByClass(aClass);
     }
 }

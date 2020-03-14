@@ -2,6 +2,7 @@ package se.iuh.e2portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.iuh.e2portal.model.Faculty;
 import se.iuh.e2portal.model.Lecturer;
 import se.iuh.e2portal.repository.LecturerRepository;
 
@@ -51,5 +52,9 @@ public class LecturerService implements GenericTemplate<Lecturer, Long> {
     @Override
     public void delete(Lecturer object) {
         lecturerRepository.delete(object);
+    }
+
+    public List<Lecturer> findByFaculty(Faculty faculty){
+        return  lecturerRepository.findByFaculty(faculty);
     }
 }
