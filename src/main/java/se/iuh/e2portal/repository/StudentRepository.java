@@ -7,7 +7,7 @@ import se.iuh.e2portal.model.Student;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends CrudRepository<Student,String> {
+public interface StudentRepository extends CrudRepository<Student,Long> {
     @Query("select s from Student s where s.fullName like ?1")
     List<Student> findByName(String name);
 //    @Query("select s from Student s where s.classId = ?1")

@@ -8,7 +8,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     @Id
-    private String personId;
+    private Long personId;
     private String fullName;
     private String status;
     private boolean gender;

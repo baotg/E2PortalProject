@@ -1,5 +1,6 @@
 package se.iuh.e2portal.service;
 
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.Student;
@@ -8,7 +9,7 @@ import se.iuh.e2portal.repository.StudentRepository;
 import java.util.List;
 
 @Service
-public class StudentService implements GenericTemplate<Student, String> {
+public class StudentService implements GenericTemplate<Student, Long> {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -19,7 +20,7 @@ public class StudentService implements GenericTemplate<Student, String> {
     }
 
     @Override
-    public Student findById(String id) {
+    public Student findById(Long id) {
         return studentRepository.findById(id).get();
     }
 
@@ -33,7 +34,7 @@ public class StudentService implements GenericTemplate<Student, String> {
     }
 
     @Override
-    public boolean existsById(String id) {
+    public boolean existsById(Long id) {
         return studentRepository.existsById(id);
     }
 
@@ -43,7 +44,7 @@ public class StudentService implements GenericTemplate<Student, String> {
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         studentRepository.deleteById(id);
     }
 
@@ -51,7 +52,7 @@ public class StudentService implements GenericTemplate<Student, String> {
     public void delete(Student object) {
         studentRepository.delete(object);
     }
-//    public List<Student> findByClass(Class aClass){
+    //    public List<Student> findByClass(Class aClass){
 //        return studentRepository.findByClass(aClass);
 //    }
 }

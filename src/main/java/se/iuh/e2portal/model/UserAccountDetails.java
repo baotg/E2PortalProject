@@ -31,7 +31,7 @@ public class UserAccountDetails implements UserDetails {
     public String getPassword() {
         return userAccount.getPassword();
     }
-    public String getId(){
+    public Long getId(){
         return userAccount.getAccountId();
     }
     @Override

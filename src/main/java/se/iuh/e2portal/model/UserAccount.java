@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 public class UserAccount{
     @Id
-    private String accountId;
+    private Long accountId;
     private String password;
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId

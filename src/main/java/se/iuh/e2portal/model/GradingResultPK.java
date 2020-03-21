@@ -12,7 +12,7 @@ import java.util.Objects;
 public class GradingResultPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String student;
+    private long student;
     private String moduleClass;
 
     @Override
@@ -20,7 +20,7 @@ public class GradingResultPK implements Serializable {
         if (this == o) return true;
         if (!(o instanceof GradingResultPK)) return false;
         GradingResultPK that = (GradingResultPK) o;
-        return getStudent().equals(that.getStudent()) &&
+        return getStudent() == that.getStudent() &&
                 getModuleClass().equals(that.getModuleClass());
     }
 

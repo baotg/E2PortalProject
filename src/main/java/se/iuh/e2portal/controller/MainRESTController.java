@@ -3,22 +3,28 @@ package se.iuh.e2portal.controller;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import se.iuh.e2portal.config.jwt.JwtTokenProvider;
+import se.iuh.e2portal.model.Person;
+import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.model.UserAccount;
 import se.iuh.e2portal.model.UserAccountDetails;
 import se.iuh.e2portal.payload.LoginRequest;
 import se.iuh.e2portal.payload.LoginResponse;
 import se.iuh.e2portal.repository.UserAccountRepository;
+import se.iuh.e2portal.service.StudentService;
 
 import javax.naming.AuthenticationException;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("/api")
@@ -26,6 +32,8 @@ public class MainRESTController {
     private static final int DEFAULT_RANGE = 100;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private StudentService studentService;
     @Autowired
     private JwtTokenProvider tokenProvider;
     @GetMapping("/random")
@@ -44,5 +52,10 @@ public class MainRESTController {
 //        System.out.println("Principal :" + authentication.getPrincipal());
         String jwt = tokenProvider.generateToken(authentication.getPrincipal().toString());
         return new LoginResponse(jwt);
+    }
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ResponseEntity<Student> viewProfile(Authentication authentication){
+        Student student = studentService.findById(Long.valueOf(authentication.getName()));
+        return ResponseEntity.ok().body(student);
     }
 }
