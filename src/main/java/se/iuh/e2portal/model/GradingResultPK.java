@@ -1,6 +1,7 @@
 package se.iuh.e2portal.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -9,8 +10,9 @@ import java.util.Objects;
 @Embeddable
 @Data
 public class GradingResultPK implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long student;
+    private String student;
     private String moduleClass;
 
     @Override
@@ -18,12 +20,12 @@ public class GradingResultPK implements Serializable {
         if (this == o) return true;
         if (!(o instanceof GradingResultPK)) return false;
         GradingResultPK that = (GradingResultPK) o;
-        return student == that.student &&
-                moduleClass.equals(that.moduleClass);
+        return getStudent().equals(that.getStudent()) &&
+                getModuleClass().equals(that.getModuleClass());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(student, moduleClass);
+        return Objects.hash(getStudent(), getModuleClass());
     }
 }

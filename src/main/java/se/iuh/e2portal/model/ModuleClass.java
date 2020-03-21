@@ -13,16 +13,14 @@ public class ModuleClass {
     private String moduleClassId;
     private String moduleClassName;
     private Date startDate;
-    private int duration;
-    @ManyToOne
-    @JoinColumn(name = "subjectId", referencedColumnName = "subjectId")
-    private Subject subject;
+    private Date endDate;
+    private int numOfWeek; //Số tuần
+    private int numOfCredit; //Số tín chỉ
+    private String semester; //Học kỳ
+    private String subjectName;
     @ManyToOne
     @JoinColumn(name = "lecturerId", referencedColumnName = "lecturerId")
     private Lecturer lecturer;
-    @ManyToOne
-    @JoinColumn(name = "semesterId", referencedColumnName = "semesterId")
-    private Semester semester;
     @ManyToMany(mappedBy = "moduleClasses")
     private List<Student> students;
     @OneToMany(mappedBy = "moduleClass")

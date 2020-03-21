@@ -31,8 +31,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	@Autowired
 	private AnnouncementService announcementService;
 	@Autowired
-	StudentRepository studentRepository;
-	@Autowired
+	//StudentRepository studentRepository;
+	//@Autowired
 	AttendanceService attendanceRepository;
 
 	@Override
@@ -46,9 +46,9 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		UserAccount user_default = new UserAccount();
 		UserAccount admin_default = new UserAccount();
 		Person lecturer_user = new Lecturer();
-		lecturer_user.setPersonId(Long.parseLong(USER_ID));
+		lecturer_user.setPersonId(USER_ID);
 		Person lecturer_admin = new Lecturer();
-		lecturer_admin.setPersonId(Long.parseLong(ADMIN_ID));
+		lecturer_admin.setPersonId(ADMIN_ID);
 		lecturer_admin.setUserAccount(admin_default);
 		admin_default.setPerson(lecturer_admin);
 		user_default.setPassword(USER_PWD);

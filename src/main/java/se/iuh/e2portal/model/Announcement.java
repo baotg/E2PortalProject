@@ -16,8 +16,5 @@ public class Announcement {
     private String summary;
     private String contentDetail;
     private Date createdDate;
-    @ManyToOne
-    @JoinColumn(name = "createdBy", referencedColumnName = "lecturerId")
-    private Lecturer createdBy;
 
 }

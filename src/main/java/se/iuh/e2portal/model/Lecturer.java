@@ -12,7 +12,4 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Data
 @PrimaryKeyJoinColumn(name = "lecturerId", referencedColumnName = "personId")
 public class Lecturer extends Person {
-    @ManyToOne
-    @JoinColumn(name = "facultyId", referencedColumnName = "facultyId")
-    private Faculty faculty;
 }

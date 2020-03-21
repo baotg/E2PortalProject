@@ -22,12 +22,13 @@ public class GradingResult {
     private float quiz2;
     private float quiz3;
     private float quiz4;
+    private float quiz5;
     private float midScore;
     private float endScore;
+    private float averageScore;
     private float practiceScore1;
     private float practiceScore2;
-
-
-    public GradingResult() {
-    }
+    private float practiceScore3;
+    private float practiceScore4;
+    private float practiceScore5;
 }
