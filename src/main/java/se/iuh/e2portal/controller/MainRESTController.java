@@ -3,6 +3,7 @@ package se.iuh.e2portal.controller;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,10 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import se.iuh.e2portal.config.jwt.JwtTokenProvider;
-import se.iuh.e2portal.model.Person;
-import se.iuh.e2portal.model.Student;
-import se.iuh.e2portal.model.UserAccount;
-import se.iuh.e2portal.model.UserAccountDetails;
+import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.payload.LoginRequest;
 import se.iuh.e2portal.payload.LoginResponse;
 import se.iuh.e2portal.repository.UserAccountRepository;
@@ -58,4 +56,5 @@ public class MainRESTController {
         Student student = studentService.findById(Long.valueOf(authentication.getName()));
         return ResponseEntity.ok().body(student);
     }
+
 }

@@ -1,6 +1,8 @@
 package se.iuh.e2portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,8 +23,10 @@ public class ModuleClass {
     @ManyToOne
     @JoinColumn(name = "lecturerId", referencedColumnName = "lecturerId")
     private Lecturer lecturer;
+    @JsonIgnore
     @ManyToMany(mappedBy = "moduleClasses")
     private List<Student> students;
     @OneToMany(mappedBy = "moduleClass")
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<TimeTable> timeTables;
 }

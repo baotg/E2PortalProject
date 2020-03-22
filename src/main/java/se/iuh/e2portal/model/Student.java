@@ -12,9 +12,9 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "studentId", referencedColumnName = "personId")
 public class Student extends Person {
     private String headClass; //Lớp CN
-//    @ManyToOne
-//    @JoinColumn(name = "headLecturer", referencedColumnName = "lecturerId")
-//    private Lecturer headLecturer; //GVCN
+    @ManyToOne
+    @JoinColumn(name = "headLecturer", referencedColumnName = "lecturerId")
+    private Lecturer headLecturer; //GVCN
     private String speciality;//Chuyên ngành
     private int year; //Khóa học
     @ManyToMany
