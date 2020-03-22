@@ -11,7 +11,7 @@ public class Announcement {
     @Id
     @GenericGenerator(name = "sequence_long_id", strategy = "se.iuh.e2portal.generator.LongGenerator")
     @GeneratedValue(generator = "sequence_long_id")
-    private long announcementId;
+    private Long announcementId;
     private String title;
     private String summary;
     private String contentDetail;

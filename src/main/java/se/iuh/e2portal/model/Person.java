@@ -19,9 +19,6 @@ public class Person {
     private String email;
     private String imageProfile;
     private String faculty;
-    @JsonIgnore
-    @OneToOne(mappedBy = "person")
-    @PrimaryKeyJoinColumn
-    private UserAccount userAccount;
+
 
 }

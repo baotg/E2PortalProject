@@ -12,7 +12,7 @@ public class TimeTable {
     @Id
     @GenericGenerator(name = "sequence_long_id", strategy = "se.iuh.e2portal.generator.LongGenerator")
     @GeneratedValue(generator = "sequence_long_id")
-    private long timeTableId;
+    private Long timeTableId;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")

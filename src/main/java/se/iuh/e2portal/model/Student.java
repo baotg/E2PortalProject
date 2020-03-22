@@ -9,8 +9,8 @@ import java.util.List;
 
 @Entity
 @Data
-@PrimaryKeyJoinColumn(name = "studentId", referencedColumnName = "personId")
-public class Student extends Person {
+@PrimaryKeyJoinColumn(name = "studentId", referencedColumnName = "userId")
+public class Student extends User {
     private String headClass; //Lớp CN
     @ManyToOne
     @JoinColumn(name = "headLecturer", referencedColumnName = "lecturerId")

@@ -16,8 +16,8 @@ public class UserAccount{
     private String password;
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
-    @JoinColumn(name="accountId", referencedColumnName = "personId")
-    private Person person;
+    @JoinColumn(name="accountId", referencedColumnName = "userId")
+    private User user;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userAccount_Role", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles;

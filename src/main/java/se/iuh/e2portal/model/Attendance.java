@@ -15,7 +15,7 @@ public class Attendance {
     @Id
     @GenericGenerator(name = "sequence_long_id", strategy = "se.iuh.e2portal.generator.LongGenerator")
     @GeneratedValue(generator = "sequence_long_id")
-    private long attendanceId;
+    private Long attendanceId;
     private Date dateOff;
     private boolean allowed;
     @ManyToOne

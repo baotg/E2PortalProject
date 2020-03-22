@@ -11,10 +11,7 @@ import se.iuh.e2portal.repository.AttendanceRepository;
 import se.iuh.e2portal.repository.LecturerRepository;
 import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
-import se.iuh.e2portal.service.AnnouncementService;
-import se.iuh.e2portal.service.AttendanceService;
-import se.iuh.e2portal.service.ModuleClassService;
-import se.iuh.e2portal.service.UserAccountService;
+import se.iuh.e2portal.service.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -37,72 +34,59 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	private StudentRepository studentRepository;
 	@Autowired
 	private ModuleClassService moduleClassService;
+	@Autowired
+	private LecturerService lecturerService;
 
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
-//		Role role_user = new Role(ROLE_USER);
-//		Role role_admin = new Role(ROLE_ADMIN);
-//		roleRepository.save(role_user);
-//		roleRepository.save(role_admin);
-//		//Initial User & Admin account
-//		UserAccount user_default = new UserAccount();
-//		UserAccount admin_default = new UserAccount();
-//		Person lecturer_user = new Lecturer();
-//		lecturer_user.setPersonId(Long.parseLong(USER_ID));
-//		Person lecturer_admin = new Lecturer();
-//		lecturer_admin.setPersonId(Long.parseLong(ADMIN_ID));
-//		lecturer_admin.setUserAccount(admin_default);
-//		admin_default.setPerson(lecturer_admin);
-//		user_default.setPassword(USER_PWD);
-//		user_default.setPerson(lecturer_user);
-//		lecturer_user.setUserAccount(user_default);
-//		Set<Role> roles_user = new HashSet<Role>();
-//		roles_user.add(role_user);
-//		user_default.setRoles(roles_user);
-//		admin_default.setPassword(ADMIN_PWD);
-//		Set<Role> roles_admin = new HashSet<Role>();
-//		roles_admin.add(role_admin);
-//		roles_admin.add(role_user);
-//
-//		admin_default.setRoles(roles_admin);
-//		userAccountService.save(user_default);
-//		userAccountService.save(admin_default);
-//
-//
-//		Student student = new Student();
-//		student.setFullName("Trần Gia Bảo");
-//		student.setHeadClass("DHKTPM12BTT");
-//		student.setSpeciality("Kỹ thuật Phần mềm");
-//		student.setYear(2016);
-//		student.setPhoneNumber("0987654321");
-//		student.setAddress("49 Lê Lợi, phường 4, quận Gò Vấp, TP. Hồ Chí Minh");
-//		student.setFaculty("Công nghệ Thông tin");
-//		student.setDateOfBirth(new GregorianCalendar(1998,Calendar.FEBRUARY,24).getTime());
-//		student.setPersonId(16059211l);
-//		student.setEmail("tgiabao1340@gmail.com");
-//		student.setGender(true);
-//		student.setStatus("Đang học");
-//
-//		UserAccount userAccount = new UserAccount();
-//		userAccount.setPerson(student);
-//		userAccount.setPassword(USER_PWD);
-//		student.setUserAccount(userAccount);
-//		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName("USER"))));
-//		userAccountService.save(userAccount);
-//
-//		initModuleClassAndTimeTable();
+		Role role_user = new Role(ROLE_USER);
+		Role role_admin = new Role(ROLE_ADMIN);
+		roleRepository.save(role_user);
+		roleRepository.save(role_admin);
+		//Initial User & Admin account
+		UserAccount admin_default = new UserAccount();
+		Administrator administrator = new Administrator();
+		administrator.setPersonId(Long.valueOf(ADMIN_ID));
+		admin_default.setUser(administrator);
+		administrator.setUserAccount(admin_default);
+		admin_default.setPassword(ADMIN_PWD);
+		Set<Role> roles_admin = new HashSet<Role>();
+		roles_admin.add(role_admin);
+		roles_admin.add(role_user);
+		admin_default.setRoles(roles_admin);
+		userAccountService.save(admin_default);
+
+
+		Student student = new Student();
+		student.setFullName("Trần Gia Bảo");
+		student.setHeadClass("DHKTPM12BTT");
+		student.setSpeciality("Kỹ thuật Phần mềm");
+		student.setYear(2016);
+		student.setPhoneNumber("0987654321");
+		student.setAddress("49 Lê Lợi, phường 4, quận Gò Vấp, TP. Hồ Chí Minh");
+		student.setFaculty("Công nghệ Thông tin");
+		student.setDateOfBirth(new GregorianCalendar(1998,Calendar.FEBRUARY,24).getTime());
+		student.setPersonId(16059211l);
+		student.setEmail("tgiabao1340@gmail.com");
+		student.setGender(true);
+		student.setStatus("Đang học");
+
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUser(student);
+		userAccount.setPassword(USER_PWD);
+		student.setUserAccount(userAccount);
+		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName("USER"))));
+		userAccountService.save(userAccount);
+
+		initModuleClassAndTimeTable();
 
 
 	}
 	public void initModuleClassAndTimeTable(){
 		ModuleClass moduleClass = new ModuleClass();
 		Lecturer lecturer = new Lecturer();
-		UserAccount userAccount = new UserAccount();
-		userAccount.setPassword("123");
-		lecturer.setUserAccount(userAccount);
-		userAccount.setPerson(lecturer);
 		lecturer.setPersonId(1000000l);
 		lecturer.setAddress("12 Nguyễn Văn Bảo, phường 4, quận Gò Vấp");
 		lecturer.setEmail("cuongt.trinh@iuh.edu.vn");
@@ -120,9 +104,10 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		moduleClass.setSubjectName("Anh Văn 4");
 		moduleClass.setSemester("HK3 2019-2020");
 		moduleClass.setNumOfCredit(4);
+		moduleClass.setNumOfWeek(8);
 		Student student = studentRepository.findById(16059211l).get();
 		student.setModuleClasses(new ArrayList<>(Arrays.asList(moduleClass)));
-		moduleClass.setStudents(new ArrayList<Student>(Arrays.asList(student)));
+		moduleClass.setStudents(new ArrayList<>(Arrays.asList(student)));
 
 		TimeTable timeTable1 = new TimeTable();
 		timeTable1.setModuleClass(moduleClass);
@@ -140,7 +125,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		timeTable3.setWeek(3);
 		moduleClass.setTimeTables(new ArrayList<>(Arrays.asList(timeTable1,timeTable2,timeTable3)));
 
-		userAccountService.save(userAccount);
+		lecturerService.save(lecturer);
 		moduleClassService.save(moduleClass);
 		studentRepository.save(student);
 
