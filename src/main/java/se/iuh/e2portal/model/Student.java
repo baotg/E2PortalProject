@@ -11,10 +11,6 @@ import java.util.List;
 @Data
 @PrimaryKeyJoinColumn(name = "studentId", referencedColumnName = "userId")
 public class Student extends User {
-    private String headClass; //Lớp CN
-    @ManyToOne
-    @JoinColumn(name = "headLecturer", referencedColumnName = "lecturerId")
-    private Lecturer headLecturer; //GVCN
     private String speciality;//Chuyên ngành
     private int year; //Khóa học
     @ManyToMany

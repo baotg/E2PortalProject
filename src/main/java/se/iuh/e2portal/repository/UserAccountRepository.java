@@ -7,5 +7,5 @@ import se.iuh.e2portal.model.UserAccount;
 import javax.swing.text.html.Option;
 import java.util.Optional;
 @Repository
-public interface UserAccountRepository extends CrudRepository<UserAccount, Long> {
+public interface UserAccountRepository extends CrudRepository<UserAccount, String> {
 }

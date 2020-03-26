@@ -9,8 +9,7 @@ import se.iuh.e2portal.repository.StudentRepository;
 import java.util.List;
 
 @Service
-public class StudentService implements GenericTemplate<Student, Long> {
-
+public class StudentService implements GenericTemplate<Student, String> {
     @Autowired
     private StudentRepository studentRepository;
 
@@ -20,7 +19,7 @@ public class StudentService implements GenericTemplate<Student, Long> {
     }
 
     @Override
-    public Student findById(Long id) {
+    public Student findById(String id) {
         return studentRepository.findById(id).get();
     }
 
@@ -34,7 +33,7 @@ public class StudentService implements GenericTemplate<Student, Long> {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public boolean existsById(String id) {
         return studentRepository.existsById(id);
     }
 
@@ -44,7 +43,7 @@ public class StudentService implements GenericTemplate<Student, Long> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         studentRepository.deleteById(id);
     }
 

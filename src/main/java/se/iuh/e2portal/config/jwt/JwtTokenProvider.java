@@ -43,8 +43,8 @@ public class JwtTokenProvider {
         return false;
     }
 
-    public Long getUserIdFormJWT(String token) {
+    public String getUserIdFormJWT(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtProperties.getSecretCode()).parseClaimsJws(token).getBody();
-        return Long.valueOf(claims.getSubject());
+        return claims.getSubject();
     }
 }

@@ -48,7 +48,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		//Initial User & Admin account
 		UserAccount admin_default = new UserAccount();
 		Administrator administrator = new Administrator();
-		administrator.setPersonId(Long.valueOf(ADMIN_ID));
+		administrator.setPersonId(ADMIN_ID);
 		admin_default.setUser(administrator);
 		administrator.setUserAccount(admin_default);
 		admin_default.setPassword(ADMIN_PWD);
@@ -57,18 +57,16 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		roles_admin.add(role_user);
 		admin_default.setRoles(roles_admin);
 		userAccountService.save(admin_default);
-
-
+		//
 		Student student = new Student();
 		student.setFullName("Trần Gia Bảo");
-		student.setHeadClass("DHKTPM12BTT");
 		student.setSpeciality("Kỹ thuật Phần mềm");
 		student.setYear(2016);
 		student.setPhoneNumber("0987654321");
 		student.setAddress("49 Lê Lợi, phường 4, quận Gò Vấp, TP. Hồ Chí Minh");
 		student.setFaculty("Công nghệ Thông tin");
 		student.setDateOfBirth(new GregorianCalendar(1998,Calendar.FEBRUARY,24).getTime());
-		student.setPersonId(16059211l);
+		student.setPersonId("16059211l");
 		student.setEmail("tgiabao1340@gmail.com");
 		student.setGender(true);
 		student.setStatus("Đang học");
@@ -87,7 +85,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	public void initModuleClassAndTimeTable(){
 		ModuleClass moduleClass = new ModuleClass();
 		Lecturer lecturer = new Lecturer();
-		lecturer.setPersonId(1000000l);
+		lecturer.setPersonId("1000000l");
 		lecturer.setAddress("12 Nguyễn Văn Bảo, phường 4, quận Gò Vấp");
 		lecturer.setEmail("cuongt.trinh@iuh.edu.vn");
 		lecturer.setFaculty("Ngoại ngữ");
@@ -105,7 +103,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		moduleClass.setSemester("HK3 2019-2020");
 		moduleClass.setNumOfCredit(4);
 		moduleClass.setNumOfWeek(8);
-		Student student = studentRepository.findById(16059211l).get();
+		Student student = studentRepository.findById("16059211l").get();
 		student.setModuleClasses(new ArrayList<>(Arrays.asList(moduleClass)));
 		moduleClass.setStudents(new ArrayList<>(Arrays.asList(student)));
 
@@ -128,11 +126,6 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		lecturerService.save(lecturer);
 		moduleClassService.save(moduleClass);
 		studentRepository.save(student);
-
-
-
-
-
 
 	}
 

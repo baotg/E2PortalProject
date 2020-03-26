@@ -17,6 +17,7 @@ import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.UserAccountRepository;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.*;
 
 @Service
@@ -31,7 +32,7 @@ public class UserAccountService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(username.isEmpty()) throw new UsernameNotFoundException("ID Not Empty!");
-        UserAccountDetails userAccount = findById(Long.valueOf(username));
+        UserAccountDetails userAccount = findById(username);
         if(userAccount == null) throw new UsernameNotFoundException(username);
         return new User(userAccount.getId().toString(),userAccount.getPassword(),userAccount.getAuthorities());
     }
@@ -40,13 +41,13 @@ public class UserAccountService implements UserDetailsService {
         return userAccountRepository.save(userAccount);
     }
 
-    public UserAccountDetails findById(Long id) {
+    public UserAccountDetails findById(String id) {
         Optional<UserAccount> user = userAccountRepository.findById(id);
         if (!user.isPresent()) throw new UsernameNotFoundException("Id not found :" + id);
         return new UserAccountDetails(user.get());
     }
 
-    public boolean existsById(Long id) {
+    public boolean existsById(String id) {
         return userAccountRepository.existsById(id);
     }
 
@@ -54,7 +55,7 @@ public class UserAccountService implements UserDetailsService {
         return userAccountRepository.count();
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         userAccountRepository.deleteById(id);
     }
 

@@ -1,4 +1,4 @@
-package se.iuh.e2portal.controller;
+package se.iuh.e2portal.controller.api;
 
 import java.util.Random;
 
@@ -51,10 +51,4 @@ public class MainRESTController {
         String jwt = tokenProvider.generateToken(authentication.getPrincipal().toString());
         return new LoginResponse(jwt);
     }
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ResponseEntity<Student> viewProfile(Authentication authentication){
-        Student student = studentService.findById(Long.valueOf(authentication.getName()));
-        return ResponseEntity.ok().body(student);
-    }
-
 }
