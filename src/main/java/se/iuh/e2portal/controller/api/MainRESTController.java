@@ -42,7 +42,7 @@ public class MainRESTController {
         }
         return "Random number is : " + new Random().nextInt(value);
     }
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getId(),loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

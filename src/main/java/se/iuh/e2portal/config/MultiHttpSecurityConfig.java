@@ -39,7 +39,7 @@ public class MultiHttpSecurityConfig {
                     .and()
                     .csrf()
                     .disable().authorizeRequests()
-                    .antMatchers("/api/login").permitAll()
+                    .antMatchers("/api/authenticate").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

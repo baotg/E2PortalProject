@@ -17,6 +17,7 @@ public class TimeTable {
     @ManyToOne
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
     private ModuleClass moduleClass;
+    private String classRoom;
     private int week; //Tuần thứ
     private String mon;
     private String tue;
