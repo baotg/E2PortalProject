@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:fragment="main-fragment(title, mainContent)">
+    <head>
+        <title th:replace="${title}"></title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <!-- Metro 4 -->
+        <link rel="stylesheet" href="/css/metro-all.css">
+        <link rel="stylesheet" href="/css/metro-icons.css">
+        <link rel="stylesheet" href="/css/index.css">
+        <script>
+            window.on_page_functions = [];
+        </script>
+    </head>
+    <body class="m4-cloak h-vh-100">
+        <!--Nav--->
+        <div data-role="navview" data-toggle="#paneToggle" data-expanded="xl" data-compact="lg"
+             data-active-state="true">
+            <div class="navview-pane">
+                <div class="bg-cyan d-flex flex-align-center">
+                    <button class="pull-button m-0 bg-darkCyan-hover">
+                        <span class="mif-menu fg-white"></span>
+                    </button>
+                    <h2 class="text-light m-0 fg-white pl-7" style="line-height: 52px">E2Portal</h2>
+                </div>
+                <div class="suggest-box">
+                    <input type="text" data-role="input" data-clear-button="false" data-search-button="true">
+                    <button class="holder">
+                        <span class="mif-search fg-white"></span>
+                    </button>
+                </div>
+                <ul class="navview-menu mt-4" id="side-menu">
+                    <li class="item-header">MANAGEMENT</li>
+                    <li>
+                        <a th:href="@{/}">
+                            <span class="icon"><span class="mif-meter"></span></span>
+                            <span class="caption">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/announcement}">
+                            <span class="icon"><span class="mif-bell"></span></span>
+                            <span class="caption">Announcement</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/students}">
+                            <span class="icon"><span class="mif-drive2"></span></span>
+                            <span class="caption">Student</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/moduleclass}">
+                            <span class="icon"><span class="mif-books"></span></span>
+                            <span class="caption">Module Class</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/timetable}">
+                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="caption">TimeTable</span>
+                        </a>
+                    </li>
+
+                    <th:block th:each="role:${#authentication.getAuthorities()}">
+                        <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">ADMIN PANEL</li>
+                    </th:block>
+                </ul>
+            </div>
+            <div class="navview-content h-100">
+                <div data-role="appbar" class="pos-absolute bg-darkCyan fg-white">
+                    <a href="#" class="app-bar-item d-block d-none-lg" id="paneToggle"><span class="mif-menu"></span></a>
+                    <div class="app-bar-container ml-auto">
+                        <div class="app-bar-container">
+                            <a href="#" class="app-bar-item"><span class="ml-2 app-bar-name"
+                                                                   sec:authentication="principal"></span></a>
+                            <div class="user-block shadow-1" data-role="collapse" data-collapsed="true">
+                                <div class="bg-darkCyan fg-white p-2 text-center">
+                                    <div class="h4 mb-0" sec:authentication="principal"></div>
+                                    <div class="text-medium">Access</div>
+                                    <div class="inline-list">
+                                        <th:block th:each="role:${#authentication.getAuthorities()}">
+                                            <div class="items-list">
+                                                <button th:utext="${role}" class="button after-bg-lightIndigo ml-0"></button>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    <div>#Name</div>
+                                </div>
+                                <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
+                                    <button class="button mr-1">Profile</button>
+                                    <button class="button ml-1 "><a th:href="@{/logout}">Sign out</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:insert="${mainContent}" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
+                    <!--All content here!-->
+                </div>
+            </div>
+        </div>
+        <th:block th:fragment="script">
+            <script src="/js/jquery-3.4.1.min.js"></script>
+            <script src="/js/metro.js"></script>
+        </th:block>
+    </body>
+</html>

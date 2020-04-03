@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class LoginRequest {
     @NotNull
-    private Long id;
+    private String id;
     @NotBlank
     private String password;
 }

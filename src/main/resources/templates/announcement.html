@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+<head>
+    <title>Home</title>
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Announcement <small>view</small></h3>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                <div class="cell-md-3 cell-xl-2">
+                    <a class="button mb-3 success" th:href="@{announcement/add}">New</a>
+                    <div class="panel">
+                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
+                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-md-9 cell-xl-10">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Summary</th>
+                                <th>Created Date</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="announcement : ${page.content}">
+                                <td th:text="${announcement.announcementId}"></td>
+                                <td th:text="${announcement.title}"></td>
+                                <td th:text="${announcement.summary}"></td>
+                                <td th:text="${announcement.createdDate}"></td>
+                                <td>
+                                    <a th:href="@{announcement/edit?id={id}(id=${announcement.announcementId})}" class="button warning">Edit</a>
+                                </td>
+                                <td>
+                                    <a th:href="@{announcement/delete?id={id}(id=${announcement.announcementId})}" class="button alert">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex flex-column flex-justify-center">
+                            <ul class="pagination">
+                                <li th:if="${page.hasPrevious()}">
+                                    <a th:href="@{/announcements(page=${page.number - 1},size=${page.size})}">Previous</a>
+                                </li>
+                                <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                                    <li th:if="${page.number == i}" class="page-item active">[[${i}+1]]</li>
+                                    <li th:unless="${page.number == i}">
+                                        <a th:href="@{/announcements(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                                    </li>
+                                </th:block>
+                                <li th:if="${page.hasNext()}">
+                                    <a th:href="@{/announcements(page=${page.number+1},size=${page.size})}">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dialog" data-role="dialog">
+    <div class="dialog-title">Use Windows location service?</div>
+    <div class="dialog-content">
+        Bassus abactors ducunt ad triticum.
+        A fraternal form of manifestation is the bliss.
+    </div>
+    <div class="dialog-actions">
+        <button class="button js-dialog-close">Disagree</button>
+        <button class="button primary js-dialog-close">Agree</button>
+    </div>
+</div>
+<button class="button primary"
+        onclick="Metro.dialog.open('#demoDialog1')">Open dialog</button>
+</body>
+</html>

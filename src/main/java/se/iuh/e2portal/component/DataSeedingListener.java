@@ -13,6 +13,7 @@ import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
 import se.iuh.e2portal.service.*;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -77,10 +78,17 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		student.setUserAccount(userAccount);
 		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName("USER"))));
 		userAccountService.save(userAccount);
-
+		initAnnouncement();
 		initModuleClassAndTimeTable();
 
 
+	}
+	private void initAnnouncement(){
+		Announcement announcement = new Announcement();
+		announcement.setSummary("Test sum");
+		announcement.setCreatedDate(new Date());
+		announcement.setTitle("Test title");
+		announcementService.save(announcement);
 	}
 	public void initModuleClassAndTimeTable(){
 		ModuleClass moduleClass = new ModuleClass();
