@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="cell-md-3 cell-xl-2">
                     Import Student
-                    <form th:action="@{moduleclass/import}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{student/import}" method="post" enctype="multipart/form-data">
 
                         <input type="file" th:name="file">
 
@@ -34,17 +34,28 @@
                         <table class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
-                                <th>Class Id</th>
-                                <th>Faculty</th>
-                                <th>Level</th>
-                                <th>Type</th>
-                                <th>Speciality</th>
-                                <th>Year</th>
+                                <th>Student Code</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Family Phone</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="class : ${listClass}">
-                                <td th:text="${class.classId}"></td>
+                            <tr th:each="student : ${studentList}">
+                                <td th:text="${student.id}"></td>
+                                <td th:text="${student.firstName}"></td>
+                                <td th:text="${student.lastName}"></td>
+                                <td th:text="${student.gender}"></td>
+                                <td th:text="${student.dateOfBirth}"></td>
+                                <td th:text="${student.address}"></td>
+                                <td th:text="${student.numberPhone}"></td>
+                                <td th:text="${student.email}"></td>
+                                <td th:text="${student.familyNumber}"></td>
                             </tr>
                             </tbody>
                         </table>

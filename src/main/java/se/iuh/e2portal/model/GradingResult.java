@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class GradingResult {
     @Id
     @ManyToOne
-    @JoinColumn(name = "studentId", referencedColumnName = "studentId")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private Student student;
     @Id
     @ManyToOne

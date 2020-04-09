@@ -1,57 +1,82 @@
 package se.iuh.e2portal.service;
 
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.repository.StudentRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class StudentService implements GenericTemplate<Student, String> {
+public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Override
-    public Student save(Student student) {
-        return studentRepository.save(student);
+    public <S extends Student> S save(S entity) {
+        return studentRepository.save(entity);
     }
 
-    @Override
-    public Student findById(String id) {
-        return studentRepository.findById(id).get();
+
+    public <S extends Student> Iterable<S> saveAll(Iterable<S> entities) {
+        return studentRepository.saveAll(entities);
     }
 
-    public List<Student> findByName(String name) {
-        return studentRepository.findByName(name);
+
+    public Optional<Student> findById(String s) {
+        return studentRepository.findById(s);
     }
 
-    @Override
-    public List<Student> findAll() {
-        return (List<Student>) studentRepository.findAll();
+
+    public boolean existsById(String s) {
+        return studentRepository.existsById(s);
     }
 
-    @Override
-    public boolean existsById(String id) {
-        return studentRepository.existsById(id);
+    public Iterable<Student> findAll() {
+        return studentRepository.findAll();
     }
 
-    @Override
+
+    public Iterable<Student> findAllById(Iterable<String> strings) {
+        return studentRepository.findAllById(strings);
+    }
+
+
     public long count() {
         return studentRepository.count();
     }
 
-    @Override
-    public void deleteById(String id) {
-        studentRepository.deleteById(id);
+
+    public void deleteById(String s) {
+        studentRepository.deleteById(s);
     }
 
-    @Override
-    public void delete(Student object) {
-        studentRepository.delete(object);
+
+    public void delete(Student entity) {
+        studentRepository.delete(entity);
     }
-    //    public List<Student> findByClass(Class aClass){
-//        return studentRepository.findByClass(aClass);
-//    }
+
+    public void deleteAll(Iterable<? extends Student> entities) {
+        studentRepository.deleteAll(entities);
+    }
+
+    public void deleteAll() {
+        studentRepository.deleteAll();
+    }
+
+    public Iterable<Student> findAll(Sort sort) {
+        return studentRepository.findAll(sort);
+    }
+
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable);
+    }
+
+    public List<Student> findByMainClass(MainClass clazz) {
+        return studentRepository.findByMainClass(clazz);
+    }
 }

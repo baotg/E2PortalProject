@@ -22,11 +22,11 @@ public class LecturerService implements GenericTemplate<Lecturer, String> {
     public Lecturer findById(String id) {
         return lecturerRepository.findById(id).get();
     }
-
-
-    public List<Lecturer> findByName(String name) {
-        return lecturerRepository.findByName(name);
-    }
+//
+//
+//    public List<Lecturer> findByName(String name) {
+//        return lecturerRepository.findByName(name);
+//    }
 
     @Override
     public List<Lecturer> findAll() {

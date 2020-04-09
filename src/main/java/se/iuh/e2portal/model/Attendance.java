@@ -19,7 +19,7 @@ public class Attendance {
     private Date dateOff;
     private boolean allowed;
     @ManyToOne
-    @JoinColumn(name = "studentId")
+    @JoinColumn(name = "id")
     private Student student;
     @ManyToOne
     @JoinColumn(name = "moduleClassId")
