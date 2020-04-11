@@ -9,7 +9,7 @@
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Announcement <small>view</small></h3>
+            <h3 class="dashboard-section-title">Module Class Management <small>view</small></h3>
         </div>
     </div>
     <div class="m-3">
@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="class : ${listClass}">
-                                <td th:text="${class.classId}"></td>
+                                <td th:text="${class.moduleClassId}"></td>
                             </tr>
                             </tbody>
                         </table>

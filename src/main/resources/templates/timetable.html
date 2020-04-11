@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
-    <title>Home</title>
+    <title>Time Table</title>
 </head>
 <body class="m4-cloak h-vh-100">
-    <div id="main-content">
-       Timetable Content
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Time Table Management <small>view</small></h3>
+        </div>
     </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                <div class="cell-md-3 cell-xl-2">
+                    Import Student
+                    <form th:action="@{timetable/import}" method="post" enctype="multipart/form-data">
+
+                        <input type="file" th:name="file" required>
+
+                        <input th:type="submit" value="Import"/>
+                    </form>
+                    <div class="panel">
+                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
+                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-md-9 cell-xl-10">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+                            <thead>
+                            <tr>
+                                <th>Day of Week</th>
+                                <th>Period</th>
+                                <th>Subject</th>
+                                <th>Lecturer</th>
+                                <th>Class Room</th>
+                                <th>Begin Date</th>
+                                <th>End Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="timetable : ${timetables}">
+                                <td th:text="${timetable.dayOfWeek}"></td>
+                                <td th:text="${timetable.period}"></td>
+                                <td th:text="${timetable.moduleClass.moduleClassName}"></td>
+                                <td th:text="${timetable.moduleClass.lecturer.lastName + timetable.moduleClass.lecturer.firstName}"></td>
+                                <td th:text="${timetable.classRoom}"></td>
+                                <td th:text="${timetable.startDate}"></td>
+                                <td th:text="${timetable.endDate}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

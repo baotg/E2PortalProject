@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -18,12 +19,9 @@ public class TimeTable {
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
     private ModuleClass moduleClass;
     private String classRoom;
-    private int week; //Tuần thứ
-    private String mon;
-    private String tue;
-    private String wed;
-    private String thu;
-    private String fri;
-    private String sat;
-    private String sun;
+    private String dayOfWeek;
+    private String period;
+    private Date startDate;
+    private Date endDate;
+
 }

@@ -3,6 +3,7 @@ package se.iuh.e2portal.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,9 @@ public class ModuleClass {
     private int numOfTSession; //Số tiết lý thuyết
     private int numOfPSession; //Số tiết thực hành
     private int numOfCredit; //Số tín chỉ
-    private int semester; //Học kỳ
+    private String semester; //Học kỳ
+    private Date startDate;
+    private Date endDate;
     @ManyToOne
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Lecturer lecturer;

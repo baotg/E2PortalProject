@@ -39,8 +39,8 @@ public class StudentController {
 //    }
     @GetMapping("")
     public String getMainClass(Model model){
-        model.addAttribute("listClass",mainClassService.findAll());
-        return "student";
+        model.addAttribute("studentList",studentService.findAll());
+        return "studentdetail";
     }
     @GetMapping("/{id}")
     public String getStudent(@PathVariable("id") String id, Model model){

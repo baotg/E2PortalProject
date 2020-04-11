@@ -9,7 +9,7 @@
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Announcement <small>view</small></h3>
+            <h3 class="dashboard-section-title">Student Management <small>view</small></h3>
         </div>
     </div>
     <div class="m-3">
@@ -19,7 +19,7 @@
                     Import Student
                     <form th:action="@{student/import}" method="post" enctype="multipart/form-data">
 
-                        <input type="file" th:name="file">
+                        <input type="file" th:name="file" required>
 
                         <input th:type="submit" value="Import"/>
                     </form>
@@ -50,8 +50,9 @@
                                 <td th:text="${student.id}"></td>
                                 <td th:text="${student.firstName}"></td>
                                 <td th:text="${student.lastName}"></td>
-                                <td th:text="${student.gender}"></td>
-                                <td th:text="${student.dateOfBirth}"></td>
+                                <td th:if="${student.gender} == true">Nam</td>
+                                <td th:if="${student.gender} == false">Nữ</td>
+                                <td th:text="${student.getFormatedDate()}"></td>
                                 <td th:text="${student.address}"></td>
                                 <td th:text="${student.numberPhone}"></td>
                                 <td th:text="${student.email}"></td>

@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 @Data
 @Entity
@@ -21,4 +22,9 @@ public class Person implements Serializable {
     private String numberPhone;
     private String email;
     private String imageProfile;
+
+    public String getFormatedDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(dateOfBirth);
+    }
 }

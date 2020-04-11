@@ -34,7 +34,7 @@ public class ModuleClassReader {
         ModuleClass moduleClass = new ModuleClass();
         String moduleClassId = getCellValue(row.getCell(COL_ID_MOUDLE_CLASS));
         String moduleClassName = getCellValue(row.getCell(COL_NAME_MOUDLE_CLASS));
-        int semester = Integer.parseInt(getCellValue(row.getCell(COL_SEMESTER_MOUDLE_CLASS)));
+        String semester = getCellValue(row.getCell(COL_SEMESTER_MOUDLE_CLASS));
         int numOfCredit = Integer.parseInt(getCellValue(row.getCell(COL_NUM_OF_CREDIT_MOUDLE_CLASS)));
         int numOfTSession = Integer.parseInt(getCellValue(row.getCell(COL_NUM_OF_TSESSION_MOUDLE_CLASS)));
         int numOfPSession = Integer.parseInt(getCellValue(row.getCell(COL_NUM_OF_PSESSION_MOUDLE_CLASS)));

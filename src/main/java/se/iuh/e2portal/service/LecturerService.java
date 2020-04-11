@@ -8,17 +8,17 @@ import se.iuh.e2portal.repository.LecturerRepository;
 import java.util.List;
 
 @Service
-public class LecturerService implements GenericTemplate<Lecturer, String> {
+public class LecturerService  {
 
     @Autowired
     private LecturerRepository lecturerRepository;
 
-    @Override
+
     public Lecturer save(Lecturer lecturer) {
         return lecturerRepository.save(lecturer);
     }
 
-    @Override
+
     public Lecturer findById(String id) {
         return lecturerRepository.findById(id).get();
     }
@@ -28,27 +28,27 @@ public class LecturerService implements GenericTemplate<Lecturer, String> {
 //        return lecturerRepository.findByName(name);
 //    }
 
-    @Override
+
     public List<Lecturer> findAll() {
         return (List<Lecturer>) lecturerRepository.findAll();
     }
 
-    @Override
+
     public boolean existsById(String id) {
         return lecturerRepository.existsById(id);
     }
 
-    @Override
+
     public long count() {
         return lecturerRepository.count();
     }
 
-    @Override
+
     public void deleteById(String id) {
         lecturerRepository.deleteById(id);
     }
 
-    @Override
+
     public void delete(Lecturer object) {
         lecturerRepository.delete(object);
     }
