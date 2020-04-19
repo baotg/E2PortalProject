@@ -50,8 +50,8 @@
                                 <td th:text="${timetable.moduleClass.moduleClassName}"></td>
                                 <td th:text="${timetable.moduleClass.lecturer.lastName + timetable.moduleClass.lecturer.firstName}"></td>
                                 <td th:text="${timetable.classRoom}"></td>
-                                <td th:text="${timetable.startDate}"></td>
-                                <td th:text="${timetable.endDate}"></td>
+                                <td th:text="${timetable.getFormatedStartDate()}"></td>
+                                <td th:text="${timetable.getFormatedEndDate()}"></td>
                             </tr>
                             </tbody>
                         </table>
