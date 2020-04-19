@@ -17,7 +17,7 @@ th:fragment="main-fragment(title, mainContent)">
     <body class="m4-cloak h-vh-100">
         <!--Nav--->
         <div data-role="navview" data-toggle="#paneToggle" data-expanded="xl" data-compact="lg"
-             data-active-state="true">
+             data-active-state="true" th:fragment="navbar">
             <div class="navview-pane">
                 <div class="bg-cyan d-flex flex-align-center">
                     <button class="pull-button m-0 bg-darkCyan-hover">
@@ -26,46 +26,70 @@ th:fragment="main-fragment(title, mainContent)">
                     <h2 class="text-light m-0 fg-white pl-7" style="line-height: 52px">E2Portal</h2>
                 </div>
                 <div class="suggest-box">
-                    <input type="text" data-role="input" data-clear-button="false" data-search-button="true">
+                    <input type="text" data-role="input" data-clear-button="false" data-search-button="true" placeholder="Bạn đang tìm gì?">
                     <button class="holder">
                         <span class="mif-search fg-white"></span>
                     </button>
                 </div>
                 <ul class="navview-menu mt-4" id="side-menu">
-                    <li class="item-header">MANAGEMENT</li>
+                    <li class="item-header">QUẢN LÝ</li>
                     <li>
-                        <a th:href="@{/}">
+                        <a th:href="@{/dashboard}">
                             <span class="icon"><span class="mif-meter"></span></span>
-                            <span class="caption">Dashboard</span>
+                            <span class="caption">Trang chính</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/announcement}">
                             <span class="icon"><span class="mif-bell"></span></span>
-                            <span class="caption">Announcement</span>
+                            <span class="caption">Thông báo</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/student}">
                             <span class="icon"><span class="mif-drive2"></span></span>
-                            <span class="caption">Student</span>
+                            <span class="caption">Sinh viên</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/moduleclass}">
                             <span class="icon"><span class="mif-books"></span></span>
-                            <span class="caption">Module Class</span>
+                            <span class="caption">Lớp học phần</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/mainclass}">
+                            <span class="icon"><span class="mif-books"></span></span>
+                            <span class="caption">Lớp chủ nhiệm</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/timetable}">
                             <span class="icon"><span class="mif-calendar"></span></span>
-                            <span class="caption">TimeTable</span>
+                            <span class="caption">Lịch học</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/lecturer}">
+                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="caption">Giảng viên</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/attendance}">
+                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="caption">Điểm danh</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/gradingresult}">
+                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="caption">Kết quả học tập</span>
                         </a>
                     </li>
 
                     <th:block th:each="role:${#authentication.getAuthorities()}">
-                        <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">ADMIN PANEL</li>
+                        <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN TRỊ</li>
                     </th:block>
                 </ul>
             </div>
@@ -79,7 +103,7 @@ th:fragment="main-fragment(title, mainContent)">
                             <div class="user-block shadow-1" data-role="collapse" data-collapsed="true">
                                 <div class="bg-darkCyan fg-white p-2 text-center">
                                     <div class="h4 mb-0" sec:authentication="principal"></div>
-                                    <div class="text-medium">Access</div>
+                                    <div class="text-medium">Được phép truy cập</div>
                                     <div class="inline-list">
                                         <th:block th:each="role:${#authentication.getAuthorities()}">
                                             <div class="items-list">
@@ -90,8 +114,8 @@ th:fragment="main-fragment(title, mainContent)">
                                     <div>#Name</div>
                                 </div>
                                 <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
-                                    <button class="button mr-1">Profile</button>
-                                    <button class="button ml-1 "><a th:href="@{/logout}">Sign out</a></button>
+                                    <button class="button mr-1">Hồ sơ</button>
+                                    <button class="button ml-1 "><a th:href="@{/logout}">Đăng xuất</a></button>
                                 </div>
                             </div>
                         </div>

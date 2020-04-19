@@ -9,19 +9,19 @@
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Student Management <small>view</small></h3>
+            <h3 class="dashboard-section-title">Quản lý Sinh viên<small>view</small></h3>
         </div>
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
-                <div class="cell-md-3 cell-xl-2">
-                    Import Student
+                <div class="cell-md-12 cell-xl-2">
+                    Nhập Thông tin Sinh viên
                     <form th:action="@{student/import}" method="post" enctype="multipart/form-data">
 
                         <input type="file" th:name="file" required>
 
-                        <input th:type="submit" value="Import"/>
+                        <input th:type="submit" value="Nhập"/>
                     </form>
                     <div class="panel">
                         <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
@@ -29,27 +29,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell-md-9 cell-xl-10">
+                <div class="cell-md-12 cell-xl-12">
                     <div class="p-1 p-6-lg bg-white mt-3">
                         <table class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
-                                <th>Student Code</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Gender</th>
-                                <th>Date of Birth</th>
-                                <th>Address</th>
-                                <th>Phone</th>
+                                <th>Mã số sinh viên</th>
+                                <th>Tên</th>
+                                <th>Họ đệm</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Điện thoại</th>
                                 <th>Email</th>
-                                <th>Family Phone</th>
+                                <th>Điện thoại người thân</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="student : ${studentList}">
                                 <td th:text="${student.id}"></td>
-                                <td th:text="${student.firstName}"></td>
                                 <td th:text="${student.lastName}"></td>
+                                <td th:text="${student.firstName}"></td>
                                 <td th:if="${student.gender} == true">Nam</td>
                                 <td th:if="${student.gender} == false">Nữ</td>
                                 <td th:text="${student.getFormatedDate()}"></td>

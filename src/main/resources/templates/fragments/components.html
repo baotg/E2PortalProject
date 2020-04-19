@@ -68,6 +68,12 @@
                     <span class="caption">TimeTable</span>
                 </a>
             </li>
+            <li>
+            <a href="#attendance">
+                <span class="icon"><span class="mif-calendar"></span></span>
+                <span class="caption">TimeTable</span>
+            </a>
+        </li>
 
             <th:block th:each="role:${#authentication.getAuthorities()}">
                 <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">ADMIN PANEL</li>
