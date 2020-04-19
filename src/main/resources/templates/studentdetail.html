@@ -4,17 +4,20 @@
       th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
     <title>Home</title>
+    <meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100">
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Sinh viên<small>view</small></h3>
+            <h3 class="dashboard-section-title">Quản lý Sinh viên<small>Xem</small></h3>
         </div>
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
+            <span style="color: red" id="message" th:text="${failMessage}"></span>
             <div class="row">
+
                 <div class="cell-md-12 cell-xl-2">
                     Nhập Thông tin Sinh viên
                     <form th:action="@{student/import}" method="post" enctype="multipart/form-data">

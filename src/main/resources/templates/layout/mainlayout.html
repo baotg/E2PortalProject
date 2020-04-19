@@ -34,8 +34,8 @@ th:fragment="main-fragment(title, mainContent)">
                 <ul class="navview-menu mt-4" id="side-menu">
                     <li class="item-header">QUẢN LÝ</li>
                     <li>
-                        <a th:href="@{/dashboard}">
-                            <span class="icon"><span class="mif-meter"></span></span>
+                        <a th:href="@{/}">
+                            <span class="icon"><span class="mif-home"></span></span>
                             <span class="caption">Trang chính</span>
                         </a>
                     </li>
@@ -47,7 +47,7 @@ th:fragment="main-fragment(title, mainContent)">
                     </li>
                     <li>
                         <a th:href="@{/student}">
-                            <span class="icon"><span class="mif-drive2"></span></span>
+                            <span class="icon"><span class="mif-user"></span></span>
                             <span class="caption">Sinh viên</span>
                         </a>
                     </li>
@@ -71,19 +71,19 @@ th:fragment="main-fragment(title, mainContent)">
                     </li>
                     <li>
                         <a th:href="@{/lecturer}">
-                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="icon"><span class="mif-user"></span></span>
                             <span class="caption">Giảng viên</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/attendance}">
-                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="icon"><span class="mif-checkmark"></span></span>
                             <span class="caption">Điểm danh</span>
                         </a>
                     </li>
                     <li>
                         <a th:href="@{/gradingresult}">
-                            <span class="icon"><span class="mif-calendar"></span></span>
+                            <span class="icon"><span class="mif-note"></span></span>
                             <span class="caption">Kết quả học tập</span>
                         </a>
                     </li>
@@ -91,7 +91,28 @@ th:fragment="main-fragment(title, mainContent)">
                     <th:block th:each="role:${#authentication.getAuthorities()}">
                         <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN TRỊ</li>
                     </th:block>
+                    <li class="item-header">TẢI XUỐNG</li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><span class="mif-download"></span></span>
+                            <span class="caption">Template Bảng điểm</span>
+                        </a>
+                        <a href="#">
+                            <span class="icon"><span class="mif-download"></span></span>
+                            <span class="caption">Template Bảng điểm danh</span>
+                        </a>
+                        <a href="#">
+                            <span class="icon"><span class="mif-download"></span></span>
+                            <span class="caption">Template Lịch học</span>
+                        </a>
+                        <a href="#">
+                            <span class="icon"><span class="mif-download"></span></span>
+                            <span class="caption">Template Sinh viên</span>
+                        </a>
+                    </li>
                 </ul>
+
+
             </div>
             <div class="navview-content h-100">
                 <div data-role="appbar" class="pos-absolute bg-darkCyan fg-white">

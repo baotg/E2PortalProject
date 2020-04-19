@@ -16,7 +16,10 @@ public class MainClass {
     private String level; // Bậc học
     private String type; // Loại hình đào tạo
     @ManyToOne
-    @JoinColumn(name ="falcultyId")
+    @JoinColumn(name ="facultyId")
     private Faculty faculty;
     private String year;
+    @ManyToOne
+    @JoinColumn(name ="lecturerId")
+    private Lecturer lecturer;
 }

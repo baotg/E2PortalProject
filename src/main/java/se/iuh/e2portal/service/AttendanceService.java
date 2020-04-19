@@ -7,46 +7,60 @@ import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.repository.AttendanceRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
-public class AttendanceService implements GenericTemplate<Attendance, Long> {
+public class AttendanceService {
     @Autowired
-    private AttendanceRepository attendanceRepository;
-    @Override
-    public Attendance save(Attendance attendance) {
-        return attendanceRepository.save(attendance);
-    }
-
-    @Override
-    public Attendance findById(Long id) {
-        return attendanceRepository.findById(id).get();
-    }
-
-    @Override
-    public List<Attendance> findAll() {
-       return (List<Attendance>)attendanceRepository.findAll();
-    }
+    AttendanceRepository attendanceRepository;
 
     public List<Attendance> findAllByStudent(Student student) {
         return attendanceRepository.findAllByStudent(student);
     }
 
-    @Override
-    public boolean existsById(Long id) {
-        return attendanceRepository.existsById(id);
+
+    public <S extends Attendance> S save(S entity) {
+        return attendanceRepository.save(entity);
     }
 
-    @Override
+    public <S extends Attendance> Iterable<S> saveAll(Iterable<S> entities) {
+        return attendanceRepository.saveAll(entities);
+    }
+
+    public Optional<Attendance> findById(Long aLong) {
+        return attendanceRepository.findById(aLong);
+    }
+
+    public boolean existsById(Long aLong) {
+        return attendanceRepository.existsById(aLong);
+    }
+
+    public Iterable<Attendance> findAll() {
+        return attendanceRepository.findAll();
+    }
+
+    public Iterable<Attendance> findAllById(Iterable<Long> longs) {
+        return attendanceRepository.findAllById(longs);
+    }
+
     public long count() {
         return attendanceRepository.count();
     }
 
-    @Override
-    public void deleteById(Long id) {
-        attendanceRepository.deleteById(id);
+    public void deleteById(Long aLong) {
+        attendanceRepository.deleteById(aLong);
     }
 
-    @Override
-    public void delete(Attendance object) {
-        attendanceRepository.delete(object);
+    public void delete(Attendance entity) {
+        attendanceRepository.delete(entity);
+    }
+
+    public void deleteAll(Iterable<? extends Attendance> entities) {
+        attendanceRepository.deleteAll(entities);
+    }
+
+    public void deleteAll() {
+        attendanceRepository.deleteAll();
+
     }
 }

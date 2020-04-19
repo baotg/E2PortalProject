@@ -25087,7 +25087,7 @@ Metro.plugin('switch', Switch);
 
 var TableDefaultConfig = {
     tableDeferred: 0,
-    emptyTableTitle: "Nothing to show",
+    emptyTableTitle: "Không có dữ liệu",
     templateBeginToken: "<%",
     templateEndToken: "%>",
     paginationDistance: 5,

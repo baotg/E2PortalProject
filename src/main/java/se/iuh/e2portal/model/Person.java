@@ -25,6 +25,6 @@ public class Person implements Serializable {
 
     public String getFormatedDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDateFormat.format(dateOfBirth);
+        return dateOfBirth!=null?simpleDateFormat.format(dateOfBirth):"";
     }
 }

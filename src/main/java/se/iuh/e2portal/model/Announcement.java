@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 @Entity
 @Data
@@ -17,5 +18,9 @@ public class Announcement {
     @Column(columnDefinition = "nvarchar(2000)")
     private String contentDetail;
     private Date createdDate;
+    public String getFormattedCreatedDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(createdDate);
+    }
 
 }

@@ -3,10 +3,12 @@ package se.iuh.e2portal.component;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Component;
 import se.iuh.e2portal.model.Faculty;
+import se.iuh.e2portal.model.Lecturer;
 import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Student;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 @Component
@@ -18,6 +20,8 @@ public class StudentReader {
     private static int COL_TYPE_MAIN_CLASS = 3;
     private static int COL_FAULTY_MAIN_CLASS = 4;
     private static int COL_YEAR_MAIN_CLASS = 5;
+    private static int COL_LECTURER_NAME = 6;
+    private static int COL_LECTURER_ID = 7;
     private static int ROW_STUDENT = 4;
     private static int COL_ID_STUDENT = 1;
     private static int COL_FNAME_STUDENT = 2;
@@ -31,11 +35,18 @@ public class StudentReader {
     public MainClass getMainClass(Sheet sheet){
         Row row = sheet.getRow(ROW_MAIN_CLASS);
         MainClass mainClass = new MainClass();
+        Lecturer lecturer = new Lecturer();
         String classId = getCellValue(row.getCell(COL_CLASS_ID_MAIN_CLASS));
         String speciality = getCellValue(row.getCell(COL_SPECIALITY_MAIN_CLASS));
         String level = getCellValue(row.getCell(COL_LEVEL_MAIN_CLASS));
         String type = getCellValue(row.getCell(COL_TYPE_MAIN_CLASS));
         String facultyId = getCellValue(row.getCell(COL_FAULTY_MAIN_CLASS));
+        lecturer.setId(getCellValue(row.getCell(COL_LECTURER_ID)));
+        String fullName = getCellValue(row.getCell(COL_LECTURER_NAME));
+        List<String> fullNames = Arrays.asList(fullName.split(" "));
+        lecturer.setFirstName(fullNames.get(fullNames.size()-1));
+        lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
+        mainClass.setLecturer(lecturer);
         Faculty faculty = new Faculty();
         faculty.setFalcultyId(facultyId);
         String year = getCellValue(row.getCell(COL_YEAR_MAIN_CLASS));

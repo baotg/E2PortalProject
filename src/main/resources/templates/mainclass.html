@@ -15,8 +15,9 @@
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
+                <span style="color: red" id="message" th:text="${failMessage}"></span>
                 <div class="cell-md-3 cell-xl-2">
-                    Import Student
+                    Nhập thông tin Sinh viên
                     <form th:action="@{mainclass/import}" method="post" enctype="multipart/form-data">
 
                         <input type="file" th:name="file" required>
@@ -40,6 +41,7 @@
                                 <th>Loại hình đào tạo</th>
                                 <th>Chuyên ngành</th>
                                 <th>Niên Khóa</th>
+                                <th>Giảng viên</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,6 +52,7 @@
                                 <td th:text="${class.type}"></td>
                                 <td th:text="${class.speciality}"></td>
                                 <td th:text="${class.year + '-' + class.year+4}"></td>
+                                <td th:text="${class.lecturer.lastName + ' ' +class.lecturer.firstName}"></td>
                             </tr>
                             </tbody>
                         </table>

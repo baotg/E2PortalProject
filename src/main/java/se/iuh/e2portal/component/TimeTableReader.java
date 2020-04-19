@@ -51,6 +51,7 @@ public class TimeTableReader {
         lecturer.setFirstName(fullNames.get(fullNames.size()-1));
         lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
 
+
         moduleClass.setLecturer(lecturer);
         return moduleClass;
     }

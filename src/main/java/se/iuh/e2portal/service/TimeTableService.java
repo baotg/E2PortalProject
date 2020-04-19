@@ -14,12 +14,9 @@ public class TimeTableService {
     @Autowired
     private TimeTableRepository timeTableRepository;
 
-
     public TimeTable save(TimeTable timeTable) {
         return timeTableRepository.save(timeTable);
     }
-
-
 
     public <S extends TimeTable> Iterable<S> saveAll(Iterable<S> entities) {
         return timeTableRepository.saveAll(entities);
@@ -38,17 +35,14 @@ public class TimeTableService {
         return timeTableRepository.existsById(id);
     }
 
-
     public long count() {
         return timeTableRepository.count();
     }
-
 
     public void deleteById(Long id) {
         timeTableRepository.deleteById(id);
 
     }
-
 
     public void delete(TimeTable object) {
         timeTableRepository.delete(object);

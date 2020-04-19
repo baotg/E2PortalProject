@@ -1,5 +1,4 @@
 package se.iuh.e2portal.controller;
-
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -10,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import se.iuh.e2portal.component.StudentReader;
 import se.iuh.e2portal.model.Faculty;
+import se.iuh.e2portal.model.Lecturer;
 import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.service.FacultyService;
+import se.iuh.e2portal.service.LecturerService;
 import se.iuh.e2portal.service.MainClassService;
 import se.iuh.e2portal.service.StudentService;
 
@@ -31,7 +32,9 @@ public class StudentController {
     private FacultyService facultyService;
     @Autowired
     private StudentReader studentReader;
-//    @GetMapping("")
+    @Autowired
+    private LecturerService lecturerService;
+    //    @GetMapping("")
 //    public String getMainClass(@PageableDefault(size = 10) Pageable pageable, Model model) {
 //        Iterable<Student> page = studentService.findAll();
 //        model.addAttribute("page", page);
@@ -53,24 +56,29 @@ public class StudentController {
         return "redirect:/student";
     }
     @PostMapping("/import")
-    public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile) throws IOException {
+    public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile, Model model) throws IOException {
+
         Workbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         MainClass mainClass = studentReader.getMainClass(sheet);
         Faculty faculty = mainClass.getFaculty();
-        if(!facultyService.findById(faculty.getFalcultyId()).isPresent()){
+        Lecturer lecturer = mainClass.getLecturer();
+        if(!facultyService.findById(faculty.getFalcultyId()).isPresent())
             facultyService.save(faculty);
-        }
-        else {
+        else
             faculty = facultyService.findById(faculty.getFalcultyId()).get();
-            mainClass.setFaculty(faculty);
-        }
-        if(!mainClassService.findById(mainClass.getClassId()).isPresent()){
+        mainClass.setFaculty(faculty);
+        if(!lecturerService.existsById(lecturer.getId()))
+            lecturerService.save(lecturer);
+        else
+            lecturer = lecturerService.findById(lecturer.getId());
+
+        mainClass.setLecturer(lecturer);
+        if(!mainClassService.findById(mainClass.getClassId()).isPresent())
             mainClassService.save(mainClass);
-        }
-        else {
+        else
             mainClass = mainClassService.findById(mainClass.getClassId()).get();
-        }
+
         List<Student> students = studentReader.getListStudent(sheet, mainClass);
         studentService.saveAll(students);
         return "redirect:/student";

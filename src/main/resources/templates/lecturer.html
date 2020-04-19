@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+<head>
+    <title>Quản lý Giảng viên</title>
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Quản lý Giảng viên<small>Xem</small></h3>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                <div class="cell-md-12 cell-xl-12">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+                            <thead>
+                            <tr>
+                                <th>Mã số giảng viên</th>
+                                <th>Họ đệm</th>
+                                <th>Tên</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Điện thoại</th>
+                                <th>Email</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="lecturer : ${lecturers}">
+                                <td th:text="${lecturer.id}"></td>
+                                <td th:text="${lecturer.lastName}"></td>
+                                <td th:text="${lecturer.firstName}"></td>
+                                <td th:if="${lecturer.gender} == true">Nam</td>
+                                <td th:if="${lecturer.gender} == false">Nữ</td>
+                                <td th:text="${lecturer.getFormatedDate()}"></td>
+                                <td th:text="${lecturer.address}"></td>
+                                <td th:text="${lecturer.numberPhone}"></td>
+                                <td th:text="${lecturer.email}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

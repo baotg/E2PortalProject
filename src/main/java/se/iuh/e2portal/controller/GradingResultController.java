@@ -15,7 +15,6 @@ import se.iuh.e2portal.service.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/gradingresult")
@@ -46,24 +45,25 @@ public class GradingResultController {
         return "redirect:/student";
     }
     @PostMapping("/import")
-    public String mapReadExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile) throws IOException {
-        Workbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
-        Sheet sheet = workbook.getSheetAt(0);
-        ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
-        if(!moduleClassService.existsById(moduleClass.getModuleClassId())){
-            moduleClassService.save(moduleClass);
-        }
-        else {
-            moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
-        }
-        List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
-        for(GradingResult gradingResult : gradingResults){
-            if(!studentService.existsById(gradingResult.getStudent().getId()))
-                studentService.save(gradingResult.getStudent());
-            else
-                gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
-        }
-        gradingResultService.saveAll(gradingResults);
+    public String mapReadExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile, Model model) throws IOException {
+
+            Workbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+            ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
+            if(!moduleClassService.existsById(moduleClass.getModuleClassId())){
+                moduleClassService.save(moduleClass);
+            }
+            else {
+                moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
+            }
+            List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
+            for(GradingResult gradingResult : gradingResults){
+                if(!studentService.existsById(gradingResult.getStudent().getId()))
+                    studentService.save(gradingResult.getStudent());
+                else
+                    gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
+            }
+            gradingResultService.saveAll(gradingResults);
         return "redirect:/gradingresult";
     }
 }

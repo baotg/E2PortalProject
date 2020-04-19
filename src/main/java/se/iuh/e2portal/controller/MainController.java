@@ -1,8 +1,8 @@
 package se.iuh.e2portal.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 public class MainController {
@@ -10,4 +10,5 @@ public class MainController {
     public String home() {
         return "home";
     }
+
 }

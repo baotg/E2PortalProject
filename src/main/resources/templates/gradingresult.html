@@ -9,12 +9,13 @@
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Kết quả học tập<small>view</small></h3>
+            <h3 class="dashboard-section-title">Quản lý Kết quả học tập<small>Xem</small></h3>
         </div>
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
+                <span style="color: red" id="message" th:text="${failMessage}"></span>
                 <div class="cell-md-12 cell-xl-2">
                     Nhập Kêt quả học tập Sinh viên
                     <form th:action="@{gradingresult/import}" method="post" enctype="multipart/form-data">

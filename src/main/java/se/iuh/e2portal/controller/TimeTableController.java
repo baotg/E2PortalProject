@@ -4,7 +4,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import se.iuh.e2portal.component.ModuleClassReader;
 import se.iuh.e2portal.component.TimeTableReader;
 import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.service.LecturerService;
@@ -41,7 +39,7 @@ public class TimeTableController {
         return "timetable";
     }
     @PostMapping("/import")
-    public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile) throws IOException {
+    public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile, Model model) throws IOException {
         Workbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         ModuleClass moduleClass = timeTableReader.getModuleClass(sheet);
@@ -58,5 +56,6 @@ public class TimeTableController {
         List<TimeTable> timeTableList = timeTableReader.getListTimeTable(sheet,moduleClass);
         timeTableService.saveAll(timeTableList);
         return "redirect:/timetable";
+
     }
 }

@@ -3,22 +3,22 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
-    <title>Time Table</title>
+    <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Lịch học<small>Xem</small></h3>
+        <div class="cell-md-6 text-center text-left-md">
+            <h3 class="dashboard-section-title">Quản lý Chuyên cần<small>xem</small></h3>
         </div>
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <span style="color: red" id="message" th:text="${failMessage}"></span>
             <div class="row">
-                <div class="cell-md-3 cell-xl-2">
-                    Nhập Lịch học
-                    <form th:action="@{timetable/import}" method="post" enctype="multipart/form-data">
+                <div class="cell-md-12 cell-xl-2">
+                    Nhập Thông tin chuyên cần
+                    <form th:action="@{attendance/import}" method="post" enctype="multipart/form-data">
 
                         <input type="file" th:name="file" required>
 
@@ -30,29 +30,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell-md-9 cell-xl-10">
+                <div class="cell-md-12 cell-xl-12">
                     <div class="p-1 p-6-lg bg-white mt-3">
                         <table class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
-                                <th>Thứ</th>
-                                <th>Tiết</th>
-                                <th>Môn học</th>
-                                <th>Giảng viên</th>
-                                <th>Phòng học</th>
-                                <th>Ngày bắt đầu</th>
-                                <th>Ngày kết thúc</th>
+                                <th>Mã số sinh viên</th>
+                                <th>Họ đệm</th>
+                                <th>Tên</th>
+                                <th>Ngày nghỉ</th>
+                                <th>Phép</th>
+                                <th>Lớp học phần</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="timetable : ${timetables}">
-                                <td th:text="${timetable.dayOfWeek}"></td>
-                                <td th:text="${timetable.period}"></td>
-                                <td th:text="${timetable.moduleClass.moduleClassName}"></td>
-                                <td th:text="${timetable.moduleClass.lecturer.lastName + timetable.moduleClass.lecturer.firstName}"></td>
-                                <td th:text="${timetable.classRoom}"></td>
-                                <td th:text="${timetable.getFormatedStartDate()}"></td>
-                                <td th:text="${timetable.getFormatedEndDate()}"></td>
+                            <tr th:each="attendance : ${attendances}">
+                                <td th:text="${attendance.student.id}"></td>
+                                <td th:text="${attendance.student.lastName}"></td>
+                                <td th:text="${attendance.student.firstName}"></td>
+                                <td th:text="${attendance.getFormattedDateOff()}"></td>
+                                <td th:if="${attendance.allowed} == true">Có</td>
+                                <td th:if="${attendance.allowed} == false">Không</td>
+                                <td th:text="${attendance.moduleClass.moduleClassName}"></td>
                             </tr>
                             </tbody>
                         </table>

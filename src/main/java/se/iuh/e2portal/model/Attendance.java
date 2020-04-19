@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 @Entity
 @Data
@@ -24,4 +25,8 @@ public class Attendance {
     @ManyToOne
     @JoinColumn(name = "moduleClassId")
     private ModuleClass moduleClass;
+    public String getFormattedDateOff(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(dateOff);
+    }
 }

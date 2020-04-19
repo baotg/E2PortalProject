@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import se.iuh.e2portal.service.MainClassService;
-import se.iuh.e2portal.service.ModuleClassService;
 
 @Controller
 @RequestMapping("/mainclass")

@@ -16,18 +16,7 @@
         <div class="p-1 bg-transparent">
             <div class="row">
                 <div class="cell-md-3 cell-xl-2">
-                    Import Student
-                    <form th:action="@{moduleclass/import}" method="post" enctype="multipart/form-data">
-
-                        <input type="file" th:name="file" required>
-
-                        <input th:type="submit" value="Nhập"/>
-                    </form>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
-                        </div>
-                    </div>
+                    <a class="button mb-3 success" >Button</a>
                 </div>
                 <div class="cell-md-9 cell-xl-10">
                     <div class="p-1 p-6-lg bg-white mt-3">
@@ -53,8 +42,8 @@
                                 <td th:text="${class.numOfPSession}"></td>
                                 <td th:text="${class.numOfCredit}"></td>
                                 <td th:text="${class.semester}"></td>
-                                <td th:text="${class.startDate}"></td>
-                                <td th:text="${class.endDate}"></td>
+                                <td th:text="${class.getFormattedStartDate()}"></td>
+                                <td th:text="${class.getFormattedEndDate()}"></td>
                                 <td th:text="${class.lecturer.lastName +' '+ class.lecturer.firstName}"></td>
                             </tr>
                             </tbody>
