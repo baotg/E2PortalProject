@@ -9,17 +9,19 @@ import se.iuh.e2portal.repository.GradingResultRepository;
 import java.util.List;
 
 @Service
-public class GradingResultService implements GenericTemplate<GradingResult, Long>{
+public class GradingResultService {
 
     @Autowired
     private GradingResultRepository gradingResultRepository;
 
-    @Override
+
     public GradingResult save(GradingResult gradingResult) {
         return null;
     }
 
-    @Override
+    public <S extends GradingResult> Iterable<S> saveAll(Iterable<S> entities) {
+        return gradingResultRepository.saveAll(entities);
+    }
     public GradingResult findById(Long id) {
         return gradingResultRepository.findById(id).get();
     }
@@ -28,28 +30,28 @@ public class GradingResultService implements GenericTemplate<GradingResult, Long
         return gradingResultRepository.findByStudent(student);
     }
 
-    @Override
+
     public List<GradingResult> findAll() {
         return (List<GradingResult>)gradingResultRepository.findAll();
     }
 
-    @Override
+
     public boolean existsById(Long id) {
         return gradingResultRepository.existsById(id);
     }
 
-    @Override
+
     public long count() {
         return gradingResultRepository.count();
     }
 
-    @Override
+
     public void deleteById(Long id) {
         gradingResultRepository.deleteById(id);
 
     }
 
-    @Override
+
     public void delete(GradingResult object) {
         gradingResultRepository.delete(object);
     }
