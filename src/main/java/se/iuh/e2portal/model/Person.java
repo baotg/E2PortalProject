@@ -16,7 +16,7 @@ public class Person implements Serializable {
     private String id;
     private String firstName;
     private String lastName;
-    private boolean gender;
+    private Boolean gender;
     private Date dateOfBirth;
     private String address;
     private String numberPhone;

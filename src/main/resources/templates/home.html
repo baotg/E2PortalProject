@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
     <div id="main-content">
-        CHECK
-    </div>
+  	<span th:text="${msg}"></span>
+    </div>   
 </body>
 </html>

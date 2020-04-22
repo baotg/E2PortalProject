@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+      >
 <head>
     <title>Add Announcement</title>
 </head>
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="cell-md-9 cell-xl-10">
                 <div class="p-1 p-6-lg bg-white mt-3">
-                    <form th:object="${announcement}" th:action="@{/announcement/save}" action="#" method="post">
+                    <form id="add-form" th:object="${announcement}" th:action="@{/announcement/save}" action="#" method="post">
                         <input type="hidden" th:field="*{announcementId}">
                         <div class="form-group">
                             <label>Tiêu đề</label>

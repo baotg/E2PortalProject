@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+      >
 <head>
     <title>Home</title>
 </head>
@@ -16,7 +16,7 @@
         <div class="p-1 bg-transparent">
             <div class="row">
                 <div class="cell-md-3 cell-xl-2">
-                    <a class="button mb-3 success" th:href="@{announcement/add}">Tạo thông báo</a>
+                    <a class="button mb-3 success" onclick="retrieveGuests('/announcement/add')" >Tạo thông báo</a>
                     <div class="panel">
                         <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
                              class="panel-content collapsed" data-role-panel="true" style="display: none;">
@@ -72,18 +72,5 @@
         </div>
     </div>
 </div>
-<div class="dialog" data-role="dialog">
-    <div class="dialog-title">Use Windows location service?</div>
-    <div class="dialog-content">
-        Bassus abactors ducunt ad triticum.
-        A fraternal form of manifestation is the bliss.
-    </div>
-    <div class="dialog-actions">
-        <button class="button js-dialog-close">Disagree</button>
-        <button class="button primary js-dialog-close">Agree</button>
-    </div>
-</div>
-<button class="button primary"
-        onclick="Metro.dialog.open('#demoDialog1')">Open dialog</button>
 </body>
 </html>

@@ -42,7 +42,7 @@ public class GradingResultController {
     @GetMapping("/{id}")
     public String getGradingResultByStudent(@PathVariable("id") String id, Model model){
 
-        return "redirect:/student";
+        return "redirect:/";
     }
     @PostMapping("/import")
     public String mapReadExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile, Model model) throws IOException {
@@ -64,6 +64,6 @@ public class GradingResultController {
                     gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
             }
             gradingResultService.saveAll(gradingResults);
-        return "redirect:/gradingresult";
+        return "redirect:/";
     }
 }

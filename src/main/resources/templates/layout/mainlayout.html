@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-th:fragment="main-fragment(title, mainContent)">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
-        <title th:replace="${title}"></title>
+        <title>E2Portal</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,11 +10,14 @@ th:fragment="main-fragment(title, mainContent)">
         <link rel="stylesheet" href="/css/metro-icons.css">
         <link rel="stylesheet" href="/css/index.css">
         <script>
-            window.on_page_functions = [];
-        </script>
+        window.on_page_functions = [];
+        function retrieveGuests(url) {
+     
+            $("#content-wrapper").load(url);
+        }
+    </script>
     </head>
     <body class="m4-cloak h-vh-100">
-        <!--Nav--->
         <div data-role="navview" data-toggle="#paneToggle" data-expanded="xl" data-compact="lg"
              data-active-state="true" th:fragment="navbar">
             <div class="navview-pane">
@@ -34,7 +36,7 @@ th:fragment="main-fragment(title, mainContent)">
                 <ul class="navview-menu mt-4" id="side-menu">
                     <li class="item-header">QUẢN LÝ</li>
                     <li>
-                        <a th:href="@{/}">
+                        <a th:href="@{/home}">
                             <span class="icon"><span class="mif-home"></span></span>
                             <span class="caption">Trang chính</span>
                         </a>
@@ -142,7 +144,7 @@ th:fragment="main-fragment(title, mainContent)">
                         </div>
                     </div>
                 </div>
-                <div th:insert="${mainContent}" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
+                <div th:include="home" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
                     <!--All content here!-->
                 </div>
             </div>
@@ -150,6 +152,8 @@ th:fragment="main-fragment(title, mainContent)">
         <th:block th:fragment="script">
             <script src="/js/jquery-3.4.1.min.js"></script>
             <script src="/js/metro.js"></script>
+            <script src="/js/index.js"></script>
+            
         </th:block>
     </body>
 </html>

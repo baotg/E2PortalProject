@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Sinh viên</title>
+    <meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Nhập thông tin sinh viên<small>Xem trước</small></h3>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                 <div class="cell-md-12 cell-xl-12">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+                            <thead>
+                            <tr>
+                                <th>Mã số sinh viên</th>
+                                <th>Tên</th>
+                                <th>Họ đệm</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Điện thoại</th>
+                                <th>Email</th>
+                                <th>Điện thoại người thân</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="student : ${students}">
+                                <td th:text="${student.id}"></td>
+                                <td th:text="${student.lastName}"></td>
+                                <td th:text="${student.firstName}"></td>
+                                <td th:if="${student.gender} == true">Nam</td>
+                                <td th:if="${student.gender} == false">Nữ</td>
+                                <td th:text="${student.getFormatedDate()}"></td>
+                                <td th:text="${student.address}"></td>
+                                <td th:text="${student.numberPhone}"></td>
+                                <td th:text="${student.email}"></td>
+                                <td th:text="${student.familyNumber}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="#" class="button warning" onclick="retrieveGuests('student/import/save')">Nhập</a>
+                        <a href="#" class="button primary" onclick="retrieveGuests('student/import/cancel')">Hủy bỏ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

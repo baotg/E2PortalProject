@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Sinh viên</title>
+    <meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Thông tin sinh viên<small>Xem chi tiết</small></h3>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                <div class="cell-md-12 cell-xl-12">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <div id="user-profile-tabs-content">
+                <div id="profile-about">
+                    <br>
+                    <div data-role="panel" data-title-caption="Thông tin chung" data-title-icon="<span class='mif-info'>"  data-collapsible="true">
+                        <div class="text-bold">Giới tính</div>
+                        <div>Male</div>
+
+                        <div class="text-bold mt-2">Ngày sinhy</div>
+                        <div>February 30th, 1974</div>
+
+                        <div class="text-bold mt-2">Địa chỉ</div>
+                        <address>
+                            Khreschatyk str, Suite 1<br>
+                            Kiev, Ukraine 01001<br>
+                            <abbr title="primary phone number">Di động:</abbr> (123) 456-7890
+                        </address>
+                    <br>
+                    <div data-role="panel" data-title-caption="Lớp chủ nhiệm" data-title-icon="<span class='mif-library'>"  data-collapsible="true">
+                        
+                        
+                    </div>
+                </div>
+                <div id="profile-activity">
+                    <br>
+                    <div data-role="panel" data-title-caption="User activity" data-title-icon="<span class='mif-chart-line'>"  data-collapsible="true">
+                        <canvas id="profileChart1"></canvas>
+                    </div>
+                    <br>
+                    <div data-role="panel" data-title-caption="Clients" data-title-icon="<span class='mif-users'>" data-collapsible="true">
+                        <table class="table striped table-border mt-4"
+                               data-role="table"
+                               data-cls-table-top="row"
+                               data-cls-search="cell-md-6"
+                               data-cls-rows-count="cell-md-6"
+                               data-rows="5"
+                               data-rows-steps="5, 10"
+                               data-show-activity="false"
+                               data-source="data/table.json"
+                               data-horizontal-scroll="true"
+                        >
+                        </table>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

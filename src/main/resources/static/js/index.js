@@ -16,14 +16,14 @@ var statuses = {
 };
 
 var hash = location.hash;
-var target = hash.length > 0 ? hash.substr(1) : "dashboard";
+var target = hash.length > 0 ? hash.substr(1) : "home";
 var link = $(".navview-menu a[href*="+target+"]");
 var menu = link.closest("ul[data-role=dropdown]");
 var node = link.parent("li").addClass("active");
 
 function getContent(target){
     window.on_page_functions = [];
-    $.get(target + ".html").then(
+    $.get("/" + target).then(
         function(response){
             $("#content-wrapper").html(response);
 
@@ -55,7 +55,7 @@ $(".navview-menu").on(Metro.events.click, "a", function(e){
     }
 
     hash = href.substr(1);
-    href = hash + ".html";
+    href = hash;
 
     getContent(hash);
 
@@ -66,7 +66,7 @@ $(".navview-menu").on(Metro.events.click, "a", function(e){
     pane.find("li").removeClass("active");
     $(this).closest("li").addClass("active");
 
-    window.history.pushState(href, href, "index.html#"+hash);
+    window.history.pushState(href, href, "#"+hash);
 
     return false;
 });

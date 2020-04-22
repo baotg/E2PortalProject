@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Home</title>
+    <title>Sinh viên</title>
     <meta charset="UTF-8">
 </head>
-<body class="m4-cloak h-vh-100">
+<body class="m4-cloak h-vh-100" th:fragment="student">
+<script type="text/javascript">
+$(document).ready(function () {
+
+    $("#btnSubmit").click(function (event) {
+
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+
+        fire_ajax_submit();
+
+    });
+
+});
+
+function fire_ajax_submit() {
+    var form = $('#import-student')[0];
+    var data = new FormData(form);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/upload/import",
+        data: data,
+        processData: false, //prevent jQuery from automatically transforming the data into a query string
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+			
+            if(data==='successful')
+            	retrieveGuests('/student/import');
+
+        },
+        error: function (e) {
+           
+		alert('failed!');
+        }
+    });
+    function retrieveGuests(url) {
+        
+        $("#content-wrapper").load(url);
+    }
+}
+
+    //Bắt sự kiện click cho phần tử có class .example1
+    $(".button").click(function () {
+
+        //lấy phần tử bấm chuột - chính là  $(".example1")
+        var ele_example1 = $(this);
+
+        //lấy nội dung
+        var htmlmarkup =  ele_example1.html();
+        var htmlcontent = ele_example1.text();
+
+        alert("HTML Markup:\n" + htmlmarkup);
+        alert("HTML Content:\n" + htmlcontent);
+
+    });
+   
+</script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -15,16 +73,12 @@
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
-            <span style="color: red" id="message" th:text="${failMessage}"></span>
             <div class="row">
-
                 <div class="cell-md-12 cell-xl-2">
-                    Nhập Thông tin Sinh viên
-                    <form th:action="@{student/import}" method="post" enctype="multipart/form-data">
-
-                        <input type="file" th:name="file" required>
-
-                        <input th:type="submit" value="Nhập"/>
+                    Nhập sinh viên
+                    <form id="import-student" method="post" enctype="multipart/form-data">
+                        <input type="file" th:name="file" id="file" required><br>
+                        <input type="submit" id="btnSubmit" value="Nhậpaaa"/>
                     </form>
                     <div class="panel">
                         <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
@@ -46,11 +100,13 @@
                                 <th>Điện thoại</th>
                                 <th>Email</th>
                                 <th>Điện thoại người thân</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="student : ${studentList}">
-                                <td th:text="${student.id}"></td>
+                            <tr th:each="student : ${studentList}" >
+                               <td><span th:text="${student.id}"></span></td>
                                 <td th:text="${student.lastName}"></td>
                                 <td th:text="${student.firstName}"></td>
                                 <td th:if="${student.gender} == true">Nam</td>
@@ -60,6 +116,12 @@
                                 <td th:text="${student.numberPhone}"></td>
                                 <td th:text="${student.email}"></td>
                                 <td th:text="${student.familyNumber}"></td>
+                                <td>
+                                    <a th:href="@{/student/edit?id={id}(id=${student.id})}" class="button warning">Sửa</a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/student/delete?id={id}(id=${student.id})}" class="button alert">Xóa</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

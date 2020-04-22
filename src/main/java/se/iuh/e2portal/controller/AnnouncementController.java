@@ -36,18 +36,18 @@ public class AnnouncementController {
     public String saveAnnouncement(Announcement announcement){
         announcement.setCreatedDate(new Date());
         announcementService.save(announcement);
-        return "redirect:/announcement";
+        return "redirect:/";
     }
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editAnnouncement(@RequestParam("id") Long id, Model model) {
         Optional<Announcement> announcementEdit = announcementService.findById(id);
         announcementEdit.ifPresent(announcement -> model.addAttribute("announcement", announcement));
-        return "editAnnouncement";
+        return "redirect:/";
     }
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteAnnouncement(@RequestParam("id") Long id, Model model){
         announcementService.deleteById(id);
-        return "redirect:/announcement";
+        return "redirect:/";
 
     }
 }

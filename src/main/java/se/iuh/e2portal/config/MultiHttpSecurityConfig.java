@@ -73,7 +73,7 @@ public class MultiHttpSecurityConfig {
 
             http
                     .authorizeRequests()
-                    .antMatchers("/login").permitAll()
+                    .antMatchers("/login").permitAll().and().csrf().disable().authorizeRequests()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
