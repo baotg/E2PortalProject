@@ -1,6 +1,5 @@
 package se.iuh.e2portal.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,8 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+	
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
+    
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserDetails userAccountDetails = userDetailsService.loadUserByUsername(authentication.getName());
@@ -25,9 +26,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
         return result;
     }
+    
     public void setUserDetailsService(UserDetailsService userDetailsService){
         this.userDetailsService = userDetailsService;
     }
+    
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);

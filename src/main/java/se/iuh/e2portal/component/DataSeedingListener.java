@@ -10,14 +10,14 @@ import se.iuh.e2portal.repository.StudentRepository;
 import se.iuh.e2portal.service.AnnouncementService;
 import se.iuh.e2portal.service.LecturerService;
 import se.iuh.e2portal.service.ModuleClassService;
+import se.iuh.e2portal.service.RoleService;
 import se.iuh.e2portal.service.UserAccountService;
 
 import java.util.*;
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
-	private final static String ROLE_ADMIN = "ADMIN";
-	private final static String ROLE_USER = "USER";
+	
 	private final static String ADMIN_ID = "101010";
 	private final static String ADMIN_PWD = "101010";
 	private final static String USER_ID = "10101010";
@@ -34,15 +34,21 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	private ModuleClassService moduleClassService;
 	@Autowired
 	private LecturerService lecturerService;
+	@Autowired
+	private RoleService roleService;
 
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
-		Role role_user = new Role(ROLE_USER);
-		Role role_admin = new Role(ROLE_ADMIN);
-		roleRepository.save(role_user);
-		roleRepository.save(role_admin);
+		Role role_user = null ;
+		Role role_admin = null ;
+		role_user = roleService.findByName(Role.USER);
+		role_admin = roleService.findByName(Role.ADMIN);
+		if(role_admin==null)
+			roleService.save(new Role(Role.ADMIN));
+		if(role_user==null)
+			roleService.save(new Role(Role.USER));
 		//Initial User & Admin account
 		UserAccount admin_default = new UserAccount();
 		admin_default.setAccountId(ADMIN_ID);
@@ -74,9 +80,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 //		userAccountService.save(userAccount);
 //		initAnnouncement();
 //		initModuleClassAndTimeTable();
-
-
 	}
+	
 	private void initAnnouncement(){
 		Announcement announcement = new Announcement();
 		announcement.setSummary("Test sum");
@@ -84,6 +89,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		announcement.setTitle("Test title");
 		announcementService.save(announcement);
 	}
+	
 //	public void initModuleClassAndTimeTable(){
 //		ModuleClass moduleClass = new ModuleClass();
 //		Lecturer lecturer = new Lecturer();

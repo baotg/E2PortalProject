@@ -93,23 +93,17 @@
                     <th:block th:each="role:${#authentication.getAuthorities()}">
                         <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN TRỊ</li>
                     </th:block>
+                    <li>
+                        <a th:href="@{/account-management}">
+                            <span class="icon"><span class="mif-user"></span></span>
+                            <span class="caption">Quản lý Tài khoản</span>
+                        </a>
+                    </li>
                     <li class="item-header">TẢI XUỐNG</li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/download}">
                             <span class="icon"><span class="mif-download"></span></span>
-                            <span class="caption">Template Bảng điểm</span>
-                        </a>
-                        <a href="#">
-                            <span class="icon"><span class="mif-download"></span></span>
-                            <span class="caption">Template Bảng điểm danh</span>
-                        </a>
-                        <a href="#">
-                            <span class="icon"><span class="mif-download"></span></span>
-                            <span class="caption">Template Lịch học</span>
-                        </a>
-                        <a href="#">
-                            <span class="icon"><span class="mif-download"></span></span>
-                            <span class="caption">Template Sinh viên</span>
+                            <span class="caption">Template Excel</span>
                         </a>
                     </li>
                 </ul>
@@ -153,7 +147,6 @@
             <script src="/js/jquery-3.4.1.min.js"></script>
             <script src="/js/metro.js"></script>
             <script src="/js/index.js"></script>
-            
         </th:block>
     </body>
 </html>

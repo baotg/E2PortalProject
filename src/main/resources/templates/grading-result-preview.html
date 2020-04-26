@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     >
+<head>
+    <title>Home</title>
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Nhập kết quả học tâp<small>Xem trước</small></h3>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="p-1 bg-transparent">
+            <div class="row">
+                <div class="cell-md-12 cell-xl-12">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+                            <thead>
+                            <tr>
+                                <th>Mã số sinh viên</th>
+                                <th>Tên</th>
+                                <th>Họ đệm</th>
+                                <th>TK1</th>
+                                <th>TK2</th>
+                                <th>TK3</th>
+                                <th>TK4</th>
+                                <th>TK5</th>
+                                <th>Giữa kỳ</th>
+                                <th>TH1</th>
+                                <th>TH2</th>
+                                <th>TH3</th>
+                                <th>TH4</th>
+                                <th>TH5</th>
+                                <th>Cuối kỳ</th>
+                                <th>Trung bình</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="gradingresult : ${gradingresults}">
+                                <td th:text="${gradingresult.student.id}"></td>
+                                <td th:text="${gradingresult.student.lastName}"></td>
+                                <td th:text="${gradingresult.student.firstName}"></td>
+                                <td th:text="${gradingresult.quiz1}"></td>
+                                <td th:text="${gradingresult.quiz2}"></td>
+                                <td th:text="${gradingresult.quiz3}"></td>
+                                <td th:text="${gradingresult.quiz4}"></td>
+                                <td th:text="${gradingresult.quiz5}"></td>
+                                <td th:text="${gradingresult.midScore}"></td>
+                                <td th:text="${gradingresult.practiceScore1}"></td>
+                                <td th:text="${gradingresult.practiceScore2}"></td>
+                                <td th:text="${gradingresult.practiceScore3}"></td>
+                                <td th:text="${gradingresult.practiceScore4}"></td>
+                                <td th:text="${gradingresult.practiceScore5}"></td>
+                                <td th:text="${gradingresult.endScore}"></td>
+                                <td th:text="${gradingresult.averageScore}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="#gradingresult" class="button warning"
+								onclick="retrieveGuests('gradingresult/import/save')">Nhập</a> 
+						<a href="#gradingresult" class="button primary"
+								onclick="retrieveGuests('gradingresult/import/cancel')">Hủy bỏ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

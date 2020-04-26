@@ -1,13 +1,13 @@
 package se.iuh.e2portal.model;
 
-import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@Data
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
-public class Lecturer extends Person {
+public class Lecturer extends Person {/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6981111536736660603L;
 
 }

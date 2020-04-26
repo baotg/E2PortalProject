@@ -27,6 +27,7 @@ import javax.xml.ws.Response;
 @RestController
 @RequestMapping("/api")
 public class MainRESTController {
+	
     private static final int DEFAULT_RANGE = 100;
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -34,6 +35,7 @@ public class MainRESTController {
     private StudentService studentService;
     @Autowired
     private JwtTokenProvider tokenProvider;
+    
     @GetMapping("/random")
     @ResponseBody
     public String randomNumber(@RequestParam(value = "range", required = false) Integer value) {
@@ -42,6 +44,7 @@ public class MainRESTController {
         }
         return "Random number is : " + new Random().nextInt(value);
     }
+    
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getId(),loginRequest.getPassword()));

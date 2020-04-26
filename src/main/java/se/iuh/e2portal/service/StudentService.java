@@ -4,25 +4,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.MainClass;
+import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.model.Student;
+import se.iuh.e2portal.model.UserAccount;
+import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
+import se.iuh.e2portal.repository.UserAccountRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentService {
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     public <S extends Student> S save(S entity) {
+    	UserAccount userAccount = new UserAccount();
+		userAccount.setAccountId(entity.getId());
+		userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
+		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
+		userAccountRepository.save(userAccount);
         return studentRepository.save(entity);
     }
 
-
     public <S extends Student> Iterable<S> saveAll(Iterable<S> entities) {
+    	List<UserAccount> userAccounts = new ArrayList<UserAccount>();
+    	for(Student student : entities) {
+    		UserAccount userAccount = new UserAccount();
+    		userAccount.setAccountId(student.getId());
+    		userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
+    		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+    		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
+    		userAccounts.add(userAccount);
+    	}
+    	userAccountRepository.saveAll(userAccounts);
         return studentRepository.saveAll(entities);
     }
 

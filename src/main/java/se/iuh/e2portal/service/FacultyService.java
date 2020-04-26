@@ -8,6 +8,7 @@ import se.iuh.e2portal.repository.FacultyRepository;
 import java.util.Optional;
 @Service
 public class FacultyService {
+	
     @Autowired
     private FacultyRepository facultyRepository;
 

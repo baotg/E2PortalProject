@@ -1,7 +1,6 @@
 package se.iuh.e2portal.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;

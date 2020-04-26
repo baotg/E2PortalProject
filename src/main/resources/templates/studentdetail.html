@@ -1,135 +1,93 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Sinh viên</title>
-    <meta charset="UTF-8">
+<title>Sinh viên</title>
+<meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100" th:fragment="student">
-<script type="text/javascript">
-$(document).ready(function () {
-
-    $("#btnSubmit").click(function (event) {
-
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
-
-        fire_ajax_submit();
-
-    });
-
-});
-
-function fire_ajax_submit() {
-    var form = $('#import-student')[0];
-    var data = new FormData(form);
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "/upload/import",
-        data: data,
-        processData: false, //prevent jQuery from automatically transforming the data into a query string
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-			
-            if(data==='successful')
-            	retrieveGuests('/student/import');
-
-        },
-        error: function (e) {
-           
-		alert('failed!');
-        }
-    });
-    function retrieveGuests(url) {
-        
-        $("#content-wrapper").load(url);
-    }
-}
-
-    //Bắt sự kiện click cho phần tử có class .example1
-    $(".button").click(function () {
-
-        //lấy phần tử bấm chuột - chính là  $(".example1")
-        var ele_example1 = $(this);
-
-        //lấy nội dung
-        var htmlmarkup =  ele_example1.html();
-        var htmlcontent = ele_example1.text();
-
-        alert("HTML Markup:\n" + htmlmarkup);
-        alert("HTML Content:\n" + htmlcontent);
-
-    });
-   
-</script>
-<div id="main-content">
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Sinh viên<small>Xem</small></h3>
-        </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <div class="row">
-                <div class="cell-md-12 cell-xl-2">
-                    Nhập sinh viên
-                    <form id="import-student" method="post" enctype="multipart/form-data">
-                        <input type="file" th:name="file" id="file" required><br>
-                        <input type="submit" id="btnSubmit" value="Nhậpaaa"/>
-                    </form>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                <div class="cell-md-12 cell-xl-12">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
-                            <thead>
-                            <tr>
-                                <th>Mã số sinh viên</th>
-                                <th>Tên</th>
-                                <th>Họ đệm</th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Địa chỉ</th>
-                                <th>Điện thoại</th>
-                                <th>Email</th>
-                                <th>Điện thoại người thân</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="student : ${studentList}" >
-                               <td><span th:text="${student.id}"></span></td>
-                                <td th:text="${student.lastName}"></td>
-                                <td th:text="${student.firstName}"></td>
-                                <td th:if="${student.gender} == true">Nam</td>
-                                <td th:if="${student.gender} == false">Nữ</td>
-                                <td th:text="${student.getFormatedDate()}"></td>
-                                <td th:text="${student.address}"></td>
-                                <td th:text="${student.numberPhone}"></td>
-                                <td th:text="${student.email}"></td>
-                                <td th:text="${student.familyNumber}"></td>
-                                <td>
-                                    <a th:href="@{/student/edit?id={id}(id=${student.id})}" class="button warning">Sửa</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/student/delete?id={id}(id=${student.id})}" class="button alert">Xóa</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="/js/student.js"></script>
+	<div id="student-dialog" class="dialog" data-role="dialog"
+		data-width="800" data-close-button="true">
+		<form id="import-student" enctype="multipart/form-data">
+			<div class="dialog-title">Nhập sinh viên</div>
+			<div class="dialog-content">
+				<input type="file" th:name="file" data-role="file" data-mode="drop"
+					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
+					required><br>
+				<div class="panel">
+					<div data-role="panel" data-collapsible="true"
+						data-title-caption="Folders" class="panel-content collapsed"
+						data-role-panel="true" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="dialog-actions right">
+				<button class="button js-dialog-close " type="submit" id="btnSubmit">Nhập</button>
+			</div>
+		</form>
+	</div>
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-4 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Quản lý Sinh viên<small>Xem</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12">
+						<button class="button" onclick="Metro.dialog.open('#student-dialog')">Nhập
+							thông tin sinh viên</button>
+						<span style="color: red" th:text="${msg}"></span>
+					</div>
+					<div class="cell-md-12 cell-xl-12">
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Mã số sinh viên</th>
+										<th>Họ đệm</th>
+										<th>Tên</th>
+										<th>Giới tính</th>
+										<th>Ngày sinh</th>
+										<th>Địa chỉ</th>
+										<th>Điện thoại</th>
+										<th>Email</th>
+										<th>Điện thoại người thân</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="student : ${studentList}">
+										<td><a href="#student" th:id=" 'std' + ${student.id}"
+											onclick="viewStudent(this.id)"><span
+												th:text="${student.id}"></span></a></td>
+										<td th:text="${student.lastName}"></td>
+										<td th:text="${student.firstName}"></td>
+										<td th:if="${student.gender} == true">Nam</td>
+										<td th:if="${student.gender} == false">Nữ</td>
+										<td th:text="${student.getFormatedDate()}"></td>
+										<td th:text="${student.address}"></td>
+										<td th:text="${student.numberPhone}"></td>
+										<td th:text="${student.email}"></td>
+										<td th:text="${student.familyNumber}"></td>
+										<td><a href="#student" class="button warning"
+											th:id=" 'edt' + ${student.id}" onclick="editStudent(this.id)">Sửa</a></td>
+										<td><a href="#" th:id=" 'dlt' + ${student.id}"
+											onclick="deleteStudent(this.id)" class="button alert">Xóa</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 @Data
 @Entity
 public class MainClass {
+	
     @Id
     private String classId;
     private String speciality; // Chuyên ngành
@@ -22,4 +23,5 @@ public class MainClass {
     @ManyToOne
     @JoinColumn(name ="lecturerId")
     private Lecturer lecturer;
+    
 }

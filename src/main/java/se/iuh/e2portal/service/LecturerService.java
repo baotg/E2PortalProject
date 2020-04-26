@@ -6,6 +6,7 @@ import se.iuh.e2portal.model.Lecturer;
 import se.iuh.e2portal.repository.LecturerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LecturerService  {
@@ -19,8 +20,8 @@ public class LecturerService  {
     }
 
 
-    public Lecturer findById(String id) {
-        return lecturerRepository.findById(id).get();
+    public Optional<Lecturer> findById(String id) {
+        return lecturerRepository.findById(id);
     }
 //
 //

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Sinh viên</title>
+<meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100" th:fragment="student">
+<script type="text/javascript">
+function resetPassword(id) {
+	var url = '/account-management/reset?id=' + id.replace('rst','');
+	$("#content-wrapper").load(url);
+}
+</script>
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-4 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Quản lý Tài khoản<small>Xem</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12">
+					<span style="color: green" th:text="${msg}"></span>
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Tài khoản</th>
+										<th>Người sở hữu</th>
+										<th>Quyền truy cập</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="account : ${accounts}">
+										<td th:text="${account.accountId}"></td>
+										<td></td>
+				
+										<td>
+										<span  th:each="role : ${account.roles}">
+										<span th:if="${role.roleName} =='USER'">[người dùng]</span> 
+										<span th:if="${role.roleName} =='ADMIN'">[người quản trị]</span>
+										</span>
+										</td>
+										<td><a href="#account-management" th:id=" 'rst' + ${account.accountId}"
+											class="button alert" onclick="resetPassword(this.id)">Đặt lại mật khẩu</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

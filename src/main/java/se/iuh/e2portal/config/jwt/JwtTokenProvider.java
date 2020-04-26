@@ -3,18 +3,14 @@ package se.iuh.e2portal.config.jwt;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import se.iuh.e2portal.model.UserAccount;
-import se.iuh.e2portal.model.UserAccountDetails;
-import se.iuh.e2portal.service.UserAccountService;
 
 import java.util.Date;
 
 @Component
 @Slf4j
 public class JwtTokenProvider {
+	
     @Autowired
     private JwtProperties jwtProperties;
 
@@ -26,6 +22,7 @@ public class JwtTokenProvider {
                 .setIssuedAt(now).setExpiration(duration)
                 .signWith(SignatureAlgorithm.HS512,jwtProperties.getSecretCode()).compact();
     }
+    
     public boolean validateToken(String token) {
         try {
             System.out.println("Validate : " + token);
@@ -42,7 +39,7 @@ public class JwtTokenProvider {
         }
         return false;
     }
-
+    
     public String getUserIdFormJWT(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtProperties.getSecretCode()).parseClaimsJws(token).getBody();
         return claims.getSubject();

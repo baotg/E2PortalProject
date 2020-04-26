@@ -25,7 +25,13 @@ public class RoleService {
 
 
     public Role findByName(String name) {
-        return roleRepository.findByRoleName(name);
+    	Iterable<Role> roles = roleRepository.findAll();
+    	for(Role role : roles) {
+    		if(role.getRoleName().equalsIgnoreCase(name))
+    			return role;
+    		
+    	}
+    	return null;
     }
 
 

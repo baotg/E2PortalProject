@@ -1,65 +1,80 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Home</title>
+<title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
-<div id="main-content">
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-6 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Chuyên cần<small>xem</small></h3>
-        </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <span style="color: red" id="message" th:text="${failMessage}"></span>
-            <div class="row">
-                <div class="cell-md-12 cell-xl-2">
-                    Nhập Thông tin chuyên cần
-                    <form th:action="@{attendance/import}" method="post" enctype="multipart/form-data">
-
-                        <input type="file" th:name="file" required>
-
-                        <input th:type="submit" value="Nhập"/>
-                    </form>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                <div class="cell-md-12 cell-xl-12">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
-                            <thead>
-                            <tr>
-                                <th>Mã số sinh viên</th>
-                                <th>Họ đệm</th>
-                                <th>Tên</th>
-                                <th>Ngày nghỉ</th>
-                                <th>Phép</th>
-                                <th>Lớp học phần</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="attendance : ${attendances}">
-                                <td th:text="${attendance.student.id}"></td>
-                                <td th:text="${attendance.student.lastName}"></td>
-                                <td th:text="${attendance.student.firstName}"></td>
-                                <td th:text="${attendance.getFormattedDateOff()}"></td>
-                                <td th:if="${attendance.allowed} == true">Có</td>
-                                <td th:if="${attendance.allowed} == false">Không</td>
-                                <td th:text="${attendance.moduleClass.moduleClassName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<script src="/js/attendance.js"></script>
+	<div id="attendance-dialog" class="dialog" data-role="dialog"
+		data-width="800" data-close-button="true">
+		<form id="import-attendance" enctype="multipart/form-data">
+			<div class="dialog-title">Nhập Điểm danh</div>
+			<div class="dialog-content">
+				<input type="file" th:name="file" data-role="file" data-mode="drop"
+					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
+					required><br>
+				<div class="panel">
+					<div data-role="panel" data-collapsible="true"
+						data-title-caption="Folders" class="panel-content collapsed"
+						data-role-panel="true" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="dialog-actions right">
+				<button class="button js-dialog-close " type="submit"
+					id="btnSubmitAttendance">Nhập</button>
+			</div>
+		</form>
+	</div>
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-6 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Quản lý Chuyên cần<small>xem</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12">
+						<button class="button"
+							onclick="Metro.dialog.open('#attendance-dialog')">Nhập
+							Điểm danh</button>
+						<span style="color: red" th:text="${msg}"></span>
+					</div>
+					<div class="cell-md-12 cell-xl-12">
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Mã số sinh viên</th>
+										<th>Họ đệm</th>
+										<th>Tên</th>
+										<th>Ngày nghỉ</th>
+										<th>Phép</th>
+										<th>Lớp học phần</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="attendance : ${attendances}">
+										<td th:text="${attendance.student.id}"></td>
+										<td th:text="${attendance.student.lastName}"></td>
+										<td th:text="${attendance.student.firstName}"></td>
+										<td th:text="${attendance.getFormattedDateOff()}"></td>
+										<td th:if="${attendance.allowed} == true">Có</td>
+										<td th:if="${attendance.allowed} == false">Không</td>
+										<td th:text="${attendance.moduleClass.moduleClassName}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

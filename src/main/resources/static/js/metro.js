@@ -13423,7 +13423,7 @@ var Dialog = {
                 button = $("<button>").addClass("button js-dialog-close").addClass(o.clsDefaultAction).html(this.locale["buttons"]["ok"]);
                 button.appendTo(buttons);
             }
-
+            
             if (Utils.isObject(o.actions)) $.each(Utils.isObject(o.actions), function(){
                 var item = this;
                 button = $("<button>").addClass("button").addClass(item.cls).html(item.caption);
@@ -13444,7 +13444,7 @@ var Dialog = {
                 that.close();
             });
         }
-
+        
         var closer = element.find("closer");
         if (closer.length === 0) {
             closer = $("<span>").addClass("button square closer js-dialog-close");
@@ -14570,9 +14570,9 @@ Metro.plugin('dropdown', Dropdown);
 var FileDefaultConfig = {
     fileDeferred: 0,
     mode: "input",
-    buttonTitle: "Choose file(s)",
-    filesTitle: "file(s) selected",
-    dropTitle: "<strong>Choose a file(s)</strong> or drop it here",
+    buttonTitle: "Chọn tệp tin",
+    filesTitle: " tệp tin đã được chọn",
+    dropTitle: "<strong>Chọn tệp tải lên</strong> hoặc thả vào đây",
     dropIcon: "<span class='default-icon-upload'></span>",
     prepend: "",
     clsComponent: "",
@@ -14715,7 +14715,9 @@ var File = {
                 caption.html(entry);
                 caption.attr('title', entry);
             } else {
-                files.html(element[0].files.length + " " +o.filesTitle);
+//                files.html(element[0].files.length + " " +o.filesTitle);
+            	//lloogg
+            	files.html(file_names + " đã được chọn");
             }
 
             Utils.exec(o.onSelect, [fi.files], element[0]);
@@ -24765,7 +24767,7 @@ var Streamer = {
         var a = [];
         var link;
         var origin = window.location.href;
-
+        
         $.each(events, function(){
             var event = $(this);
             if (event.data("sid") === undefined || !event.hasClass("selected")) {

@@ -12,8 +12,10 @@ import se.iuh.e2portal.service.MainClassService;
 @Controller
 @RequestMapping("/mainclass")
 public class MainClassController {
+	
     @Autowired
     MainClassService mainClassService;
+    
     @GetMapping("")
     public String getMainClass(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("listClass",mainClassService.findAll());

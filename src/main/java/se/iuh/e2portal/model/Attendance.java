@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 @ToString
 public class Attendance {
+	
     @Id
     @GenericGenerator(name = "sequence_long_id", strategy = "se.iuh.e2portal.generator.LongGenerator")
     @GeneratedValue(generator = "sequence_long_id")
@@ -25,6 +26,7 @@ public class Attendance {
     @ManyToOne
     @JoinColumn(name = "moduleClassId")
     private ModuleClass moduleClass;
+    
     public String getFormattedDateOff(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(dateOff);

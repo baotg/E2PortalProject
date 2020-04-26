@@ -20,14 +20,15 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
+	
     @Autowired
     private JwtTokenProvider tokenProvider;
     @Autowired
     private UserAccountService userAccountService;
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-
             String jwt = getJwtFromRequest(request);
             //System.out.println(jwt);
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
@@ -44,6 +45,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+    
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         //System.out.println("Bearer token :" + bearerToken);

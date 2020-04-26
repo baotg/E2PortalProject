@@ -17,8 +17,11 @@ import java.util.List;
 
 @Component
 public class GradingResultReader {
+	
+	private static String CODE = "GDR";
+	private static int ROW_CODE = 2;
+	private static int COL_CODE = 0;
     private static int ROW_MODULE_CLASS = 1;
-
     private static int COL_MODULE_CLASS_ID = 0;
     private static int COL_MODULE_CLASS_NAME = 1;
     private static int COL_NUM_OF_CREDIT = 2;
@@ -29,9 +32,7 @@ public class GradingResultReader {
     private static int COL_SEMESTER = 7;
     private static int COL_LECTURER_ID = 8;
     private static int COL_LECTURER_NAME = 9;
-
     private static int ROW_GRADING_RESULT = 4;
-    private static int COL_SEQ = 0;
     private static int COL_STUDENT_ID = 1;
     private static int COL_LAST_NAME = 2;
     private static int COL_FIRST_NAME = 3;
@@ -50,14 +51,21 @@ public class GradingResultReader {
     private static int COL_END = 16;
     private static int COL_AVG = 17;
 
-
-
-
+    public boolean validdateFile(Sheet sheet) {
+      	 Row row = sheet.getRow(ROW_CODE);
+      	 String code =null;
+      	 try {
+   			 code = getCellValue(row.getCell(COL_CODE));
+   		} catch (Exception e) {
+   			return false;
+   		}
+      	return code.equalsIgnoreCase(CODE)?true:false;
+      }
+    
     public ModuleClass getModuleClass(Sheet sheet){
         Row row = sheet.getRow(ROW_MODULE_CLASS);
         ModuleClass moduleClass = new ModuleClass();
         Lecturer lecturer = new Lecturer();
-
         moduleClass.setModuleClassId(getCellValue(row.getCell(COL_MODULE_CLASS_ID)));
         moduleClass.setModuleClassName(getCellValue(row.getCell(COL_MODULE_CLASS_NAME)));
         moduleClass.setNumOfTSession(Integer.parseInt(getCellValue(row.getCell(COL_NUM_OF_THEORY_SESSION))));
@@ -81,6 +89,7 @@ public class GradingResultReader {
         moduleClass.setLecturer(lecturer);
         return moduleClass;
     }
+    
     public List<GradingResult> getListGradingResult(Sheet sheet, ModuleClass moduleClass){
         List<GradingResult> gradingResultList = new ArrayList<>();
         for (Row currentRow : sheet) {
@@ -93,6 +102,7 @@ public class GradingResultReader {
         }
         return gradingResultList;
     }
+    
     private GradingResult getGradingResult(Row row){
         GradingResult gradingResult = new GradingResult();
         Student student = new Student();
@@ -108,33 +118,25 @@ public class GradingResultReader {
         gradingResult.setQuiz3(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_3))));
         gradingResult.setQuiz4(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_4))));
         gradingResult.setQuiz5(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_5))));
-
         gradingResult.setMidScore(Float.parseFloat(getCellValue(row.getCell(COL_MID))));
-
         gradingResult.setPracticeScore1(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_1))));
         gradingResult.setPracticeScore2(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_2))));
         gradingResult.setPracticeScore3(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_3))));
         gradingResult.setPracticeScore4(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_4))));
         gradingResult.setPracticeScore5(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_5))));
-
         gradingResult.setEndScore(Float.parseFloat(getCellValue(row.getCell(COL_END))));
         gradingResult.setAverageScore(Float.parseFloat(getCellValue(row.getCell(COL_AVG))));
-
-
         gradingResult.setStudent(student);
-
 
         return gradingResult;
     }
+    
     public Sheet readFile(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
         Workbook workbook = getWorkbook(inputStream, file.getAbsolutePath());
         Sheet sheet = workbook.getSheetAt(0);
         return sheet;
     }
-
-
-
     // Get Workbook
     private Workbook getWorkbook(InputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
@@ -148,10 +150,8 @@ public class GradingResultReader {
 
         return workbook;
     }
-
     // Get cell value
     private String getCellValue(Cell cell) {
-        CellType cellType = cell.getCellTypeEnum();
         cell.setCellType(CellType.STRING);
         String cellValue = "";
         cellValue = cell.getStringCellValue();

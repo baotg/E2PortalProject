@@ -15,6 +15,7 @@ import java.util.List;
 
 @Component
 public class ModuleClassReader {
+	
     private static int ROW_MODULE_CLASS = 1;
     private static int ROW_STUDENT_HEADER = 3;
     private static int ROW_STUDENT_LIST = 4;
@@ -27,7 +28,7 @@ public class ModuleClassReader {
     private static int COL_ATTANDANCE_RESULT = 5;
     private static int COL_ID_STUDENT = 1;
     private static String ALLOWED = "P";
-    private static String NOT_ALLOWED = "K";
+//    private static String NOT_ALLOWED = "K";
 
     public ModuleClass getModuleClass(Sheet sheet){
         Row row = sheet.getRow(ROW_MODULE_CLASS);
@@ -46,7 +47,9 @@ public class ModuleClassReader {
         moduleClass.setNumOfPSession(numOfPSession);
         return moduleClass;
     }
-    private List<Attendance> getListAttandance(Sheet sheet){
+    
+    @SuppressWarnings("unused")
+	private List<Attendance> getListAttandance(Sheet sheet){
         List<Cell> listDate = getListDateCell(sheet.getRow(ROW_STUDENT_HEADER));
         List<Attendance> attendanceList = new ArrayList<>();
         ModuleClass moduleClass = getModuleClass(sheet);
@@ -67,6 +70,7 @@ public class ModuleClassReader {
         }
         return attendanceList;
     }
+    
     private Attendance getAttandance(Row row,int columnDate){
         Attendance attendance = null;
         Cell cell = row.getCell(columnDate);
@@ -83,6 +87,7 @@ public class ModuleClassReader {
         }
         return attendance;
     }
+    
     private List<Cell> getListDateCell(Row row){
         List<Cell> list = new ArrayList<>();
         for (Cell cell : row) {
@@ -95,6 +100,7 @@ public class ModuleClassReader {
         }
         return list;
     }
+    
     private Date getDate(Cell cell){
         cell.setCellType(CellType.STRING);
         String sdate = cell.getStringCellValue();
@@ -106,6 +112,7 @@ public class ModuleClassReader {
         }
         return date;
     }
+    
     public List<String> getListStudentId(Sheet sheet){
         List<String> list = new ArrayList<>();
         for (Row row : sheet) {
@@ -116,12 +123,13 @@ public class ModuleClassReader {
         }
         return list;
     }
+    
     private String getStudentId(Row row){
         Cell cell = row.getCell(COL_ID_STUDENT);
         return getCellValue(cell);
     }
+    
     private String getCellValue(Cell cell) {
-        CellType cellType = cell.getCellTypeEnum();
         cell.setCellType(CellType.STRING);
         String cellValue = "";
         cellValue = cell.getStringCellValue();

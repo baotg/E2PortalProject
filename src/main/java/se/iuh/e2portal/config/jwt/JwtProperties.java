@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "jwt")
 @Data
 public class JwtProperties {
+	
     private String secretCode = "oldpanther";
     private Long duration = 3600000L; //1h
+    
 }

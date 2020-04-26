@@ -19,35 +19,41 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/announcement")
 public class AnnouncementController {
+	
     @Autowired
     private AnnouncementService announcementService;
+    
     @GetMapping("")
     public String getAnnouncements(@PageableDefault(size = 10) Pageable pageable, Model model) {
         Page<Announcement> page = announcementService.findAll(pageable);
         model.addAttribute("page", page);
         return "announcement";
     }
+    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addAnnouncement(Model model){
         model.addAttribute("announcement", new Announcement());
         return "addAnnouncement";
     }
+    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAnnouncement(Announcement announcement){
         announcement.setCreatedDate(new Date());
         announcementService.save(announcement);
-        return "redirect:/";
+        return "redirect:/announcement";
     }
+    
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editAnnouncement(@RequestParam("id") Long id, Model model) {
         Optional<Announcement> announcementEdit = announcementService.findById(id);
         announcementEdit.ifPresent(announcement -> model.addAttribute("announcement", announcement));
-        return "redirect:/";
+        return "addAnnouncement";
     }
+    
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteAnnouncement(@RequestParam("id") Long id, Model model){
         announcementService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/announcement";
 
     }
 }

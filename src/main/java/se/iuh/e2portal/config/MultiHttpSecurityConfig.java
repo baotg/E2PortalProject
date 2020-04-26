@@ -22,6 +22,9 @@ import se.iuh.e2portal.service.UserAccountService;
 
 @EnableWebSecurity
 public class MultiHttpSecurityConfig {
+	@Autowired
+    private UserAccountService userAccountService;
+	
     @Configuration
     @Order(1)
     public class ApiSecurityAdapter extends WebSecurityConfigurerAdapter {
@@ -48,19 +51,20 @@ public class MultiHttpSecurityConfig {
             http.addFilterBefore(jwtTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         }
     }
+    
     @Configuration
     public class WebSecurityAdapter extends WebSecurityConfigurerAdapter{
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
         }
-        @Autowired
-        private UserAccountService userAccountService;
+         
         @Bean(BeanIds.AUTHENTICATION_MANAGER)
         @Override
         public AuthenticationManager authenticationManager() throws Exception {
             return super.authenticationManager();
         }
+        
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             CustomAuthenticationProvider provider = new CustomAuthenticationProvider();
@@ -68,6 +72,7 @@ public class MultiHttpSecurityConfig {
             provider.setPasswordEncoder(passwordEncoder());
             auth.authenticationProvider(provider);
         }
+        
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 

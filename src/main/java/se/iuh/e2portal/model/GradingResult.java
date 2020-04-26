@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Data
 @IdClass(GradingResultPK.class)
 public class GradingResult {
+	
     @Id
     @ManyToOne
     @JoinColumn(name = "id", referencedColumnName = "id")
@@ -31,4 +32,5 @@ public class GradingResult {
     private float practiceScore3;
     private float practiceScore4;
     private float practiceScore5;
+    
 }

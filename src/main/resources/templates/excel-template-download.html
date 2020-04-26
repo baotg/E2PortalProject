@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Tải xuống</title>
+<meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100">
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-8 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Tải xuống Template Excel<small>Danh sách template</small>
+				</h3>
+			</div>
+		</div>
+		<div class="cell border-bottom bd-lightGray m-3">
+			<div class="text-bold mt-2">Template Danh sách Sinh viên (Lớp chủ nhiệm)</div>
+			<div><a th:href="@{/excels/DANHSACH_SINHVIEN_TEMPLATE.xlsx}">Nhấn vào đây để tải về</a></div><br>
+			<div class="text-bold mt-2">Template Lịch học</div>
+			<div><a th:href="@{/excels/LICHHOC_TEMPLATE.xlsx}">Nhấn vào đây để tải về</a></div><br>
+			<div class="text-bold mt-2">Template Điểm danh</div>
+			<div><a th:href="@{/excels/DANHSACH_DIEMDANH_TEMPLATE.xlsx}">Nhấn vào đây để tải về</a></div><br>
+			<div class="text-bold mt-2">Template Kết quả học tập</div>
+			<div><a th:href="@{/excels/DANHSACHDIEM_TEMPLATE.xlsx}">Nhấn vào đây để tải về</a></div><br>
+		</div>
+	</div>
+</body>
+</html>

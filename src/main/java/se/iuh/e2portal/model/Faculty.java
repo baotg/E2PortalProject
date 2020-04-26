@@ -8,6 +8,7 @@ import javax.persistence.Id;
 @Entity
 @Data
 public class Faculty {
+	
     @Id
     private String falcultyId;
     private String name;

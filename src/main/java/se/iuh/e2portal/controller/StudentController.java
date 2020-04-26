@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import se.iuh.e2portal.component.StudentReader;
-import se.iuh.e2portal.model.Faculty;
-import se.iuh.e2portal.model.Lecturer;
-import se.iuh.e2portal.model.MainClass;
-import se.iuh.e2portal.model.Student;
+import se.iuh.e2portal.config.Message;
+import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.service.ExcelFileHandlerService;
 import se.iuh.e2portal.service.FacultyService;
 import se.iuh.e2portal.service.LecturerService;
@@ -25,6 +22,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
+	
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -43,11 +41,13 @@ public class StudentController {
 	//        model.addAttribute("page", page);
 	//        return "student";
 	//    }
+	
 	@GetMapping("")
 	public String getMainClass(Model model){
 		model.addAttribute("studentList",studentService.findAll());
 		return "studentdetail::student";
 	}
+	
 	@GetMapping("/{id}")
 	public String getStudent(@PathVariable("id") String id, Model model){
 		Optional<Student> student = studentService.findById(id);
@@ -56,30 +56,57 @@ public class StudentController {
 		model.addAttribute("student", student.get());
 		return "view-student";
 	}
-	@GetMapping("/edit/")
-	public String editStudent(@PathVariable("id") String id, Model model){
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String editStudent(@RequestParam("id") String id, Model model){
 		Optional<Student> result = studentService.findById(id);
+		Iterable<MainClass> mainClasses = mainClassService.findAll();
 		if(result.isPresent()){
+			model.addAttribute("mainClasses", mainClasses.iterator());
 			model.addAttribute("student", result.get());
 			return "edit-student";
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deleteStudent(@RequestParam("id") String id, Model model){
+		Optional<Student> result = studentService.findById(id);
+		if(result.isPresent()){
+			studentService.delete(result.get());
+			return "redirect:/student";
+		}
+		return "redirect:/";
+	}
+	
 	@GetMapping("/import")
 	public String mapReapExcelDatatoDB(Model model) throws IOException {
-
-
 		if(excelFileHandlerService.getInputStream()==null)
 			return "redirect:/";
 		@SuppressWarnings("resource")
 		Workbook workbook = new XSSFWorkbook(excelFileHandlerService.getInputStream());
 		Sheet sheet = workbook.getSheetAt(0);
+		boolean validate = studentReader.validdateFile(sheet);
+		if(!validate) {
+			Message msg = Message.FILE_NOT_CORRECT;
+			model.addAttribute("msg", msg.getMessage());
+			model.addAttribute("studentList",studentService.findAll());
+			return "studentdetail::student";
+		}
 		MainClass mainClass = studentReader.getMainClass(sheet);
 		List<Student> students = studentReader.getListStudent(sheet, mainClass);
 		excelFileHandlerService.setStudents(students);
 		model.addAttribute("students", students);
 		return "student-preview";
 	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveStudent(Student student){
+		System.out.println(student.getMainClass());
+		studentService.save(student);
+		return "redirect:/student";
+	}
+	
 	@GetMapping("/import/save")
 	public String saveAll(){
 		List<Student> students = excelFileHandlerService.getStudents();
@@ -96,16 +123,14 @@ public class StudentController {
 		if(!lecturerService.existsById(lecturer.getId()))
 			lecturerService.save(lecturer);
 		else
-			lecturer = lecturerService.findById(lecturer.getId());
+			lecturer = lecturerService.findById(lecturer.getId()).get();
 		mainClass.setLecturer(lecturer);
-		if(!mainClassService.findById(mainClass.getClassId()).isPresent())
-			mainClassService.save(mainClass);
-		else
-			mainClass = mainClassService.findById(mainClass.getClassId()).get();
+		mainClassService.save(mainClass);
 		studentService.saveAll(students);
 		excelFileHandlerService.getStudents().clear();
 		return "redirect:/student";
 	}
+	
 	@GetMapping("/import/cancel")
 	public String cancelImport() {
 		excelFileHandlerService.getStudents().clear();

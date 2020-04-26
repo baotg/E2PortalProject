@@ -6,6 +6,17 @@
     <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script>
+    function editAnnouncement(id) {
+        var url = 'announcement/edit?id=' + id.replace('edt','');
+        $("#content-wrapper").load(url);
+    }
+    function deleteAnnouncement(id) {
+        var url = 'announcement/delete?id=' + id.replace('dlt','');
+        $("#content-wrapper").load(url);
+    }
+
+</script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -42,10 +53,10 @@
                                 <td th:text="${announcement.summary}"></td>
                                 <td th:text="${announcement.getFormattedCreatedDate()}"></td>
                                 <td>
-                                    <a th:href="@{announcement/edit?id={id}(id=${announcement.announcementId})}" class="button warning">Sửa</a>
+                                    <a href="#announcement" class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
                                 </td>
                                 <td>
-                                    <a th:href="@{announcement/delete?id={id}(id=${announcement.announcementId})}" class="button alert">Xóa</a>
+                                    <a href="#announcement" class="button alert" th:id="'dlt'+${announcement.announcementId}" onclick="deleteAnnouncement(this.id)">Xóa</a>
                                 </td>
                             </tr>
                             </tbody>

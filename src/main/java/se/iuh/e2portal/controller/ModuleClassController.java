@@ -12,9 +12,11 @@ import se.iuh.e2portal.service.ModuleClassService;
 @Controller
 @RequestMapping("/moduleclass")
 public class ModuleClassController {
+	
     @Autowired
     ModuleClassService moduleClassService;
     @GetMapping("")
+    
     public String getModuleClass(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("listClass",moduleClassService.findAll());
         return "moduleclass";

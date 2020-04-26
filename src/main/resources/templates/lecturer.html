@@ -6,6 +6,20 @@
     <title>Quản lý Giảng viên</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript">
+function viewLecturer(id) {
+	var url = '/lecturer/' + id.replace('ltr','');
+	$("#content-wrapper").load(url);
+}
+function editLecturer(id) {
+var url = '/lecturer/edit?id=' + id.replace('edt','');
+	$("#content-wrapper").load(url);
+}
+function deleteLecturer(id) {
+	var url = '/lecturer/delete?id=' + id.replace('dlt','');
+	$("#content-wrapper").load(url);
+}
+</script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -28,11 +42,17 @@
                                 <th>Địa chỉ</th>
                                 <th>Điện thoại</th>
                                 <th>Email</th>
+                                <th></th>
+                                <th></th>
+                                
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="lecturer : ${lecturers}">
-                                <td th:text="${lecturer.id}"></td>
+                                <td><a href="#lecturer"
+											th:id=" 'ltr' + ${lecturer.id}"
+											onclick="viewLecturer(this.id)"><span
+												th:text="${lecturer.id}"></span></a></td>
                                 <td th:text="${lecturer.lastName}"></td>
                                 <td th:text="${lecturer.firstName}"></td>
                                 <td th:if="${lecturer.gender} == true">Nam</td>
@@ -41,6 +61,8 @@
                                 <td th:text="${lecturer.address}"></td>
                                 <td th:text="${lecturer.numberPhone}"></td>
                                 <td th:text="${lecturer.email}"></td>
+                                <td><a href="#student" class="button warning" th:id=" 'edt' + ${lecturer.id}" onclick="editLecturer(this.id)">Sửa</a></td>
+								<td><a href="#" th:id=" 'dlt' + ${lecturer.id}" onclick="deleteLecturer(this.id)"	class="button alert">Xóa</a></td>
                             </tr>
                             </tbody>
                         </table>

@@ -1,66 +1,81 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Time Table</title>
+<title>Time Table</title>
 </head>
 <body class="m4-cloak h-vh-100">
-<div id="main-content">
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Lịch học<small>Xem</small></h3>
-        </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <span style="color: red" id="message" th:text="${failMessage}"></span>
-            <div class="row">
-                <div class="cell-md-3 cell-xl-2">
-                    Nhập Lịch học
-                    <form th:action="@{timetable/import}" method="post" enctype="multipart/form-data">
-
-                        <input type="file" th:name="file" required>
-
-                        <input th:type="submit" value="Nhập"/>
-                    </form>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                <div class="cell-md-9 cell-xl-10">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
-                            <thead>
-                            <tr>
-                                <th>Thứ</th>
-                                <th>Tiết</th>
-                                <th>Môn học</th>
-                                <th>Giảng viên</th>
-                                <th>Phòng học</th>
-                                <th>Ngày bắt đầu</th>
-                                <th>Ngày kết thúc</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="timetable : ${timetables}">
-                                <td th:text="${timetable.dayOfWeek}"></td>
-                                <td th:text="${timetable.period}"></td>
-                                <td th:text="${timetable.moduleClass.moduleClassName}"></td>
-                                <td th:text="${timetable.moduleClass.lecturer.lastName + timetable.moduleClass.lecturer.firstName}"></td>
-                                <td th:text="${timetable.classRoom}"></td>
-                                <td th:text="${timetable.getFormatedStartDate()}"></td>
-                                <td th:text="${timetable.getFormatedEndDate()}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<script src="/js/timetable.js"></script>
+	<div id="time-table-dialog" class="dialog" data-role="dialog"
+		data-width="800" data-close-button="true">
+		<form id="import-time-table" enctype="multipart/form-data">
+			<div class="dialog-title">Nhập Lịch học</div>
+			<div class="dialog-content">
+				<input type="file" th:name="file" data-role="file" data-mode="drop"
+					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
+					required><br>
+				<div class="panel">
+					<div data-role="panel" data-collapsible="true"
+						data-title-caption="Folders" class="panel-content collapsed"
+						data-role-panel="true" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="dialog-actions right">
+				<button class="button js-dialog-close " type="submit"
+					id="btnSubmitTimeTable">Nhập</button>
+			</div>
+		</form>
+	</div>
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-4 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Quản lý Lịch học<small>Xem</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12">
+						<button class="button" onclick="Metro.dialog.open('#time-table-dialog')">Nhập
+							Lịch học</button>
+						<span style="color: red" th:text="${msg}"></span>
+					</div>
+					<div class="cell-md-12 cell-xl-12">
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Thứ</th>
+										<th>Tiết</th>
+										<th>Môn học</th>
+										<th>Giảng viên</th>
+										<th>Phòng học</th>
+										<th>Ngày bắt đầu</th>
+										<th>Ngày kết thúc</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="timetable : ${timetables}">
+										<td th:text="${timetable.dayOfWeek}"></td>
+										<td th:text="${timetable.period}"></td>
+										<td th:text="${timetable.moduleClass.moduleClassName}"></td>
+										<td
+											th:text="${timetable.moduleClass.lecturer.lastName + timetable.moduleClass.lecturer.firstName}"></td>
+										<td th:text="${timetable.classRoom}"></td>
+										<td th:text="${timetable.getFormatedStartDate()}"></td>
+										<td th:text="${timetable.getFormatedEndDate()}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

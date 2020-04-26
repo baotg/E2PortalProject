@@ -6,6 +6,27 @@
     <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script src="/js/gradingresult.js"></script>
+<div id="grading-result-dialog" class="dialog" data-role="dialog"
+		data-width="800" data-close-button="true">
+		<form id="import-grading-result" enctype="multipart/form-data">
+			<div class="dialog-title">Nhập Kết quả học tập</div>
+			<div class="dialog-content">
+				<input type="file" th:name="file" data-role="file" data-mode="drop"
+					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
+					required><br>
+				<div class="panel">
+					<div data-role="panel" data-collapsible="true"
+						data-title-caption="Folders" class="panel-content collapsed"
+						data-role-panel="true" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="dialog-actions right">
+				<button class="button js-dialog-close " type="submit"
+					id="btnSubmitGradingResult">Nhập</button>
+			</div>
+		</form>
+	</div>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -15,21 +36,11 @@
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
-                <span style="color: red" id="message" th:text="${failMessage}"></span>
-                <div class="cell-md-12 cell-xl-2">
-                    Nhập Kêt quả học tập Sinh viên
-                    <form th:action="@{gradingresult/import}" method="post" enctype="multipart/form-data">
-
-                        <input type="file" th:name="file" required>
-
-                        <input th:type="submit" value="Nhập"/>
-                    </form>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;">
-                        </div>
-                    </div>
-                </div>
+                <div class="cell-md-12 cell-xl-12">
+						<button class="button" onclick="Metro.dialog.open('#grading-result-dialog')">Nhập
+							Kết quả học tập</button>
+						<span style="color: red" th:text="${msg}"></span>
+					</div>
                 <div class="cell-md-12 cell-xl-12">
                     <div class="p-1 p-6-lg bg-white mt-3">
                         <table class="table striped table-border mt-4" data-role="table" data-rows="10">

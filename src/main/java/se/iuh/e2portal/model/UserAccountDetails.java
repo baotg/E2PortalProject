@@ -14,6 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 public class UserAccountDetails implements UserDetails {
+	
     private static final long serialVersionUID = 83918843410539768L;
     private UserAccount userAccount;
     @Override
@@ -34,6 +35,7 @@ public class UserAccountDetails implements UserDetails {
     public String getId(){
         return userAccount.getAccountId();
     }
+    
     @Override
     public String getUsername() {
         return getId().toString();

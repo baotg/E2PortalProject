@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.Announcement;
 import se.iuh.e2portal.repository.AnnouncementRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

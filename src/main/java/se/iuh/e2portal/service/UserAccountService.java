@@ -1,33 +1,27 @@
 package se.iuh.e2portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.model.UserAccount;
 import se.iuh.e2portal.model.UserAccountDetails;
-import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.UserAccountRepository;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.*;
 
 @Service
 public class UserAccountService implements UserDetailsService {
+	
     @Autowired
     private UserAccountRepository userAccountRepository;
     @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+    
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,6 +30,7 @@ public class UserAccountService implements UserDetailsService {
         if(userAccount == null) throw new UsernameNotFoundException(username);
         return new User(userAccount.getId().toString(),userAccount.getPassword(),userAccount.getAuthorities());
     }
+    
     public UserAccount save(UserAccount userAccount) {
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         return userAccountRepository.save(userAccount);
@@ -57,6 +52,10 @@ public class UserAccountService implements UserDetailsService {
 
     public void deleteById(String id) {
         userAccountRepository.deleteById(id);
+    }
+    
+    public Iterable<UserAccount> findAll(){
+    	return userAccountRepository.findAll();
     }
 
     public void delete(UserAccount userAccount) {

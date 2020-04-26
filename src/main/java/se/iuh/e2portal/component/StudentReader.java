@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 @Component
 public class StudentReader {
+	
+	private static String CODE = "STD";
     private static int ROW_MAIN_CLASS = 1;
     private static int COL_CLASS_ID_MAIN_CLASS = 0;
     private static int COL_SPECIALITY_MAIN_CLASS = 1;
@@ -22,16 +24,30 @@ public class StudentReader {
     private static int COL_YEAR_MAIN_CLASS = 5;
     private static int COL_LECTURER_NAME = 6;
     private static int COL_LECTURER_ID = 7;
+    private static int ROW_CODE = 2;
+    private static int COL_CODE = 0;
     private static int ROW_STUDENT = 4;
     private static int COL_ID_STUDENT = 1;
-    private static int COL_FNAME_STUDENT = 2;
-    private static int COL_LNAME_STUDENT = 3;
+    private static int COL_FNAME_STUDENT = 3;
+    private static int COL_LNAME_STUDENT = 2;
     private static int COL_GENDER_STUDENT = 4;
     private static int COL_DOB_STUDENT = 5;
     private static int COL_ADDRESS_STUDENT = 6;
     private static int COL_SPHONE_STUDENT = 7;
     private static int COL_FPHONE_STUDENT = 8;
     private static int COL_EMAIL_STUDENT = 9;
+    
+    public boolean validdateFile(Sheet sheet) {
+    	 Row row = sheet.getRow(ROW_CODE);
+    	 String code =null;
+    	 try {
+			 code = getCellValue(row.getCell(COL_CODE));
+		} catch (Exception e) {
+			return false;
+		}
+    	return code.equalsIgnoreCase(CODE)?true:false;
+    }
+    
     public MainClass getMainClass(Sheet sheet){
         Row row = sheet.getRow(ROW_MAIN_CLASS);
         MainClass mainClass = new MainClass();
@@ -58,6 +74,7 @@ public class StudentReader {
         mainClass.setYear(year);
         return mainClass;
     }
+    
     public List<Student> getListStudent(Sheet sheet, MainClass mainClass){
         List<Student> list = new ArrayList<>();
         for (Row currentRow : sheet) {
@@ -70,6 +87,7 @@ public class StudentReader {
         }
         return list;
     }
+    
     private Student getStudent(Row row){
         Student student = new Student();
         String id = getCellValue(row.getCell(COL_ID_STUDENT));
@@ -81,6 +99,7 @@ public class StudentReader {
         if(DateUtil.isCellDateFormatted(row.getCell(COL_DOB_STUDENT))){
             dob = row.getCell(COL_DOB_STUDENT).getDateCellValue();
         }
+        
         String address = getCellValue(row.getCell(COL_ADDRESS_STUDENT));
         String studentNumber = getCellValue(row.getCell(COL_SPHONE_STUDENT));
         String familyNumber = getCellValue(row.getCell(COL_FPHONE_STUDENT));
@@ -96,8 +115,8 @@ public class StudentReader {
         student.setEmail(email);
         return student;
     }
+    
     private String getCellValue(Cell cell) {
-        CellType cellType = cell.getCellTypeEnum();
         cell.setCellType(CellType.STRING);
         String cellValue = "";
         cellValue = cell.getStringCellValue();
