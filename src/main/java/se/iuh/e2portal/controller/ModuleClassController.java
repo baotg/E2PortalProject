@@ -1,7 +1,6 @@
 package se.iuh.e2portal.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -65,9 +64,7 @@ public class ModuleClassController {
 	@GetMapping("/import/save")
 	public String saveAll(){
 		ModuleClass moduleClass = excelFileHandlerService.getModuleClass();
-		List<Student> students = moduleClass.getStudents();
 		if(moduleClassService.existsById(moduleClass.getModuleClassId())){
-		//	moduleClassService.save(moduleClass);
 			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
 		}
 		for(Student student : moduleClass.getStudents()){
@@ -79,7 +76,6 @@ public class ModuleClassController {
 			else
 				student = studentService.findById(student.getId()).get();
 		}
-		moduleClass.getStudents().addAll(students);
 		moduleClassService.save(moduleClass);
 		return "redirect:/moduleclass";
 	}

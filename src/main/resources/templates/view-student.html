@@ -19,7 +19,8 @@
 			<div class="bg-white p-4">
 				<ul data-role="tabs" data-expand="true">
 					<li><a href="#profile-about">Sinh viên</a></li>
-					<li><a href="#main-class-info">Lớp học phần</a></li>
+					<li><a href="#main-class-info">Lớp học</a></li>
+					<li><a href="#main-class-profile">Danh sách lớp học phần</a></li>
 				</ul>
 
 				<div id="user-profile-tabs-content">
@@ -53,28 +54,68 @@
 						<br>
 						<div data-role="panel" data-title-caption="Thông tin chung"
 							data-title-icon="<span class='mif-info'>" data-collapsible="true">
-							<div class="text-bold mt-2">Mã số sinh viên</div>
-							<div th:text="${student.id}"></div>
+							<div class="text-bold mt-2">Mã lớp học</div>
+							<div th:text="${student.mainClass.classId}"></div>
 							
-							<div class="text-bold mt-2">Họ và Tên</div>
-							<div th:text="${student.lastName + ' ' + student.firstName}"></div>
+							<div class="text-bold mt-2">Chuyên ngành</div>
+							<div th:text="${student.mainClass.speciality}"></div>
 							
-							<div class="text-bold mt-2">Giới tính</div>
-							<div th:if="${student.gender} == true">Nam</div>
-							<div th:if="${student.gender} == false">Nữ</div>
+							<div class="text-bold mt-2">Bậc đào tạo</div>
+							<div th:text="${student.mainClass.level}"></div>
 							
-							<div class="text-bold mt-2">Ngày sinh</div>
-							<div th:text="${student.getFormatedDate()}"></div>
+							<div class="text-bold mt-2">Loại hình đào tạo</div>
+							<div th:text="${student.mainClass.type}"></div>
+	
+							<div class="text-bold mt-2">Khoa</div>
+							<div th:if="${student.mainClass.faculty} !=null" th:text="${student.mainClass.faculty.name}"></div>
+							
+							<div class="text-bold mt-2">Năm học</div>
+							<div th:text="${student.mainClass.year}"></div>
+							
+							<div class="text-bold mt-2">Giảng viên chủ nhiệm</div>
+							<div th:if="${student.mainClass.lecturer} !=null" th:text="${student.mainClass.lecturer.lastName + ' ' + student.mainClass.lecturer.firstName}"></div>
 
-							<div class="text-bold mt-2">Địa chỉ</div>
-							<address th:text="${student.address}"></address>
-							<div class="text-bold mt-2">Số điện thoại cá nhân</div>
-							<div th:text="${student.numberPhone}"></div>
+						<br>
+					</div>
+				</div>
+			</div>
+			<div id="main-class-tabs-profile">
+					<div id="main-class-profile">
+						<br>
+						<div th:each="moduleClass: ${student.moduleClasses}" data-role="panel" th:data-title-caption="${moduleClass.moduleClassName}"
+							data-title-icon="<span class='mif-info'>" data-collapsible="true">
+							<span class="text-bold mt-2">Mã lớp học phần: </span>
+							<span th:text="${moduleClass.moduleClassId}"></span>
+							<br>
+							<span class="text-bold mt-2">Tên lớp học phần: </span>
+							<span th:text="${moduleClass.moduleClassName}"></span>
+							<br>
+							<span class="text-bold mt-2">Số tiết lý thuyết: </span>
+							<span th:text="${moduleClass.numOfTSession}"></span>
+							<br>
+							<span class="text-bold mt-2">Số tiết thực hành: </span>
+							<span th:text="${moduleClass.numOfPSession}"></span>
+							<br>
+							<span class="text-bold mt-2">Số tín chỉ: </span>
+							<span th:text="${moduleClass.numOfCredit}"></span>
+							<br>
+							<span class="text-bold mt-2">Học kỳ: </span>
+							<span th:text="${moduleClass.semester}"></span>
+							<br>
+							<span class="text-bold mt-2">Ngày bắt đầu: </span>
+							<span th:text="${moduleClass.getFormattedStartDate()}"></span>
+							<br>
+							<span class="text-bold mt-2">Ngày kết thúc: </span>
+							<span th:text="${moduleClass.getFormattedEndDate()}"></span>
+							<br>
+							<span class="text-bold mt-2">Giảng viên phụ trách: </span>
+							<span th:text="${moduleClass.lecturer.lastName + ' ' + moduleClass.lecturer.firstName}"></span>
 						<br>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

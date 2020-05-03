@@ -112,7 +112,6 @@ public class StudentController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveStudent(Student student){
-		
 		studentService.save(student);
 		return "redirect:/student";
 	}

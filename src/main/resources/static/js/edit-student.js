@@ -1,5 +1,5 @@
  $(document).ready(function () {
-    $("#btnSave").click(function (event) {
+    $("#btnSaveStudent").click(function (event) {
         event.preventDefault();
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var vnf_regex2 = /((09|03|07|08|05)+([0-9]{8})\b)/g;
@@ -93,15 +93,36 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
-                retrieveGuests('/student');
-                console.log("OK!")
+              
+                $("#content-wrapper").html(data.toString());
+               
             },
             error: function (e) {
                 alert('Lưu không thành công!');
             }
         });
         $('#student-form')[0].reset();
-        function retrieveGuests(url) {
-            $("#content-wrapper").load(url);
-        }
+        
+    }
+    function cancelEdtingStudent(url){
+        Metro.dialog.create({
+            title: "Hủy bỏ",
+            content: "<div>Nội dung hiện tại sẽ không được lưu lại.<br> <b>Bạn có muốn tiếp tục?</b></div>",
+            actions: [
+                {
+                    caption: "Hủy bỏ",
+                    cls: "js-dialog-close alert",
+                    onclick: function(){
+                         $("#content-wrapper").load(url);
+                    }
+                },
+                {
+                    caption: "Hủy",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                        
+                    }
+                }
+            ]
+        });
     }

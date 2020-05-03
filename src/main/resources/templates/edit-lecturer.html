@@ -6,40 +6,7 @@
 </head>
 
 <body class="m4-cloak h-vh-100" th:fragment="edit">
-<script>
-    $(document).ready(function () {
-        $("#btnSaveLecturer").click(function (event) {
-            event.preventDefault();
-            fire_ajax_submit();
-        });
-    });
-
-    function fire_ajax_submit() {
-        var form = $('#lecturer-form')[0];
-        var data = new FormData(form);
-
-        $.ajax({
-            type: "POST",
-            url: "lecturer/save",
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-                retrieveGuests('/lecturer');
-                console.log("OK!")
-            },
-            error: function (e) {
-                alert('Lưu không thành công!');
-            }
-        });
-        $('#lecturer-form')[0].reset();
-        function retrieveGuests(url) {
-            $("#content-wrapper").load(url);
-        }
-    }
-</script>
+<script src="/js/edit-lecturer.js"></script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -53,36 +20,45 @@
                     <form th:object="${lecturer}" id="lecturer-form" action="#">
                         <input type="hidden" th:field="*{id}">
                         <div class="form-group">
-                            <label>Họ đệm</label>
-                            <input type="text" th:field="*{lastName}" placeholder="Nhập Họ đệm" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Tên</label>
-                            <input type="text" th:field="*{firstName}" placeholder="Nhập Tên" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Ngày sinh</label>
-                            <input type="date" th:field="*{dateOfBirth}" placeholder="Nhập ngày sinh" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Giới tính</label>
-                            <input type="checkbox" th:field="*{gender}"/>Nam
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ</label>
-                            <input type="text" th:field="*{address}" placeholder="Nhập địa chỉ" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Điện thoại</label>
-                            <input type="text" th:field="*{numberPhone}" placeholder="Nhập số điện thoại" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" th:field="*{email}" placeholder="Nhập số điện thoại" required/>
-                        </div>
+                        <label>Họ đệm </label><span id="errLecturerLastName"
+									style="color: red; font-size: 10pt"></span> <input type="text"
+									th:field="*{lastName}" placeholder="Nhập Họ đệm sinh viên"
+									required />
+							</div>
+							<div class="form-group">
+								<label>Tên </label><span id="errLecturerFirstName"
+									style="color: red; font-size: 10pt"></span> <input type="text"
+									th:field="*{firstName}" placeholder="Nhập Tên sinh viên"
+									required />
+							</div>
+							<div class="form-group">
+								<label>Ngày sinh </label> <input type="date"
+									th:field="*{dateOfBirth}" placeholder="Nhập ngày sinh" required onkeydown="return false" /><span id="errLecturerDOB"
+									style="color: red; font-size: 10pt"></span>
+							</div>
+							<div class="form-group">
+								<label>Giới tính </label> <input type="checkbox"
+									th:field="*{gender}" />Nam
+							</div>
+							<div class="form-group">
+								<label>Địa chỉ </label><span id="errLecturerAddress"
+									style="color: red; font-size: 10pt"></span> <input type="text"
+									th:field="*{address}" placeholder="Nhập địa chỉ" required />
+							</div>
+							<div class="form-group">
+								<label>Điện thoại </label><span id="errLecturerPhoneNumber"
+									style="color: red; font-size: 10pt"></span> <input type="number"
+									th:field="*{numberPhone}" placeholder="Nhập số điện thoại"
+									required />
+							</div>
+							<div class="form-group">
+								<label>Email </label><span id="errLecturerEmail"
+									style="color: red; font-size: 10pt"></span> <input type="text"
+									th:field="*{email}" name = "email" placeholder="Nhập địa chỉ Email" required />
+							</div>
                         <div class="form-group">
                             <button type="submit" class="button success" id="btnSaveLecturer">Lưu lại</button>
-                            <input type="button" class="button" value="Hủy" onclick="retrieveGuests('lecturer/')">
+                            <input type="button" class="button" value="Hủy" onclick="cancelEdtingLecturer('lecturer/')">
                         </div>
                     </form>
                 </div>

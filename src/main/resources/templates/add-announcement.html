@@ -49,7 +49,7 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
-                retrieveGuests('/announcement');
+            	 $("#content-wrapper").html(data.toString());
                 console.log("OK!")
             },
             error: function (e) {
