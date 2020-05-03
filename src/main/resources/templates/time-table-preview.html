@@ -6,6 +6,7 @@
 <title>Time Table</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript" src="/js/time-table-preview.js"></script>
 	<div id="main-content">
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-4 text-center text-left-md">
@@ -46,9 +47,9 @@
 								</tbody>
 							</table>
 							<a href="#timetable" class="button warning"
-								onclick="retrieveGuests('timetable/import/save')">Nhập</a> <a
+								onclick="confirmImportTimeTable('timetable/import/save')">Nhập</a> <a
 								href="#timetable" class="button primary"
-								onclick="retrieveGuests('timetable/import/cancel')">Hủy bỏ</a>
+								onclick="cancelImportTimeTable('timetable/import/cancel')">Hủy bỏ</a>
 						</div>
 					</div>
 				</div>

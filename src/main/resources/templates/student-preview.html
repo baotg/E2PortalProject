@@ -6,17 +6,47 @@
     <meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript" src="/js/student-preview.js">
+</script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
+        <div class="cell-md-12 text-center text-left-md">
             <h3 class="dashboard-section-title">Nhập thông tin sinh viên<small>Xem trước</small></h3>
         </div>
     </div>
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
+            <div class="cell-md-12 cell-xl-12">
+						
+						<div class="p-1 p-6-lg bg-white mt-3">
+						<h4>Thông tin lớp học</h4>
+							<span>Mã lớp: </span><span class="text-bold mt-2"
+								th:text="${mainClass.classId}"></span><br>
+								
+							<span>Chuyên ngành: </span><span class="text-bold mt-2"
+								th:text="${mainClass.speciality}"></span><br>
+								
+							<span>Bậc đào tạo: </span><span class="text-bold mt-2"
+								th:text="${mainClass.level}"></span><br>
+								
+							<span>Loại hình đào tạo: </span><span class="text-bold mt-2"
+								th:text="${mainClass.type}"></span><br>
+								
+							<span>Khoa: </span><span class="text-bold mt-2"
+								th:text="${mainClass.faculty.falcultyId}"></span><br>
+								
+							<span>Năm học: </span><span class="text-bold mt-2"
+								th:text="${mainClass.year}"></span><br>
+								
+							<span>Giảng viên phụ trách: </span><span class="text-bold mt-2"
+								th:text="${mainClass.lecturer.lastName + ' ' +mainClass.lecturer.firstName }"></span><br>
+						</div>
+					</div>
                  <div class="cell-md-12 cell-xl-12">
+                 
                     <div class="p-1 p-6-lg bg-white mt-3">
+                    <h4>Danh sách sinh viên</h4>
                         <table class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
@@ -46,8 +76,8 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a href="#student" class="button warning" onclick="retrieveGuests('student/import/save')">Nhập</a>
-                        <a href="#student" class="button primary" onclick="retrieveGuests('student/import/cancel')">Hủy bỏ</a>
+                        <a href="#student" class="button warning" onclick="confirmImportStudent('student/import/save')">Nhập</a>
+                        <a href="#student" class="button primary" onclick="cancelImportStudent('student/import/cancel')">Hủy bỏ</a>
                     </div>
                 </div>
             </div>

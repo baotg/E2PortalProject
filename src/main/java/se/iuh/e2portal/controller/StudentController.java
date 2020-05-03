@@ -105,13 +105,14 @@ public class StudentController {
 		MainClass mainClass = studentReader.getMainClass(sheet);
 		List<Student> students = studentReader.getListStudent(sheet, mainClass);
 		excelFileHandlerService.setStudents(students);
+		model.addAttribute("mainClass",mainClass);
 		model.addAttribute("students", students);
 		return "student-preview";
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveStudent(Student student){
-		System.out.println(student.getMainClass());
+		
 		studentService.save(student);
 		return "redirect:/student";
 	}

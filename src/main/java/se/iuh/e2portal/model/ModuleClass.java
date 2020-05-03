@@ -28,6 +28,8 @@ public class ModuleClass {
     private List<Student> students;
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<TimeTable> timeTables;
+    @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
+    private List<GradingResult> gradingResults;
     
     public String getFormattedStartDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");

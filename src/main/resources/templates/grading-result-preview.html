@@ -6,6 +6,7 @@
     <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript" src="/js/grading-result-preview.js"></script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
@@ -61,9 +62,9 @@
                             </tbody>
                         </table>
                         <a href="#gradingresult" class="button warning"
-								onclick="retrieveGuests('gradingresult/import/save')">Nhập</a> 
+								onclick="confirmImportGradingResult('gradingresult/import/save')">Nhập</a> 
 						<a href="#gradingresult" class="button primary"
-								onclick="retrieveGuests('gradingresult/import/cancel')">Hủy bỏ</a>
+								onclick="cancelImportGradingResult('gradingresult/import/cancel')">Hủy bỏ</a>
                     </div>
                 </div>
             </div>

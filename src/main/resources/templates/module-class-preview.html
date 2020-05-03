@@ -7,9 +7,10 @@
 <meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript" src="/js/module-class-preview.js"></script>
 	<div id="main-content">
 		<div class="row border-bottom bd-lightGray m-3">
-			<div class="cell-md-4 text-center text-left-md">
+			<div class="cell-md-12 text-center text-left-md">
 				<h3 class="dashboard-section-title">
 					Nhập thông tin lớp học phần<small>Xem trước</small>
 				</h3>
@@ -19,8 +20,9 @@
 			<div class="p-1 bg-transparent">
 				<div class="row">
 					<div class="cell-md-12 cell-xl-12">
-						<h3>Thông tin lớp học phần</h3>
+						
 						<div class="p-1 p-6-lg bg-white mt-3">
+						<h4>Thông tin lớp học phần</h4>
 							<span>Mã lớp học phần: </span><span class="text-bold mt-2"
 								th:text="${moduleClass.moduleClassId}"></span><br>
 								
@@ -50,8 +52,9 @@
 						</div>
 					</div>
 					<div class="cell-md-12 cell-xl-12">
-						<h3>Danh sách sinh viên</h3>
+						
 						<div class="p-1 p-6-lg bg-white mt-3">
+						<h4>Danh sách sinh viên</h4>
 							<table class="table striped table-border mt-4" data-role="table"
 								data-rows="10">
 								<thead>
@@ -72,9 +75,9 @@
 								</tbody>
 							</table>
 							<a href="#moduleclass" class="button warning"
-								onclick="retrieveGuests('moduleclass/import/save')">Nhập</a> <a
+								onclick="confirmImportModuleClass('moduleclass/import/save')">Nhập</a> <a
 								href="#moduleclass" class="button primary"
-								onclick="retrieveGuests('moduleclass/import/cancel')">Hủy bỏ</a>
+								onclick="cancelImportModuleClass('moduleclass/import/cancel')">Hủy bỏ</a>
 						</div>
 					</div>
 				</div>

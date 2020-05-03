@@ -14718,6 +14718,7 @@ var File = {
 //                files.html(element[0].files.length + " " +o.filesTitle);
             	//lloogg
             	files.html(file_names + " đã được chọn");
+            	file_names = "0 tệp"
             }
 
             Utils.exec(o.onSelect, [fi.files], element[0]);

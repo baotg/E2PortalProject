@@ -44,6 +44,51 @@ public class MainController {
    			return new ResponseEntity<String>("successful", HttpStatus.OK);
    		}
    	}
+//    @PostMapping("/upload-student")
+//   	public ResponseEntity<String> uploadFileStudent(
+//   			@RequestParam("file-student") MultipartFile uploadfile) throws IOException {
+//   		if (uploadfile.isEmpty()) {
+//   			return new ResponseEntity<String>("empty", HttpStatus.OK);
+//   		}
+//   		else {
+//   			excelFileHandlerService.setInputStream(uploadfile.getInputStream());
+//   			return new ResponseEntity<String>("successful", HttpStatus.OK);
+//   		}
+//   	}
+//    @PostMapping("/upload-module-class")
+//   	public ResponseEntity<String> uploadFileModuleClass(
+//   			@RequestParam("file-module-class") MultipartFile uploadfile) throws IOException {
+//   		if (uploadfile.isEmpty()) {
+//   			return new ResponseEntity<String>("empty", HttpStatus.OK);
+//   		}
+//   		else {
+//   			excelFileHandlerService.setInputStream(uploadfile.getInputStream());
+//   			return new ResponseEntity<String>("successful", HttpStatus.OK);
+//   		}
+//   	}
+//    @PostMapping("/upload-grading-result")
+//   	public ResponseEntity<String> uploadFileGradingResult(
+//   			@RequestParam("file-grading-result") MultipartFile uploadfile) throws IOException {
+//   		if (uploadfile.isEmpty()) {
+//   			return new ResponseEntity<String>("empty", HttpStatus.OK);
+//   		}
+//   		else {
+//   			excelFileHandlerService.setInputStream(uploadfile.getInputStream());
+//   			return new ResponseEntity<String>("successful", HttpStatus.OK);
+//   		}
+//   	}
+//    @PostMapping("/upload-time-table")
+//   	public ResponseEntity<String> uploadFileTimeTable(
+//   			@RequestParam("file-time-table") MultipartFile uploadfile) throws IOException {
+//   		if (uploadfile.isEmpty()) {
+//   			return new ResponseEntity<String>("empty", HttpStatus.OK);
+//   		}
+//   		else {
+//   			excelFileHandlerService.setInputStream(uploadfile.getInputStream());
+//   			return new ResponseEntity<String>("successful", HttpStatus.OK);
+//   		}
+//   	}
+    
     
     @GetMapping("/download")
     public String download() {

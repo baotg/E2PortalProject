@@ -6,14 +6,14 @@
     <title>Lớp học phần</title>
 </head>
 <body class="m4-cloak h-vh-100">
-<script src="/js/moduleclass.js"></script>
+<script src="/js/module-class.js"></script>
 	<div id="module-class-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">
 		<form id="import-module-class" enctype="multipart/form-data">
-			<div class="dialog-title">Nhập thông tin lớp học phần</div>
+			<div class="dialog-title">Nhập thông tin lớp học phần <span id = "fileNotChosenModuleClass" style="color:red; font-size: 10pt"></span></div>
 			<div class="dialog-content">
-				<input type="file" th:name="file" data-role="file" data-mode="drop"
-					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
+				<input type="file" th:name="file"  data-role="file" data-mode="drop"
+					id="file-module-class" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
 					required accept=".xlsx"><br>
 				<div class="panel">
 					<div data-role="panel" data-collapsible="true"
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<div class="dialog-actions right">
-				<button class="button js-dialog-close " type="submit" id="btnSubmitModuleClass">Nhập</button>
+				<button class="button" type="submit" id="btnSubmitModuleClass">Nhập</button>
 			</div>
 		</form>
 	</div>

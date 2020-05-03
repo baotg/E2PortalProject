@@ -6,9 +6,16 @@ $(document).ready(function () {
 });
 
 function fire_ajax_submit() {
+	var file = $("#file-grading-result").val();
     var form = $('#import-grading-result')[0];
     var data = new FormData(form);
-    
+    if(file==''){
+    	var fileNotChosen = " *Chưa chọn tệp để tải lên";
+    	$("#fileNotChosenGradingResult").html(fileNotChosen);
+    return false;
+    }
+    $("#fileNotChosenGradingResult").html('');
+    Metro.dialog.close('#grading-result-dialog');
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',

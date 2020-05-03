@@ -6,6 +6,7 @@
     <title>Home</title>
 </head>
 <body class="m4-cloak h-vh-100">
+<script type="text/javascript" src="/js/attendance-preview.js"></script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-6 text-center text-left-md">
@@ -41,9 +42,9 @@
                             </tbody>
                         </table>
                         <a href="#attendance" class="button warning"
-								onclick="retrieveGuests('attendance/import/save')">Nhập</a> <a
+								onclick="confirmImportAttendance('attendance/import/save')">Nhập</a> <a
 								href="#attendance" class="button primary"
-								onclick="retrieveGuests('attendance/import/cancel')">Hủy bỏ</a>
+								onclick="cancelImportAttendance('attendance/import/cancel')">Hủy bỏ</a>
                     </div>
                 </div>
             </div>
