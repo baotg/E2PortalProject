@@ -13,6 +13,7 @@ import se.iuh.e2portal.service.ExcelFileHandlerService;
 import se.iuh.e2portal.service.FacultyService;
 import se.iuh.e2portal.service.LecturerService;
 import se.iuh.e2portal.service.MainClassService;
+import se.iuh.e2portal.service.ModuleClassService;
 import se.iuh.e2portal.service.StudentService;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ import java.util.Optional;
 @RequestMapping("/student")
 public class StudentController {
 	
+	@Autowired
+	ModuleClassService moduleClassService;
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -45,7 +48,7 @@ public class StudentController {
 	@GetMapping("")
 	public String getMainClass(Model model){
 		model.addAttribute("studentList",studentService.findAll());
-		return "studentdetail::student";
+		return "student::student";
 	}
 	
 	@GetMapping("/{id}")
@@ -73,7 +76,13 @@ public class StudentController {
 	public String deleteStudent(@RequestParam("id") String id, Model model){
 		Optional<Student> result = studentService.findById(id);
 		if(result.isPresent()){
-			studentService.delete(result.get());
+			for(ModuleClass moduleClass : result.get().getModuleClasses()) {
+				moduleClass.getStudents().remove(result.get());
+				moduleClassService.save(moduleClass);
+			}
+			Student student = result.get();
+			student.getModuleClasses().clear();
+			studentService.delete(student);
 			return "redirect:/student";
 		}
 		return "redirect:/";
@@ -91,7 +100,7 @@ public class StudentController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("studentList",studentService.findAll());
-			return "studentdetail::student";
+			return "student::student";
 		}
 		MainClass mainClass = studentReader.getMainClass(sheet);
 		List<Student> students = studentReader.getListStudent(sheet, mainClass);

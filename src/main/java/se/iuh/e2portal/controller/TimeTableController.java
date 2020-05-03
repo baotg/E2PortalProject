@@ -39,7 +39,7 @@ public class TimeTableController {
     @GetMapping("")
     public String getTimeTables(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("timetables",timeTableService.findAll());
-        return "timetable";
+        return "time-table";
     }
    
     @GetMapping("/import")
@@ -54,7 +54,7 @@ public class TimeTableController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("timetables",timeTableService.findAll());
-			return "timetable";
+			return "time-table";
 		}
         ModuleClass moduleClass = timeTableReader.getModuleClass(sheet);
         List<TimeTable> timeTableList = timeTableReader.getListTimeTable(sheet,moduleClass);

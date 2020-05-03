@@ -19,6 +19,6 @@ public class MainClassController {
     @GetMapping("")
     public String getMainClass(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("listClass",mainClassService.findAll());
-        return "mainclass";
+        return "main-class";
     }
 }

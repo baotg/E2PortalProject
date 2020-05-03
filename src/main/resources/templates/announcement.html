@@ -11,10 +11,30 @@
         var url = 'announcement/edit?id=' + id.replace('edt','');
         $("#content-wrapper").load(url);
     }
-    function deleteAnnouncement(id) {
-        var url = 'announcement/delete?id=' + id.replace('dlt','');
-        $("#content-wrapper").load(url);
+    function deleteAnnouncement(id){
+        Metro.dialog.create({
+            title: "Xóa thông báo",
+            content: "<div>Nội dung bạn vừa chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.<br> <b>Bạn có muốn tiếp tục?</b></div>",
+            actions: [
+                {
+                    caption: "Xóa",
+                    cls: "js-dialog-close alert",
+                    onclick: function(){
+                    	 var url = 'announcement/delete?id=' + id.replace('dlt','');
+                         $("#content-wrapper").load(url);
+                    }
+                },
+                {
+                    caption: "Hủy",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                        
+                    }
+                }
+            ]
+        });
     }
+    
 
 </script>
 <div id="main-content">
@@ -56,7 +76,7 @@
                                     <a href="#announcement" class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
                                 </td>
                                 <td>
-                                    <a href="#announcement" class="button alert" th:id="'dlt'+${announcement.announcementId}" onclick="deleteAnnouncement(this.id)">Xóa</a>
+                                    <a href="#announcement" class="button alert" th:id="'dlt'+${announcement.announcementId}"  onclick="deleteAnnouncement(this.id)">Xóa</a>
                                 </td>
                             </tr>
                             </tbody>

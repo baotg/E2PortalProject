@@ -14,18 +14,19 @@ public class ModuleClass {
     @Id
     private String moduleClassId;
     private String moduleClassName;
-    private int numOfTSession; //Số tiết lý thuyết
-    private int numOfPSession; //Số tiết thực hành
-    private int numOfCredit; //Số tín chỉ
-    private String semester; //Học kỳ
+    private int numOfTSession; 
+    private int numOfPSession; 
+    private int numOfCredit; 
+    private String semester; 
     private Date startDate;
     private Date endDate;
-    @ManyToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lecturerId", referencedColumnName = "id")
     private Lecturer lecturer;
-    @ManyToMany(mappedBy = "moduleClasses")
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "student_moduleClass", joinColumns = @JoinColumn(name = "moduleClassId"), inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Student> students;
-    @OneToMany(mappedBy = "moduleClass")
+    @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<TimeTable> timeTables;
     
     public String getFormattedStartDate(){
@@ -37,4 +38,12 @@ public class ModuleClass {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(endDate);
     }
+
+	@Override
+	public String toString() {
+		return "ModuleClass [moduleClassId=" + moduleClassId + ", moduleClassName=" + moduleClassName
+				+ ", numOfTSession=" + numOfTSession + ", numOfPSession=" + numOfPSession + ", numOfCredit="
+				+ numOfCredit + ", semester=" + semester + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+	}
+    
 }

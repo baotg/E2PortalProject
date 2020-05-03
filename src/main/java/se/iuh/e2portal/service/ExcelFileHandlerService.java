@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import se.iuh.e2portal.model.Attendance;
 import se.iuh.e2portal.model.GradingResult;
+import se.iuh.e2portal.model.ModuleClass;
 import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.model.TimeTable;
 @Scope(value = 	WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -23,6 +24,8 @@ public class ExcelFileHandlerService {
 	private List<TimeTable> timeTables;
 	private List<GradingResult> gradingResults;
 	private List<Attendance> attendances;
+	private ModuleClass moduleClass;
+	
 
 	public InputStream getInputStream() {
 		return inputStream;
@@ -63,5 +66,15 @@ public class ExcelFileHandlerService {
 	public void setAttendances(List<Attendance> attendances) {
 		this.attendances = attendances;
 	}
+
+	public ModuleClass getModuleClass() {
+		return moduleClass;
+	}
+
+	public void setModuleClass(ModuleClass moduleClass) {
+		this.moduleClass = moduleClass;
+	}
+	
+	
 	
 }

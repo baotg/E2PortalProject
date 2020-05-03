@@ -33,7 +33,7 @@ public class AnnouncementController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addAnnouncement(Model model){
         model.addAttribute("announcement", new Announcement());
-        return "addAnnouncement";
+        return "add-announcement";
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -47,7 +47,7 @@ public class AnnouncementController {
     public String editAnnouncement(@RequestParam("id") Long id, Model model) {
         Optional<Announcement> announcementEdit = announcementService.findById(id);
         announcementEdit.ifPresent(announcement -> model.addAttribute("announcement", announcement));
-        return "addAnnouncement";
+        return "add-announcement";
     }
     
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

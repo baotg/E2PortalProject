@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Sinh viên</title>
+<meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100">
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-4 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Nhập thông tin lớp học phần<small>Xem trước</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12">
+						<h3>Thông tin lớp học phần</h3>
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<span>Mã lớp học phần: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.moduleClassId}"></span><br>
+								
+							<span>Tên lớp học phần: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.moduleClassName}"></span><br>
+								
+							<span>Số tiết lý thuyết: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.numOfTSession}"></span><br>
+								
+							<span>Số tuyết thực hành: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.numOfPSession}"></span><br>
+								
+							<span>Số tín chỉ: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.numOfCredit}"></span><br>
+								
+							<span>Học kỳ: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.semester}"></span><br>
+								
+							<span>Ngày bắt đầu: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.getFormattedStartDate()}"></span><br>
+								
+							<span>Ngày kết thúc: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.getFormattedEndDate()}"></span><br>
+								
+							<span>Giảng viên phụ trách: </span><span class="text-bold mt-2"
+								th:text="${moduleClass.lecturer.lastName + ' ' +moduleClass.lecturer.firstName }"></span><br>
+						</div>
+					</div>
+					<div class="cell-md-12 cell-xl-12">
+						<h3>Danh sách sinh viên</h3>
+						<div class="p-1 p-6-lg bg-white mt-3">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Mã số sinh viên</th>
+										<th>Họ đệm</th>
+										<th>Tên</th>
+										<th>Lớp học</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="student : ${moduleClass.students}">
+										<td th:text="${student.id}"></td>
+										<td th:text="${student.lastName}"></td>
+										<td th:text="${student.firstName}"></td>
+										<td th:text="${student.mainClass.classId}"></td>
+									</tr>
+								</tbody>
+							</table>
+							<a href="#moduleclass" class="button warning"
+								onclick="retrieveGuests('moduleclass/import/save')">Nhập</a> <a
+								href="#moduleclass" class="button primary"
+								onclick="retrieveGuests('moduleclass/import/cancel')">Hủy bỏ</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

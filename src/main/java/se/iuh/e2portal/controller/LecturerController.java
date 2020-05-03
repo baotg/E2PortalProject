@@ -8,12 +8,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import se.iuh.e2portal.model.Lecturer;
+import se.iuh.e2portal.model.ModuleClass;
 import se.iuh.e2portal.service.LecturerService;
+import se.iuh.e2portal.service.ModuleClassService;
 
 @Controller
 @RequestMapping("/lecturer")
 public class LecturerController {
 
+	@Autowired
+	ModuleClassService moduleClassService;
     @Autowired
     private LecturerService lecturerService;
     

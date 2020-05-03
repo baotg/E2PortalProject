@@ -32,7 +32,7 @@ public class AccountController {
 			account.getUserAccount().setPassword(UserAccount.DEFAULT_PASSWORD);
 		accountService.save(account.getUserAccount());
 		Message msg = Message.RESET_PASSWORD_SUCCESSFUL;
-		model.addAttribute("msg", msg.getMessage()+account.getId());
+		model.addAttribute("msg", msg.getMessage() + account.getId());
 		model.addAttribute("accounts", accountService.findAll());
 		return "account-management";
 	}

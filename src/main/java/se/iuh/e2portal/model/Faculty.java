@@ -12,4 +12,10 @@ public class Faculty {
     @Id
     private String falcultyId;
     private String name;
+    
+	@Override
+	public String toString() {
+		return "Faculty [falcultyId=" + falcultyId + ", name=" + name + "]";
+	}
+    
 }

@@ -35,4 +35,12 @@ public class Person implements Serializable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateOfBirth!=null?simpleDateFormat.format(dateOfBirth):"";
     }
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender
+				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", numberPhone=" + numberPhone + ", email="
+				+ email + ", imageProfile=" + imageProfile + "]";
+	}
+    
 }

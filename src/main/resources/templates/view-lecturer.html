@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<title>Sinh viên</title>
-<meta charset="UTF-8">
+	<title>Sinh viên</title>
+	<meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100">
-	<div id="main-content">
-		<div class="row border-bottom bd-lightGray m-3">
-			<div class="cell-md-8 text-center text-left-md">
-				<h3 class="dashboard-section-title">
-					Thông tin Giảng viên<small>Xem chi tiết</small>
-				</h3>
-			</div>
+<div id="main-content">
+	<div class="row border-bottom bd-lightGray m-3">
+		<div class="cell-md-8 text-center text-left-md">
+			<h3 class="dashboard-section-title">
+				Thông tin Giảng viên<small>Xem chi tiết</small>
+			</h3>
 		</div>
-		<div class="cell-lg-12 cell-md-6">
-			<div class="bg-white p-4">
-				<ul data-role="tabs" data-expand="true">
-					<li><a href="#profile-about">Giảng viên</a></li>
-					<li><a href="#main-class-info">Lớp học phần</a></li>
-				</ul>
+	</div>
+	<div class="cell-lg-12 cell-md-6">
+		<div class="bg-white p-4">
+			<ul data-role="tabs" data-expand="true">
+				<li><a href="#profile-about">Giảng viên</a></li>
+				<li><a href="#main-class-info">Lớp học phần</a></li>
+			</ul>
 
-				<div id="user-profile-tabs-content">
-					<div id="profile-about">
-						<br>
-						<div data-role="panel" data-title-caption="Thông tin chung"
-							data-title-icon="<span class='mif-info'>" data-collapsible="true">
-							<div class="text-bold mt-2">Mã số Giảng viên</div>
-							<div th:text="${lecturer.id}"></div>
-							
-							<div class="text-bold mt-2">Họ và Tên</div>
-							<div th:text="${lecturer.lastName + ' ' + lecturer.firstName}"></div>
-							
-							<div class="text-bold mt-2">Giới tính</div>
-							<div th:if="${lecturer.gender} == true">Nam</div>
-							<div th:if="${lecturer.gender} == false">Nữ</div>
-							
-							<div class="text-bold mt-2">Ngày sinh</div>
-							<div th:text="${lecturer.getFormatedDate()}"></div>
+			<div id="user-profile-tabs-content">
+				<div id="profile-about">
+					<br>
+					<div data-role="panel" data-title-caption="Thông tin chung"
+						 data-title-icon="<span class='mif-info'>" data-collapsible="true">
+						<div class="text-bold mt-2">Mã số Giảng viên</div>
+						<div th:text="${lecturer.id}"></div>
 
-							<div class="text-bold mt-2">Địa chỉ</div>
-							<address th:text="${lecturer.address}"></address>
-							<div class="text-bold mt-2">Số điện thoại cá nhân</div>
-							<div th:text="${lecturer.numberPhone}"></div>
+						<div class="text-bold mt-2">Họ và Tên</div>
+						<div th:text="${lecturer.lastName + ' ' + lecturer.firstName}"></div>
+
+						<div class="text-bold mt-2">Giới tính</div>
+						<div th:if="${lecturer.gender} == true">Nam</div>
+						<div th:if="${lecturer.gender} == false">Nữ</div>
+
+						<div class="text-bold mt-2">Ngày sinh</div>
+						<div th:text="${lecturer.getFormatedDate()}"></div>
+
+						<div class="text-bold mt-2">Địa chỉ</div>
+						<address th:text="${lecturer.address}"></address>
+						<div class="text-bold mt-2">Số điện thoại cá nhân</div>
+						<div th:text="${lecturer.numberPhone}"></div>
 						<br>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

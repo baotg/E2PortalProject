@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class GradingResult {
 	
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Student student;
     @Id

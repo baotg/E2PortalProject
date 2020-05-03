@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -15,11 +16,15 @@ public class Student extends Person {
 	 * 
 	 */
 	private static final long serialVersionUID = 2953742816239801419L;
-	private String familyNumber; // SDT phụ huynh
+	private String familyNumber;
     @ManyToOne
     @JoinColumn(name ="classId")
     private MainClass mainClass;
-    @ManyToMany
-    @JoinTable(name = "student_moduleClass", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "moduleClassId"))
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    private List<GradingResult> gradingResults;
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.REMOVE)
     private List<ModuleClass> moduleClasses;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    private List<Attendance> attendances;
+    
 }

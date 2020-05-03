@@ -11,11 +11,11 @@
 	<div id="student-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">
 		<form id="import-student" enctype="multipart/form-data">
-			<div class="dialog-title">Nhập sinh viên</div>
+			<div class="dialog-title">Nhập sinh viên <span id = "fileNotChosen" style="color:red; font-size: 10pt"></span></div>
 			<div class="dialog-content">
 				<input type="file" th:name="file" data-role="file" data-mode="drop"
 					id="file" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
-					required><br>
+					required accept=".xlsx"><br>
 				<div class="panel">
 					<div data-role="panel" data-collapsible="true"
 						data-title-caption="Folders" class="panel-content collapsed"
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="dialog-actions right">
-				<button class="button js-dialog-close " type="submit" id="btnSubmit">Nhập</button>
+				<button class="button" type="submit" id="btnSubmit">Nhập</button>
 			</div>
 		</form>
 	</div>

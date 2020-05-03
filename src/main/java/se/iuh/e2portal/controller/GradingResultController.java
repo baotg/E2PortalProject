@@ -34,7 +34,7 @@ public class GradingResultController {
 	@GetMapping("")
 	public String getAll(Model model){
 		model.addAttribute("gradingresults",gradingResultService.findAll());
-		return "gradingresult";
+		return "grading-result";
 	}
 
 	@GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class GradingResultController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("timetables",gradingResultService.findAll());
-			return "gradingresult";
+			return "grading-result";
 		}
 		ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
 		List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
