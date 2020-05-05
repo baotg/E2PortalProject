@@ -32,6 +32,9 @@ public class ModuleClassService  {
     public List<ModuleClass> findAll() {
         return (List<ModuleClass>) moduleClassRepository.findAll();
     }
+    public Iterable<ModuleClass> findByFacultyId(String id) {
+        return  moduleClassRepository.findByFaculty_FacultyId(id);
+    }
 
 
     public boolean existsById(String id) {

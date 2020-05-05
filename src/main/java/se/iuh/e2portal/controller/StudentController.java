@@ -44,9 +44,26 @@ public class StudentController {
 	//        model.addAttribute("page", page);
 	//        return "student";
 	//    }
+	@GetMapping("/search")
+	public String getClasses(@RequestParam("id") String id, Model model) {
+			model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(id));
+			model.addAttribute("mainClasses", mainClassService.findByFacultyId(id));
+		return "student::select-classes";
+	}
+	@GetMapping("/search/class")
+	public String getStudentByClassId(@RequestParam("id") String id, Model model) {
+		Optional<MainClass> mainClass = mainClassService.findById(id);
+		Optional<ModuleClass> moduleClass = moduleClassService.findById(id);
+		if(moduleClass.isPresent())
+			model.addAttribute("studentList",moduleClass.get().getStudents());
+		if(mainClass.isPresent())
+			model.addAttribute("studentList",mainClass.get().getStudents());
+		return "student::student-table";
+	}
 	
 	@GetMapping("")
 	public String getMainClass(Model model){
+		model.addAttribute("faculties", facultyService.findAll());
 		model.addAttribute("studentList",studentService.findAll());
 		return "student::student";
 	}
@@ -124,10 +141,10 @@ public class StudentController {
 		MainClass mainClass = students.get(0).getMainClass();
 		Faculty faculty = mainClass.getFaculty();
 		Lecturer lecturer = mainClass.getLecturer();
-		if(!facultyService.findById(faculty.getFalcultyId()).isPresent())
+		if(!facultyService.findById(faculty.getFacultyId()).isPresent())
 			facultyService.save(faculty);
 		else
-			faculty = facultyService.findById(faculty.getFalcultyId()).get();
+			faculty = facultyService.findById(faculty.getFacultyId()).get();
 		mainClass.setFaculty(faculty);
 		if(!lecturerService.existsById(lecturer.getId()))
 			lecturerService.save(lecturer);

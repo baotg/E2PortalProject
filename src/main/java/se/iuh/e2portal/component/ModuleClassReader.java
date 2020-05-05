@@ -8,10 +8,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
-import se.iuh.e2portal.model.Lecturer;
-import se.iuh.e2portal.model.MainClass;
-import se.iuh.e2portal.model.ModuleClass;
-import se.iuh.e2portal.model.Student;
+import se.iuh.e2portal.model.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,6 +36,7 @@ public class ModuleClassReader {
     private static int COL_SEMESTER = 7;
     private static int COL_LECTURER_ID = 8;
     private static int COL_LECTURER_NAME = 9;
+    private static int COL_FACULTY_ID = 10;
     private static int ROW_STUDENT = 4;
     private static int COL_STUDENT_ID = 1;
     private static int COL_LAST_NAME = 2;
@@ -79,6 +78,9 @@ public class ModuleClassReader {
         lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
         moduleClass.setLecturer(lecturer);
         moduleClass.setStudents(getListStudent(sheet, moduleClass));
+        Faculty faculty = new Faculty();
+        faculty.setFacultyId(getCellValue(row.getCell(COL_FACULTY_ID)));
+        moduleClass.setFaculty(faculty);
         return moduleClass;
     }
     

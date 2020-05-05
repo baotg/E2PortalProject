@@ -10,4 +10,5 @@ import java.util.List;
 public interface ModuleClassRepository extends CrudRepository<ModuleClass, String> {
     @Query("select m from ModuleClass m where m.moduleClassName like ?1")
     List<ModuleClass> findByName(String name);
+    Iterable<ModuleClass> findByFaculty_FacultyId(String id);
 }

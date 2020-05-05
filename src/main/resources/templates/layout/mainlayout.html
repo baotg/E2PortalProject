@@ -89,6 +89,12 @@
                             <span class="caption">Kết quả học tập</span>
                         </a>
                     </li>
+                    <li>
+                        <a th:href="@{/faculty}">
+                            <span class="icon"><span class="mif-room"></span></span>
+                            <span class="caption">Khoa - viện</span>
+                        </a>
+                    </li>
 
                     <th:block th:each="role:${#authentication.getAuthorities()}">
                         <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN TRỊ</li>

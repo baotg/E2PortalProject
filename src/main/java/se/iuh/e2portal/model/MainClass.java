@@ -17,6 +17,7 @@ public class MainClass {
 	
     @Id
     private String classId;
+    private String className;
     private String speciality; // Chuyên ngành
     private String level; // Bậc học
     private String type; // Loại hình đào tạo

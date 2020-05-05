@@ -12,6 +12,7 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
+
     public <S extends Faculty> S save(S entity) {
         return facultyRepository.save(entity);
     }
@@ -35,6 +36,7 @@ public class FacultyService {
     public Iterable<Faculty> findAll() {
         return facultyRepository.findAll();
     }
+
 
 
     public Iterable<Faculty> findAllById(Iterable<String> strings) {

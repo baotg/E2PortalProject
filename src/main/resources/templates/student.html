@@ -7,15 +7,37 @@
 <meta charset="UTF-8">
 </head>
 <body class="m4-cloak h-vh-100" th:fragment="student">
-<script src="/js/student.js"></script>
+	<script src="/js/student.js"></script>
+	<script type="text/javascript">
+		function getClasses() {
+			var faculty = document.getElementById("faculty-select");
+			var aClass = document.getElementById("class-select");
+
+			var facultyId = faculty.options[faculty.selectedIndex].value;
+			var classId = aClass.remove();
+			var url = '/student/search?id=' + facultyId;
+			$('#select-classes').load(url);
+		}
+		function getStudents() {
+			var aClass = document.getElementById("class-select");
+			var classId = aClass.options[aClass.selectedIndex].value;
+			var url2 = '/student/search/class?id=' + classId;
+			console.log(url2);
+			$('#students-table').load(url2);
+		}
+	</script>
 	<div id="student-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">
 		<form id="import-student" enctype="multipart/form-data">
-			<div class="dialog-title">Nhập sinh viên <span id = "fileNotChosen" style="color:red; font-size: 10pt"></span></div>
+			<div class="dialog-title">
+				Nhập sinh viên <span id="fileNotChosen"
+					style="color: red; font-size: 10pt"></span>
+			</div>
 			<div class="dialog-content">
 				<input type="file" th:name="file" data-role="file" data-mode="drop"
-					id="file-student" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
-					required accept=".xlsx"><br>
+					id="file-student"
+					data-prepend="Chọn tệp tin Excel để bắt đầu tải lên" required
+					accept=".xlsx"><br>
 				<div class="panel">
 					<div data-role="panel" data-collapsible="true"
 						data-title-caption="Folders" class="panel-content collapsed"
@@ -39,12 +61,39 @@
 			<div class="p-1 bg-transparent">
 				<div class="row">
 					<div class="cell-md-12 cell-xl-12">
-						<button class="button" onclick="Metro.dialog.open('#student-dialog')">Nhập
+						<button class="button"
+							onclick="Metro.dialog.open('#student-dialog')">Nhập
 							thông tin sinh viên</button>
 						<span style="color: red" th:text="${msg}"></span>
 					</div>
-					<div class="cell-md-12 cell-xl-12">
-						<div class="p-1 p-6-lg bg-white mt-3">
+					<div class="cell-md-4 cell-xl-4">
+						Khoa: <select id="faculty-select" data-role="select"
+							data-on-item-select="getClasses()">
+							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
+								th:text="${i.facultyId + ' - ' + i.name}"></option>
+
+						</select>
+					</div>
+
+					<div class="cell-md-4 cell-xl-4" id="select-classes">
+						<div th:fragment="select-classes">
+							Lớp: <select data-role="select" id="class-select"
+								data-on-item-select="getStudents()">
+								<optgroup label="Lớp học phần">
+									<option th:each="i : ${moduleClasses}"
+										th:value="${i.moduleClassId}"
+										th:text="${i.moduleClassId + ' - ' + i.moduleClassName}"></option>
+								</optgroup>
+								<optgroup label="Lớp chủ nhiệm">
+									<option th:each="i : ${mainClasses}" th:value="${i.classId}"
+										th:text="${i.classId + ' - ' + i.className}"></option>
+								</optgroup>
+							</select>
+						</div>
+					</div>
+
+					<div class="cell-md-12 cell-xl-12" id="students-table">
+						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="student-table">
 							<table class="table striped table-border mt-4" data-role="table"
 								data-rows="10">
 								<thead>
@@ -63,6 +112,7 @@
 									</tr>
 								</thead>
 								<tbody>
+									
 									<tr th:each="student : ${studentList}">
 										<td><a href="#student" th:id=" 'std' + ${student.id}"
 											onclick="viewStudent(this.id)"><span
@@ -81,7 +131,9 @@
 										<td><a href="#" th:id=" 'dlt' + ${student.id}"
 											onclick="deleteStudent(this.id)" class="button alert">Xóa</a></td>
 									</tr>
+									
 								</tbody>
+
 							</table>
 						</div>
 					</div>

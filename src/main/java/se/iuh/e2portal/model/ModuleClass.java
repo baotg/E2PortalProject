@@ -20,6 +20,9 @@ public class ModuleClass {
     private String semester; 
     private Date startDate;
     private Date endDate;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "facultyId", referencedColumnName = "facultyId")
+    private Faculty faculty;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lecturerId", referencedColumnName = "id")
     private Lecturer lecturer;

@@ -64,7 +64,7 @@ public class StudentReader {
         lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
         mainClass.setLecturer(lecturer);
         Faculty faculty = new Faculty();
-        faculty.setFalcultyId(facultyId);
+        faculty.setFacultyId(facultyId);
         String year = getCellValue(row.getCell(COL_YEAR_MAIN_CLASS));
         mainClass.setClassId(classId);
         mainClass.setSpeciality(speciality);

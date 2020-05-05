@@ -14,6 +14,9 @@ public class MainClassService {
     @Autowired
     private MainClassRepository mainClassRepository;
 
+    public Iterable<MainClass> findByFacultyId(String id){
+      return mainClassRepository.findByFaculty_FacultyId(id);
+    };
     public Iterable<MainClass> findAll(Sort sort) {
         return mainClassRepository.findAll(sort);
     }

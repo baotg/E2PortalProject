@@ -32,6 +32,7 @@ public class GradingResultReader {
     private static int COL_SEMESTER = 7;
     private static int COL_LECTURER_ID = 8;
     private static int COL_LECTURER_NAME = 9;
+    private static int COL_FACULTY_ID = 10;
     private static int ROW_GRADING_RESULT = 4;
     private static int COL_STUDENT_ID = 1;
     private static int COL_LAST_NAME = 2;
@@ -85,7 +86,9 @@ public class GradingResultReader {
         List<String> fullNames = Arrays.asList(fullName.split(" "));
         lecturer.setFirstName(fullNames.get(fullNames.size()-1));
         lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
-
+        Faculty faculty = new Faculty();
+        faculty.setFacultyId(getCellValue(row.getCell(COL_FACULTY_ID)));
+        moduleClass.setFaculty(faculty);
         moduleClass.setLecturer(lecturer);
         return moduleClass;
     }

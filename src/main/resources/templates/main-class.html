@@ -36,7 +36,7 @@
                                 <td th:text="${class.level}"></td>
                                 <td th:text="${class.type}"></td>
                                 <td th:text="${class.speciality}"></td>
-                                <td th:text="${class.year}==null?'':${class.year + '-' + class.year+4}"></td>
+                                <td th:text="${class.year}==null?'':${class.year}"></td>
                                 <td th:text="${class.lecturer}==null?'':${class.lecturer.lastName + ' ' +class.lecturer.firstName}"></td>
                             </tr>
                             </tbody>

@@ -22,6 +22,7 @@ public class TimeTableReader {
 	private static int COL_SEMESTER = 7;
 	private static int COL_LECTURER_ID = 8;
 	private static int COL_LECTURER_NAME = 9;
+	private static int COL_FACULTY_ID = 10;
 	private static int ROW_TIME_TABLE = 4;
 	private static int COL_DAY_OF_WEEK = 0;
 	private static int COL_PERIOD = 1;
@@ -60,6 +61,9 @@ public class TimeTableReader {
 		lecturer.setFirstName(fullNames.get(fullNames.size()-1));
 		lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
 		moduleClass.setLecturer(lecturer);
+		Faculty faculty = new Faculty();
+		faculty.setFacultyId(getCellValue(row.getCell(COL_FACULTY_ID)));
+		moduleClass.setFaculty(faculty);
 		return moduleClass;
 	}
 	

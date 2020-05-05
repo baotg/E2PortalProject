@@ -21,6 +21,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<UserAccount> userAccounts;
     
+    
     public Role(String name){
         this.roleName = name;
     }

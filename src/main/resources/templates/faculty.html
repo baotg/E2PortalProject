@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Sinh viên</title>
+<meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100" th:fragment="faculty">
+	<div id="main-content">
+		<div class="row border-bottom bd-lightGray m-3">
+			<div class="cell-md-4 text-center text-left-md">
+				<h3 class="dashboard-section-title">
+					Quản lý Khoa - Viện<small>Xem</small>
+				</h3>
+			</div>
+		</div>
+		<div class="m-3">
+			<div class="p-1 bg-transparent">
+				<div class="row">
+					<div class="cell-md-12 cell-xl-12" id="facultys-table">
+						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="faculty-table">
+							<table class="table striped table-border mt-4" data-role="table"
+								data-rows="10">
+								<thead>
+									<tr>
+										<th>Mã khoa</th>
+										<th>Tên khoa</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="faculty : ${faculties}">
+										<td th:text="${faculty.facultyId}"></td>
+										<td th:text="${faculty.name}"></td>
+										<td><a href="#faculty" class="button warning"
+											th:id=" 'edt' + ${faculty.facultyId}" onclick="editfaculty(this.id)">Sửa</a></td>
+										<td><a th:if="${#lists.isEmpty(faculty.moduleClasses) && #lists.isEmpty(faculty.mainClassList)}"  href="#faculty" th:id=" 'dlt' + ${faculty.facultyId}"
+											onclick="deletefaculty(this.facultyId)" class="button alert">Xóa</a></td>
+									</tr>	
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

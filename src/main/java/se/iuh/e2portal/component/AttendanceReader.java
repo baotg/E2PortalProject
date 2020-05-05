@@ -32,6 +32,7 @@ public class AttendanceReader {
 	private static int COL_SEMESTER = 7;
 	private static int COL_LECTURER_ID = 8;
 	private static int COL_LECTURER_NAME = 9;
+	private static int COL_FACULTY_ID = 10;
 	private static int ROW_ATTENDANCE = 4;
 	private static int ROW_DATE_OFF = 3;
 	private static int COL_STUDENT_ID = 1;
@@ -55,6 +56,7 @@ public class AttendanceReader {
 
 		Row row = sheet.getRow(ROW_MODULE_CLASS);
 		ModuleClass moduleClass = new ModuleClass();
+
 		Lecturer lecturer = new Lecturer();
 		moduleClass.setModuleClassId(getCellValue(row.getCell(COL_MODULE_CLASS_ID)));
 		moduleClass.setModuleClassName(getCellValue(row.getCell(COL_MODULE_CLASS_NAME)));
@@ -75,8 +77,11 @@ public class AttendanceReader {
 		List<String> fullNames = Arrays.asList(fullName.split(" "));
 		lecturer.setFirstName(fullNames.get(fullNames.size()-1));
 		lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
-
+		Faculty faculty = new Faculty();
+		faculty.setFacultyId(getCellValue(row.getCell(COL_FACULTY_ID)));
+		moduleClass.setFaculty(faculty);
 		moduleClass.setLecturer(lecturer);
+
 		return moduleClass;
 	}
 
