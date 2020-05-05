@@ -62,14 +62,14 @@ public class StudentController {
 	}
 	
 	@GetMapping("")
-	public String getMainClass(Model model){
+	public String getStudentPage(Model model){
 		model.addAttribute("faculties", facultyService.findAll());
-		model.addAttribute("studentList",studentService.findAll());
+		//model.addAttribute("studentList",studentService.findAll());
 		return "student::student";
 	}
 	
 	@GetMapping("/{id}")
-	public String getStudent(@PathVariable("id") String id, Model model){
+	public String getStudentInfo(@PathVariable("id") String id, Model model){
 		Optional<Student> student = studentService.findById(id);
 		if(!student.isPresent())
 			return "redirect:/";

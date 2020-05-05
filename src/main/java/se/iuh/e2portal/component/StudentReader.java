@@ -17,13 +17,14 @@ public class StudentReader {
 	private static String CODE = "STD";
     private static int ROW_MAIN_CLASS = 1;
     private static int COL_CLASS_ID_MAIN_CLASS = 0;
-    private static int COL_SPECIALITY_MAIN_CLASS = 1;
-    private static int COL_LEVEL_MAIN_CLASS = 2;
-    private static int COL_TYPE_MAIN_CLASS = 3;
-    private static int COL_FAULTY_MAIN_CLASS = 4;
-    private static int COL_YEAR_MAIN_CLASS = 5;
-    private static int COL_LECTURER_NAME = 6;
-    private static int COL_LECTURER_ID = 7;
+    private static int COL_CLASS_NAME_MAIN_CLASS = 1;
+    private static int COL_SPECIALITY_MAIN_CLASS = 2;
+    private static int COL_LEVEL_MAIN_CLASS = 3;
+    private static int COL_TYPE_MAIN_CLASS = 4;
+    private static int COL_FAULTY_MAIN_CLASS = 5;
+    private static int COL_YEAR_MAIN_CLASS = 6;
+    private static int COL_LECTURER_NAME = 7;
+    private static int COL_LECTURER_ID = 8;
     private static int ROW_CODE = 2;
     private static int COL_CODE = 0;
     private static int ROW_STUDENT = 4;
@@ -53,6 +54,7 @@ public class StudentReader {
         MainClass mainClass = new MainClass();
         Lecturer lecturer = new Lecturer();
         String classId = getCellValue(row.getCell(COL_CLASS_ID_MAIN_CLASS));
+        String className = getCellValue(row.getCell(COL_CLASS_NAME_MAIN_CLASS));
         String speciality = getCellValue(row.getCell(COL_SPECIALITY_MAIN_CLASS));
         String level = getCellValue(row.getCell(COL_LEVEL_MAIN_CLASS));
         String type = getCellValue(row.getCell(COL_TYPE_MAIN_CLASS));
@@ -66,6 +68,7 @@ public class StudentReader {
         Faculty faculty = new Faculty();
         faculty.setFacultyId(facultyId);
         String year = getCellValue(row.getCell(COL_YEAR_MAIN_CLASS));
+        mainClass.setClassName(className);
         mainClass.setClassId(classId);
         mainClass.setSpeciality(speciality);
         mainClass.setLevel(level);
