@@ -82,7 +82,8 @@ public class StudentController {
 		Optional<Student> result = studentService.findById(id);
 		Iterable<MainClass> mainClasses = mainClassService.findAll();
 		if(result.isPresent()){
-			model.addAttribute("mainClasses", mainClasses.iterator());
+		model.addAttribute("mainClasses", mainClasses.iterator());
+			result.get().setMainClass(null);
 			model.addAttribute("student", result.get());
 			return "edit-student";
 		}

@@ -15,14 +15,21 @@
 
 			var facultyId = faculty.options[faculty.selectedIndex].value;
 			var classId = aClass.remove();
+			if(facultyId=='empty'){
+				return false;
+			}
 			var url = '/student/search?id=' + facultyId;
 			$('#select-classes').load(url);
 		}
 		function getStudents() {
 			var aClass = document.getElementById("class-select");
 			var classId = aClass.options[aClass.selectedIndex].value;
+			if(classId=='empty'){
+				classId='';
+			}
 			var url2 = '/student/search/class?id=' + classId;
-			console.log(url2);
+			
+				
 			$('#students-table').load(url2);
 		}
 	</script>
@@ -69,17 +76,20 @@
 					<div class="cell-md-4 cell-xl-4">
 						Khoa: <select id="faculty-select" data-role="select"
 							data-on-item-select="getClasses()">
+							<option value="empty" selected>Chọn một mục</option>
 							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
 								th:text="${i.facultyId + ' - ' + i.name}"></option>
-
-						</select>
+								
+							</select>
 					</div>
 
 					<div class="cell-md-4 cell-xl-4" id="select-classes">
 						<div th:fragment="select-classes">
 							Lớp: <select data-role="select" id="class-select"
 								data-on-item-select="getStudents()">
+								<option value="empty" selected>Chọn một mục</option>
 								<optgroup label="Lớp học phần">
+								
 									<option th:each="i : ${moduleClasses}"
 										th:value="${i.moduleClassId}"
 										th:text="${i.moduleClassId + ' - ' + i.moduleClassName}"></option>

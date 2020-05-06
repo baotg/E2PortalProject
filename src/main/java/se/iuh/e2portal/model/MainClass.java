@@ -4,15 +4,10 @@ import lombok.Data;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 public class MainClass {
 	
     @Id
@@ -21,7 +16,7 @@ public class MainClass {
     private String speciality; // Chuyên ngành
     private String level; // Bậc học
     private String type; // Loại hình đào tạo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name ="facultyId")
     private Faculty faculty;
     private String year;
@@ -35,7 +30,5 @@ public class MainClass {
 		return "MainClass [classId=" + classId + ", speciality=" + speciality + ", level=" + level + ", type=" + type
 				+ ", faculty=" + faculty + ", year=" + year + "]";
 	}
-    
-    
     
 }
