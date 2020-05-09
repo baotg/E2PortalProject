@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
       >
 <head>
     <title>Lớp học phần</title>
 </head>
-<body class="m4-cloak h-vh-100">
+<body class="m4-cloak h-vh-100" th:fragment="module-class">
 <script src="/js/module-class.js"></script>
 	<div id="module-class-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">

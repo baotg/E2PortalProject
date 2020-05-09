@@ -7,7 +7,7 @@ function cancelImportStudent(url){
                 caption: "Hủy bỏ",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                	 Metro.dialog.close('#student-preview-dialog');
                 }
             },
             {
@@ -29,7 +29,8 @@ function confirmImportStudent(url){
                 caption: "Đồng ý",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                	Metro.dialog.close('#student-preview-dialog');
+                	callAjaxSave(url);
                 }
             },
             {

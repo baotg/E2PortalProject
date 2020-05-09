@@ -16,5 +16,9 @@ public class Faculty {
     private List<MainClass> mainClassList;
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ModuleClass> moduleClasses;
-    
+	@Override
+	public String toString() {
+		return "Faculty [facultyId=" + facultyId + ", name=" + name + "]";
+	}
+	
 }

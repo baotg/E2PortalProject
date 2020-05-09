@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#btnSubmitAttendance").click(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+        fire_ajax_submit_attendance();
     });
 });
 
-function fire_ajax_submit() {
+function fire_ajax_submit_attendance() {
 	var file = $("#file-attendance").val();
     var form = $('#import-attendance')[0];
     var data = new FormData(form);

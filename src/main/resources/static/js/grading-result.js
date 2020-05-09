@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#btnSubmitGradingResult").click(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+        fire_ajax_submit_grading_result();
     });
 });
 
-function fire_ajax_submit() {
+function fire_ajax_submit_grading_result() {
 	var file = $("#file-grading-result").val();
     var form = $('#import-grading-result')[0];
     var data = new FormData(form);

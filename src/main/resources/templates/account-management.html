@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
 <title>Sinh viên</title>
 <meta charset="UTF-8">
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="student">
+<body class="m4-cloak h-vh-100" th:fragment="account-management">
 <script type="text/javascript">
 function resetPassword(id) {
 	var url = '/account-management/reset?id=' + id.replace('rst','');

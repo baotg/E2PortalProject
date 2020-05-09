@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
 <title>Sinh viên</title>
 <meta charset="UTF-8">
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="student">
-	<script src="/js/student.js"></script>
-	<script type="text/javascript">
-		function getClasses() {
-			var faculty = document.getElementById("faculty-select");
-			var aClass = document.getElementById("class-select");
 
-			var facultyId = faculty.options[faculty.selectedIndex].value;
-			var classId = aClass.remove();
-			if(facultyId=='empty'){
-				return false;
-			}
-			var url = '/student/search?id=' + facultyId;
-			$('#select-classes').load(url);
-		}
-		function getStudents() {
-			var aClass = document.getElementById("class-select");
-			var classId = aClass.options[aClass.selectedIndex].value;
-			if(classId=='empty'){
-				classId='';
-			}
-			var url2 = '/student/search/class?id=' + classId;
-			
-				
-			$('#students-table').load(url2);
-		}
-	</script>
-	<div id="student-dialog" class="dialog" data-role="dialog"
+<body id="main-content" class="m4-cloak h-vh-100" >
+<div th:fragment="student">
+	<div id="student-preview-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Nhập thông tin sinh viên<small> Xem trước</small></h3>
+        </div>
+		</div>
+			<div id="student-preview-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				<a class="button warning" onclick="confirmImportStudent('student/import/save')">Nhập</a>
+                        <a class="button primary" onclick="cancelImportStudent('student/import/cancel')">Hủy bỏ</a>
+				</div>
+	</div>
+	<div id="student-edit-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Sinh viên<small> Chỉnh sửa</small></h3>
+        </div>
+		</div>
+			<div id="student-edit-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				<button type="submit" class="button success" id="btnSaveStudent">Lưu
+									lại</button>
+								<input type="button" class="button" value="Hủy"
+									onclick="cancelEdtingStudent('student/')">
+				</div>
+	</div>
+	<div id="student-dialog" class="dialog" data-role="dialog" style="width: 100px; height: 100px; margin: 10px;"
 		data-width="800" data-close-button="true">
 		<form id="import-student" enctype="multipart/form-data">
 			<div class="dialog-title">
@@ -52,15 +59,15 @@
 				</div>
 			</div>
 			<div class="dialog-actions right">
-				<button class="button" type="submit" id="btnSubmitStudent">Nhập</button>
+				<button class="button" id="btnSubmitStudent">Nhập</button>
 			</div>
 		</form>
 	</div>
-	<div id="main-content">
+	<div>
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-4 text-center text-left-md">
 				<h3 class="dashboard-section-title">
-					Quản lý Sinh viên<small>Xem</small>
+					Quản lý Sinh viên<small>Xem</small><span id="errMessageImportStudent"></span>
 				</h3>
 			</div>
 		</div>
@@ -73,30 +80,31 @@
 							thông tin sinh viên</button>
 						<span style="color: red" th:text="${msg}"></span>
 					</div>
-					<div class="cell-md-4 cell-xl-4">
-						Khoa: <select id="faculty-select" data-role="select"
+					<div class="cell-md-4 cell-xl-4" >
+					
+						Khoa: <select id="faculty-select" data-role="select" class="form-control"
 							data-on-item-select="getClasses()">
-							<option value="empty" selected>Chọn một mục</option>
+							<option value="empty">Chọn một mục</option>
+							<optgroup label="Khoa">
 							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
-								th:text="${i.facultyId + ' - ' + i.name}"></option>
-								
-							</select>
+								th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
+							</optgroup>
+						</select>
 					</div>
 
 					<div class="cell-md-4 cell-xl-4" id="select-classes">
 						<div th:fragment="select-classes">
-							Lớp: <select data-role="select" id="class-select"
+							Lớp: <select data-role="select" id="class-select" 
 								data-on-item-select="getStudents()">
-								<option value="empty" selected>Chọn một mục</option>
+								<option value="empty">Chọn một mục</option>
 								<optgroup label="Lớp học phần">
-								
 									<option th:each="i : ${moduleClasses}"
 										th:value="${i.moduleClassId}"
 										th:text="${i.moduleClassId + ' - ' + i.moduleClassName}"></option>
 								</optgroup>
 								<optgroup label="Lớp chủ nhiệm">
 									<option th:each="i : ${mainClasses}" th:value="${i.classId}"
-										th:text="${i.classId + ' - ' + i.className}"></option>
+										th:text="${i.classId + ' - ' + i.className}"  th:selected="${i==selectedMainClass}"></option>
 								</optgroup>
 							</select>
 						</div>
@@ -122,10 +130,9 @@
 									</tr>
 								</thead>
 								<tbody>
-									
+
 									<tr th:each="student : ${studentList}">
-										<td><a href="#student" th:id=" 'std' + ${student.id}"
-											onclick="viewStudent(this.id)"><span
+										<td><a href="#"	th:id=" 'std' + ${student.id}" onclick="viewStudent(this.id)"><span
 												th:text="${student.id}"></span></a></td>
 										<td th:text="${student.lastName}"></td>
 										<td th:text="${student.firstName}"></td>
@@ -136,20 +143,19 @@
 										<td th:text="${student.numberPhone}"></td>
 										<td th:text="${student.email}"></td>
 										<td th:text="${student.familyNumber}"></td>
-										<td><a href="#student" class="button warning"
-											th:id=" 'edt' + ${student.id}" onclick="editStudent(this.id)">Sửa</a></td>
-										<td><a href="#" th:id=" 'dlt' + ${student.id}"
+										<td><a class="button warning"
+											th:id=" 'edt' + ${student.id}" onclick="getStudentEditDialog(this.id)">Sửa</a></td>
+										<td><a th:id=" 'dlt' + ${student.id}"
 											onclick="deleteStudent(this.id)" class="button alert">Xóa</a></td>
 									</tr>
-									
 								</tbody>
-
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

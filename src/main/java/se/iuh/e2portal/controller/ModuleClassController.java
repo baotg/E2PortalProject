@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,14 +38,16 @@ public class ModuleClassController {
 	private ExcelFileHandlerService excelFileHandlerService;
 
     @GetMapping("")
-    public String getModuleClass(@PageableDefault(size = 10) Pageable pageable, Model model) {
+    public String getModuleClass(@PageableDefault(size = 10) Pageable pageable, Model model, @Param("ajax")String ajax) {
         model.addAttribute("listClass",moduleClassService.findAll());
+        if(ajax!=null)
+        	return "module-class::module-class";
         return "module-class";
     }
     @GetMapping("/import")
 	public String mapReadExcelDatatoDB(Model model) throws IOException {
 		if(excelFileHandlerService.getInputStream()==null)
-			return "redirect:/";
+			return "module-class::module-class";
 		@SuppressWarnings("resource")
 		Workbook workbook = new XSSFWorkbook(excelFileHandlerService.getInputStream());
 		Sheet sheet = workbook.getSheetAt(0);
@@ -53,7 +56,7 @@ public class ModuleClassController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("listClass",moduleClassService.findAll());
-			return "module-class";
+			return "module-class::module-class";
 		}
 		ModuleClass moduleClass = moduleClassReader.getModuleClass(sheet);
 		excelFileHandlerService.setModuleClass(moduleClass);

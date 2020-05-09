@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	  th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>Home</title>
 </head>
-<body class="m4-cloak h-vh-100">
+<body class="m4-cloak h-vh-100" th:fragment="attendance">
 	<script src="/js/attendance.js"></script>
 	<div id="attendance-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">

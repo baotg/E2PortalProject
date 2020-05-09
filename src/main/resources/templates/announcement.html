@@ -1,43 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      >
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 <head>
     <title>Home</title>
 </head>
-<body class="m4-cloak h-vh-100">
-<script>
-    function editAnnouncement(id) {
-        var url = 'announcement/edit?id=' + id.replace('edt','');
-        $("#content-wrapper").load(url);
-    }
-    function deleteAnnouncement(id){
-        Metro.dialog.create({
-            title: "Xóa thông báo",
-            content: "<div>Nội dung bạn vừa chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.<br> <b>Bạn có muốn tiếp tục?</b></div>",
-            actions: [
-                {
-                    caption: "Xóa",
-                    cls: "js-dialog-close alert",
-                    onclick: function(){
-                    	 var url = 'announcement/delete?id=' + id.replace('dlt','');
-                         $("#content-wrapper").load(url);
-                    }
-                },
-                {
-                    caption: "Hủy",
-                    cls: "js-dialog-close",
-                    onclick: function(){
-                        
-                    }
-                }
-            ]
-        });
-    }
-    
-
-</script>
-<div id="main-content">
+<body class="m4-cloak h-vh-100" id="main-content">
+<div th:fragment="announcement">
+<div id="announcememt-add-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Thông báo<small> thêm</small></h3>
+        </div>
+		</div>
+			<div id="announcement-add-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				 <button type="submit" class="button success" id="btnSaveAnnouncement">Gửi</button>
+                            <a><input type="button" class="button" value="Hủy" onclick="cancelAddingAnnouncement('/announcement')"/></a>
+				</div>
+	</div>
+<div>
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
             <h3 class="dashboard-section-title">Thông báo <small>Xem</small></h3>
@@ -47,7 +31,7 @@
         <div class="p-1 bg-transparent">
             <div class="row">
                 <div class="cell-md-3 cell-xl-2">
-                    <a class="button mb-3 success" onclick="retrieveGuests('/announcement/add')" >Tạo thông báo</a>
+                    <a class="button mb-3 success" onclick="addAnnouncement()" >Tạo thông báo</a>
                     <div class="panel">
                         <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
                              class="panel-content collapsed" data-role-panel="true" style="display: none;">
@@ -73,27 +57,27 @@
                                 <td th:text="${announcement.summary}"></td>
                                 <td th:text="${announcement.getFormattedCreatedDate()}"></td>
                                 <td>
-                                    <a href="#announcement" class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
+                                    <a class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
                                 </td>
                                 <td>
-                                    <a href="#announcement" class="button alert" th:id="'dlt'+${announcement.announcementId}"  onclick="deleteAnnouncement(this.id)">Xóa</a>
+                                    <a class="button alert" th:id="'dlt'+${announcement.announcementId}"  onclick="deleteAnnouncement(this.id)">Xóa</a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="d-flex flex-column flex-justify-center">
                             <ul class="pagination">
-                                <li th:if="${page.hasPrevious()}">
-                                    <a th:href="@{/announcements(page=${page.number - 1},size=${page.size})}">Trang trước</a>
+                                <li class="page-item" th:if="${page.hasPrevious()}">
+                                    <a class="page-link" th:id="@{/announcement(page=${page.number - 1},size=${page.size})}" onclick="goToPage(this.id)">Trang trước</a>
                                 </li>
                                 <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                                    <li th:if="${page.number == i}" class="page-item active">[[${i}+1]]</li>
-                                    <li th:unless="${page.number == i}">
-                                        <a th:href="@{/announcements(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                                    <li th:if="${page.number == i}" class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
+                                    <li class="page-item" th:unless="${page.number == i}">
+                                        <a class="page-link" th:id="@{/announcement(page=${i},size=${page.size})}" onclick="goToPage(this.id)">[[${i}+1]]</a>
                                     </li>
                                 </th:block>
-                                <li th:if="${page.hasNext()}">
-                                    <a th:href="@{/announcements(page=${page.number+1},size=${page.size})}">Trang sau</a>
+                                <li class="page-item" th:if="${page.hasNext()}">
+                                    <a class="page-link"  th:id="@{/announcement(page=${page.number+1},size=${page.size})}" onclick="goToPage(this.id)">Trang sau</a>
                                 </li>
                             </ul>
                         </div>
@@ -102,6 +86,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

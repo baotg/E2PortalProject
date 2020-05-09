@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#btnSubmitTimeTable").click(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+        fire_ajax_submit_time_table();
     });
 });
 
-function fire_ajax_submit() {
+function fire_ajax_submit_time_table() {
 	var file = $("#file-time-table").val();
     var form = $('#import-time-table')[0];
     var data = new FormData(form);

@@ -39,7 +39,7 @@ public class TimeTableController {
     @GetMapping("")
     public String getTimeTables(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("timetables",timeTableService.findAll());
-        return "time-table";
+        return "time-table::time-table";
     }
    
     @GetMapping("/import")

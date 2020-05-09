@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
       >
 <head>
     <title>Lớp chủ nhiệm</title>
 </head>
-<body class="m4-cloak h-vh-100">
+<body class="m4-cloak h-vh-100" th:fragment="main-class">
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">

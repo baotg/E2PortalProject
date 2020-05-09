@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="main-fragment(title, mainContent)">
     <head>
         <title>E2Portal</title>
         <!-- Required meta tags -->
@@ -12,11 +13,18 @@
         <script>
         window.on_page_functions = [];
         function retrieveGuests(url) {
-     
+            url += '?ajax=true';
             $("#content-wrapper").load(url);
         }
     </script>
     </head>
+    <div id="loading-dialog" class="dialog text-center" data-role="dialog" data-overlay="true"
+		data-width="400" data-height="100" data-overlay-color="#003366" >
+				<div class="dialog-actions text-center">
+				<br>
+				<div data-role="activity" data-type="metro" data-style="dark"></div><span>Đang xử lý, vui lòng chờ trong giây lát...</span>
+				</div>
+	</div>
     <body class="m4-cloak h-vh-100">
         <div data-role="navview" data-toggle="#paneToggle" data-expanded="xl" data-compact="lg"
              data-active-state="true" th:fragment="navbar">
@@ -144,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <div th:include="home" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
+                <div th:insert="${mainContent}" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
                     <!--All content here!-->
                 </div>
             </div>
@@ -153,6 +161,11 @@
             <script src="/js/jquery-3.4.1.min.js"></script>
             <script src="/js/metro.js"></script>
             <script src="/js/index.js"></script>
+            <script src="/js/student.js"></script>
+            <script type="text/javascript" src="/js/student-preview.js"></script>
+            <script src="/js/edit-student.js"></script>
+            <script src="/js/announcement.js"></script>
+             <script src="/js/add-announcement.js"></script>
         </th:block>
     </body>
 </html>

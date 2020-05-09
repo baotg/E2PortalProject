@@ -15,18 +15,20 @@ import se.iuh.e2portal.service.UserAccountService;
 @Controller
 @RequestMapping("/account-management")
 public class AccountController {
-	
+
 	@Autowired
 	private UserAccountService accountService;
-	
+
 	@GetMapping("")
-	public String getAllAccount(Model model) {
-		
+	public String getAllAccount(Model model,@Param(value = "ajax") String ajax) {
+
 		model.addAttribute("accounts", accountService.findAll());
+		if(ajax!=null)
+			return "account-management::account-management";
 		return "account-management";
 	}
 	@GetMapping("/reset")
-	public String resetPassword(Model model, @Param(value = "id") String id) {
+	public String resetPassword(Model model, @Param(value = "id") String id,@Param(value = "ajax") String ajax) {
 		UserAccountDetails account = accountService.findById(id);
 		if(account.getUserAccount()!=null)
 			account.getUserAccount().setPassword(UserAccount.DEFAULT_PASSWORD);
@@ -34,6 +36,8 @@ public class AccountController {
 		Message msg = Message.RESET_PASSWORD_SUCCESSFUL;
 		model.addAttribute("msg", msg.getMessage() + account.getId());
 		model.addAttribute("accounts", accountService.findAll());
+		if(ajax!=null)
+			return "account-management::account-management";
 		return "account-management";
 	}
 

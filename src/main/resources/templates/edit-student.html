@@ -7,9 +7,7 @@
 <title>Cập nhật sinh viên</title>
 </head>
 
-<body class="m4-cloak h-vh-100" th:fragment="edit">
-<script src="/js/edit-student.js"> 
-</script>
+<body class="m4-cloak h-vh-100" >
 	<div id="main-content">
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-4 text-center text-left-md">
@@ -18,7 +16,7 @@
 				</h3>
 			</div>
 		</div>
-		<div class="m-3">
+		<div class="m-3" th:fragment="edit-student">
 			<div class="row">
 				<div class="cell-md-9 cell-xl-10">
 					<div class="p-1 p-6-lg bg-white mt-3">
@@ -72,15 +70,15 @@
 									style="color: red; font-size: 10pt"></span> <select
 									th:field="*{mainClass}" class="form-control">
 									<option th:each="i : ${mainClasses}" th:value="${i.classId}"
-										th:text="${i.classId}" th:selected="${student.mainClass}"></option>
+										th:text="${i.classId}" th:selected="${mainClass}"></option>
 								</select>
 							</div>
-							<div class="form-group">
+						<!-- <div class="form-group">
 								<button type="submit" class="button success" id="btnSaveStudent">Lưu
 									lại</button>
 								<input type="button" class="button" value="Hủy"
 									onclick="cancelEdtingStudent('student/')">
-							</div>
+							</div> -->	
 						</form>
 					</div>
 				</div>

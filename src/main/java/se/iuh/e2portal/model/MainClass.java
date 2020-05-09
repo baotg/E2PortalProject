@@ -17,7 +17,7 @@ public class MainClass {
     private String level; // Bậc học
     private String type; // Loại hình đào tạo
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinColumn(name ="facultyId")
+    @JoinColumn(name ="facultyId",referencedColumnName = "facultyId")
     private Faculty faculty;
     private String year;
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -27,8 +27,8 @@ public class MainClass {
     private List<Student> students;
 	@Override
 	public String toString() {
-		return "MainClass [classId=" + classId + ", speciality=" + speciality + ", level=" + level + ", type=" + type
-				+ ", faculty=" + faculty + ", year=" + year + "]";
+		return "MainClass [classId=" + classId + ", className=" + className + "]";
 	}
+    
     
 }

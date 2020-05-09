@@ -64,11 +64,11 @@
         				return false;
         			}
 
-        	        fire_ajax_submit();
+        	        fire_ajax_submit_lecturer();
         	    });
         	   });
 
-    function fire_ajax_submit() {
+    function fire_ajax_submit_lecturer() {
         var form = $('#lecturer-form')[0];
         var data = new FormData(form);
 

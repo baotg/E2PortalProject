@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	  th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>Tải xuống</title>
 <meta charset="UTF-8">
 </head>
-<body class="m4-cloak h-vh-100">
+<body class="m4-cloak h-vh-100" th:fragment="excel-template">
 	<div id="main-content">
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-8 text-center text-left-md">

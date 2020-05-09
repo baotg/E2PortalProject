@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#btnSubmitModuleClass").click(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+        fire_ajax_submit_module_class();
     });
 });
 
-function fire_ajax_submit() {
+function fire_ajax_submit_module_class() {
 	var file = $("#file-module-class").val();
     var form = $('#import-module-class')[0];
     var data = new FormData(form);

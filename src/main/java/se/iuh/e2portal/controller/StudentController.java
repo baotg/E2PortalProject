@@ -3,6 +3,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +26,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
-	
+
 	@Autowired
 	ModuleClassService moduleClassService;
 	@Autowired
@@ -46,8 +49,8 @@ public class StudentController {
 	//    }
 	@GetMapping("/search")
 	public String getClasses(@RequestParam("id") String id, Model model) {
-			model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(id));
-			model.addAttribute("mainClasses", mainClassService.findByFacultyId(id));
+		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(id));
+		model.addAttribute("mainClasses", mainClassService.findByFacultyId(id));
 		return "student::select-classes";
 	}
 	@GetMapping("/search/class")
@@ -60,36 +63,38 @@ public class StudentController {
 			model.addAttribute("studentList",mainClass.get().getStudents());
 		return "student::student-table";
 	}
-	
+
 	@GetMapping("")
-	public String getStudentPage(Model model){
+	public String getStudentPage(Model model, @Param("ajax")String ajax){
 		model.addAttribute("faculties", facultyService.findAll());
-		//model.addAttribute("studentList",studentService.findAll());
-		return "student::student";
+		if(ajax!=null)
+			return "student::student";
+		return "student";
 	}
-	
+
 	@GetMapping("/{id}")
-	public String getStudentInfo(@PathVariable("id") String id, Model model){
+	public String getStudentInfo(@PathVariable("id") String id, Model model, @Param("ajax")String ajax){
 		Optional<Student> student = studentService.findById(id);
 		if(!student.isPresent())
 			return "redirect:/";
 		model.addAttribute("student", student.get());
+		if(ajax!=null)
+			return "view-student::view-student";
 		return "view-student";
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String editStudent(@RequestParam("id") String id, Model model){
 		Optional<Student> result = studentService.findById(id);
 		Iterable<MainClass> mainClasses = mainClassService.findAll();
 		if(result.isPresent()){
-		model.addAttribute("mainClasses", mainClasses.iterator());
-			result.get().setMainClass(null);
-			model.addAttribute("student", result.get());
-			return "edit-student";
+			model.addAttribute("mainClasses", mainClasses);
+			model.addAttribute("student", result);
+			return "edit-student::edit-student";
 		}
-		return "redirect:/";
+		return "student::student";
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String deleteStudent(@RequestParam("id") String id, Model model){
 		Optional<Student> result = studentService.findById(id);
@@ -101,15 +106,16 @@ public class StudentController {
 			Student student = result.get();
 			student.getModuleClasses().clear();
 			studentService.delete(student);
-			return "redirect:/student";
+			model.addAttribute("studentList",studentService.findByMainClass(student.getMainClass()));
+			return "student::student-table";
 		}
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/import")
 	public String mapReapExcelDatatoDB(Model model) throws IOException {
 		if(excelFileHandlerService.getInputStream()==null)
-			return "redirect:/";
+			return "student::student";
 		@SuppressWarnings("resource")
 		Workbook workbook = new XSSFWorkbook(excelFileHandlerService.getInputStream());
 		Sheet sheet = workbook.getSheetAt(0);
@@ -117,25 +123,25 @@ public class StudentController {
 		if(!validate) {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
-			model.addAttribute("studentList",studentService.findAll());
-			return "student::student";
+			return "redirect:/handle";
 		}
 		MainClass mainClass = studentReader.getMainClass(sheet);
 		List<Student> students = studentReader.getListStudent(sheet, mainClass);
 		excelFileHandlerService.setStudents(students);
 		model.addAttribute("mainClass",mainClass);
 		model.addAttribute("students", students);
-		return "student-preview";
+		return "student-preview::student-preview";
 	}
-	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveStudent(Student student){
+	public String saveStudent(Student student, Model model){
+		model.addAttribute("studentList", studentService.findByMainClass(student.getMainClass()));
 		studentService.save(student);
-		return "redirect:/student";
+		return "student::student-table";
 	}
-	
+
 	@GetMapping("/import/save")
-	public String saveAll(){
+	public String saveAll(Model model){
 		List<Student> students = excelFileHandlerService.getStudents();
 		if(students.isEmpty() || students == null)
 			return "redirect:/";
@@ -155,9 +161,16 @@ public class StudentController {
 		mainClassService.save(mainClass);
 		studentService.saveAll(students);
 		excelFileHandlerService.getStudents().clear();
-		return "redirect:/student";
+		model.addAttribute("studentList", studentService.findByMainClass(mainClass));
+		model.addAttribute("faculties", facultyService.findAll());
+		model.addAttribute("mainClasses", mainClassService.findByFacultyId(faculty.getFacultyId()));
+		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(faculty.getFacultyId()));
+		model.addAttribute("selectedFaculty",faculty);
+		model.addAttribute("selectedMainClass",mainClass);
+		System.out.println(faculty.getFacultyId() + faculty.getName());
+		return "student::student";
 	}
-	
+
 	@GetMapping("/import/cancel")
 	public String cancelImport() {
 		excelFileHandlerService.getStudents().clear();

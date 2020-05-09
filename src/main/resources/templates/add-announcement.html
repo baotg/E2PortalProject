@@ -1,96 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
       >
 <head>
     <title>Add Announcement</title>
 </head>
 <body class="m4-cloak h-vh-100">
-<script>
-    $(document).ready(function () {
-        $("#btnSave").click(function (event) {
-            event.preventDefault();
-            var title = $("#title").val();
-            var summary = $("#summary").val();
-            var contentDetail = $("#contentDetail").val();
-            $('#errTitle').html('');
-            $('#errSummary').html('');
-            $('#errContent').html('');
-            if(title == '' || summary == '' || contentDetail == ''){
-            	if(title ==''){
-        			$('#errTitle').html('*Thông tin này không được để trống!');
-        			
-        		}
-        		if(summary ==''){
-        			$('#errSummary').html('*Thông tin này không được để trống!');
-        			
-        		}
-        		if(contentDetail ==''){
-        			$('#errContent').html('*Thông tin này không được để trống!');
-        		
-        		}
-        			return false;
-            }
-    		
-            fire_ajax_submit();
-        });
-    });
-
-    function fire_ajax_submit() {
-
-        var form = $('#add-form')[0];
-        var data = new FormData(form);
-        $.ajax({
-            type: "POST",
-            url: "announcement/save",
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-            	 $("#content-wrapper").html(data.toString());
-                console.log("OK!")
-            },
-            error: function (e) {
-                alert('Lưu không thành công!');
-            }
-        });
-        $('#add-form')[0].reset();
-        function retrieveGuests(url) {
-            $("#content-wrapper").load(url);
-        }
-    }
-    function cancelAddingAnnouncement(url){
-        Metro.dialog.create({
-            title: "Hủy bỏ",
-            content: "<div>Nội dung hiện tại sẽ không được lưu lại.<br> <b>Bạn có muốn tiếp tục?</b></div>",
-            actions: [
-                {
-                    caption: "Hủy bỏ",
-                    cls: "js-dialog-close alert",
-                    onclick: function(){
-                         $("#content-wrapper").load(url);
-                    }
-                },
-                {
-                    caption: "Hủy",
-                    cls: "js-dialog-close",
-                    onclick: function(){
-                        
-                    }
-                }
-            ]
-        });
-    }
-</script>
 <div id="main-content">
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
             <h3 class="dashboard-section-title">Thông báo <small>Tạo mới</small></h3>
         </div>
     </div>
-    <div class="m-3">
+    <div class="m-3" th:fragment="add-announcement">
         <div class="row">
             <div class="cell-md-9 cell-xl-10">
                 <div class="p-1 p-6-lg bg-white mt-3">
@@ -109,10 +32,10 @@
                             <textarea data-role="textarea" th:field="*{contentDetail}"
                                       placeholder="Nội dung chi tiết" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="button success" id="btnSave">Lưu lại</button>
+                      <!-- <div class="form-group">
+                            <button type="submit" class="button success" id="btnSaveAnnouncement">Gửi</button>
                             <a href="#announcement"><input type="button" class="button" value="Hủy" onclick=" cancelAddingAnnouncement('/announcement')"/></a>
-                        </div>
+                        </div> -->  
                     </form>
                 </div>
             </div>

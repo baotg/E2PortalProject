@@ -83,7 +83,7 @@ public class MultiHttpSecurityConfig {
                     .and()
                     .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/home")
                     .usernameParameter("id")
                     .passwordParameter("password").permitAll()
                     .and()

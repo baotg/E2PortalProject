@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	  th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>Sinh viên</title>

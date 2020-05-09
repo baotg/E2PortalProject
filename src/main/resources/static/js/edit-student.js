@@ -76,17 +76,17 @@
 			$("#errParentPhoneNumber").html(' *Số điện toại không đúng định dạng');
 			return false;
 		}
-        fire_ajax_submit();
+        fire_ajax_submit_student_edit();
     });
    });
 
-    function fire_ajax_submit() {
+    function fire_ajax_submit_student_edit() {
         var form = $('#student-form')[0];
         var data = new FormData(form);
 
         $.ajax({
             type: "POST",
-            url: "student/save",
+            url: "/student/save",
             data: data,
             processData: false,
             contentType: false,
@@ -94,10 +94,12 @@
             timeout: 600000,
             success: function (data) {
               
-                $("#content-wrapper").html(data.toString());
+                $("#students-table").html(data.toString());
+                Metro.dialog.close('#student-edit-dialog');
                
             },
             error: function (e) {
+            	Metro.dialog.close('#student-edit-dialog');
                 alert('Lưu không thành công!');
             }
         });
@@ -113,7 +115,7 @@
                     caption: "Hủy bỏ",
                     cls: "js-dialog-close alert",
                     onclick: function(){
-                         $("#content-wrapper").load(url);
+                    	Metro.dialog.close('#student-edit-dialog');
                     }
                 },
                 {
@@ -125,4 +127,9 @@
                 }
             ]
         });
+    }
+    function getStudentEditDialog(id){
+    	var url = '/student/edit?id=' + id.replace('edt','');
+    	$("#student-edit-dialog-content").load(url);
+    	Metro.dialog.open('#student-edit-dialog');
     }

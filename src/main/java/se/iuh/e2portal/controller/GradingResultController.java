@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,10 @@ public class GradingResultController {
 	private ExcelFileHandlerService excelFileHandlerService;
 
 	@GetMapping("")
-	public String getAll(Model model){
+	public String getAll(Model model, @Param("ajax")String ajax){
 		model.addAttribute("gradingresults",gradingResultService.findAll());
+		if(ajax!=null)
+			return "grading-result::grading-result";
 		return "grading-result";
 	}
 
@@ -55,7 +58,7 @@ public class GradingResultController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("timetables",gradingResultService.findAll());
-			return "grading-result";
+			return "grading-result::grading-result";
 		}
 		ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
 		List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);

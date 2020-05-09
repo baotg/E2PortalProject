@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,10 @@ public class AttendanceController {
 	private ExcelFileHandlerService excelFileHandlerService;
 
 	@GetMapping("")
-	public String getAll(Model model){
+	public String getAll(Model model, @Param("ajax")String ajax){
 		model.addAttribute("attendances",attendanceService.findAll());
+		if(ajax!=null)
+		return "attendance::attendance";
 		return "attendance";
 	}
 
@@ -55,7 +58,7 @@ public class AttendanceController {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
 			model.addAttribute("attendances",attendanceService.findAll());
-			return "attendance";
+			return "attendance::attendance";
 		}
 		ModuleClass moduleClass = attendanceReader.getModuleClass(sheet);
 		List<Attendance> attendances = attendanceReader.getListAttendance(sheet,moduleClass);

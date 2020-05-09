@@ -26,7 +26,6 @@ public class ExcelFileHandlerService {
 	private List<Attendance> attendances;
 	private ModuleClass moduleClass;
 	
-
 	public InputStream getInputStream() {
 		return inputStream;
 	}
