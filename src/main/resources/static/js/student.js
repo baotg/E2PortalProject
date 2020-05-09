@@ -1,10 +1,15 @@
-$(document).ready(function () {
-    $("#btnSubmitStudent").click(function (event) {
-        $("#fileNotChosen").html('');
-        event.preventDefault();
-        fire_ajax_submit_student();
-    });
-});
+// $(document).ready(function () {
+//     $("#btnSubmitStudent").click(function (event) {
+//         $("#fileNotChosen").html('');
+//         event.preventDefault();
+//         fire_ajax_submit_student();
+//     });
+// });
+ function doImportStudent(){
+	 event.preventDefault();
+	 $("#fileNotChosen").html('');
+     fire_ajax_submit_student();
+ }
 
 function fire_ajax_submit_student() {
 	var file = $("#file-student").val();

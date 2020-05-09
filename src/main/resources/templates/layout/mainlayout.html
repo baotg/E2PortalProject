@@ -1,171 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:fragment="main-fragment(title, mainContent)">
-    <head>
-        <title>E2Portal</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <!-- Metro 4 -->
-        <link rel="stylesheet" href="/css/metro-all.css">
-        <link rel="stylesheet" href="/css/metro-icons.css">
-        <link rel="stylesheet" href="/css/index.css">
-        <script>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:fragment="main-fragment(title, mainContent)">
+<head>
+<title>E2Portal</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- Metro 4 -->
+<link rel="stylesheet" href="/css/metro-all.css">
+<link rel="stylesheet" href="/css/metro-icons.css">
+<link rel="stylesheet" href="/css/index.css">
+<script>
         window.on_page_functions = [];
         function retrieveGuests(url) {
             url += '?ajax=true';
             $("#content-wrapper").load(url);
         }
     </script>
-    </head>
-    <div id="loading-dialog" class="dialog text-center" data-role="dialog" data-overlay="true"
-		data-width="400" data-height="100" data-overlay-color="#003366" >
-				<div class="dialog-actions text-center">
-				<br>
-				<div data-role="activity" data-type="metro" data-style="dark"></div><span>Đang xử lý, vui lòng chờ trong giây lát...</span>
-				</div>
+</head>
+<div id="loading-dialog" class="dialog text-center" data-role="dialog"
+	data-overlay="true" data-width="400" data-height="100"
+	data-overlay-color="#003366">
+	<div class="dialog-actions text-center">
+		<br>
+		<div data-role="activity" data-type="metro" data-style="dark"></div>
+		<span>Đang xử lý, vui lòng chờ trong giây lát...</span>
 	</div>
-    <body class="m4-cloak h-vh-100">
-        <div data-role="navview" data-toggle="#paneToggle" data-expanded="xl" data-compact="lg"
-             data-active-state="true" th:fragment="navbar">
-            <div class="navview-pane">
-                <div class="bg-cyan d-flex flex-align-center">
-                    <button class="pull-button m-0 bg-darkCyan-hover">
-                        <span class="mif-menu fg-white"></span>
-                    </button>
-                    <h2 class="text-light m-0 fg-white pl-7" style="line-height: 52px">E2Portal</h2>
-                </div>
-                <div class="suggest-box">
-                    <input type="text" data-role="input" data-clear-button="false" data-search-button="true" placeholder="Bạn đang tìm gì?">
-                    <button class="holder">
-                        <span class="mif-search fg-white"></span>
-                    </button>
-                </div>
-                <ul class="navview-menu mt-4" id="side-menu">
-                    <li class="item-header">QUẢN LÝ</li>
-                    <li>
-                        <a th:href="@{/home}">
-                            <span class="icon"><span class="mif-home"></span></span>
-                            <span class="caption">Trang chính</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/announcement}">
-                            <span class="icon"><span class="mif-bell"></span></span>
-                            <span class="caption">Thông báo</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/student}">
-                            <span class="icon"><span class="mif-user"></span></span>
-                            <span class="caption">Sinh viên</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/moduleclass}">
-                            <span class="icon"><span class="mif-books"></span></span>
-                            <span class="caption">Lớp học phần</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/mainclass}">
-                            <span class="icon"><span class="mif-books"></span></span>
-                            <span class="caption">Lớp chủ nhiệm</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/timetable}">
-                            <span class="icon"><span class="mif-calendar"></span></span>
-                            <span class="caption">Lịch học</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/lecturer}">
-                            <span class="icon"><span class="mif-user"></span></span>
-                            <span class="caption">Giảng viên</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/attendance}">
-                            <span class="icon"><span class="mif-checkmark"></span></span>
-                            <span class="caption">Điểm danh</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/gradingresult}">
-                            <span class="icon"><span class="mif-note"></span></span>
-                            <span class="caption">Kết quả học tập</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/faculty}">
-                            <span class="icon"><span class="mif-room"></span></span>
-                            <span class="caption">Khoa - viện</span>
-                        </a>
-                    </li>
+</div>
+<body class="m4-cloak h-vh-100">
+	<div data-role="navview" data-toggle="#paneToggle" data-expanded="xl"
+		data-compact="lg" data-active-state="true" th:fragment="navbar">
+		<div class="navview-pane">
+			<div class="bg-cyan d-flex flex-align-center">
+				<button class="pull-button m-0 bg-darkCyan-hover">
+					<span class="mif-menu fg-white"></span>
+				</button>
+				<h2 class="text-light m-0 fg-white pl-7" style="line-height: 52px">E2Portal</h2>
+			</div>
+			<div class="suggest-box">
+				<input type="text" data-role="input" data-clear-button="false"
+					data-search-button="true" placeholder="Bạn đang tìm gì?">
+				<button class="holder">
+					<span class="mif-search fg-white"></span>
+				</button>
+			</div>
+			<ul class="navview-menu mt-4" id="side-menu">
+				<li class="item-header">QUẢN LÝ</li>
+				<li><a th:href="@{/home}"> <span class="icon"><span
+							class="mif-home"></span></span> <span class="caption">Trang chính</span>
+				</a></li>
+				<li><a th:href="@{/announcement}"> <span class="icon"><span
+							class="mif-bell"></span></span> <span class="caption">Thông báo</span>
+				</a></li>
+				<li><a th:href="@{/student}"> <span class="icon"><span
+							class="mif-user"></span></span> <span class="caption">Sinh viên</span>
+				</a></li>
+				<li><a th:href="@{/moduleclass}"> <span class="icon"><span
+							class="mif-books"></span></span> <span class="caption">Lớp học
+							phần</span>
+				</a></li>
+				<li><a th:href="@{/mainclass}"> <span class="icon"><span
+							class="mif-books"></span></span> <span class="caption">Lớp chủ
+							nhiệm</span>
+				</a></li>
+				<li><a th:href="@{/timetable}"> <span class="icon"><span
+							class="mif-calendar"></span></span> <span class="caption">Lịch
+							học</span>
+				</a></li>
+				<li><a th:href="@{/lecturer}"> <span class="icon"><span
+							class="mif-user"></span></span> <span class="caption">Giảng viên</span>
+				</a></li>
+				<li><a th:href="@{/attendance}"> <span class="icon"><span
+							class="mif-checkmark"></span></span> <span class="caption">Điểm
+							danh</span>
+				</a></li>
+				<li><a th:href="@{/gradingresult}"> <span class="icon"><span
+							class="mif-note"></span></span> <span class="caption">Kết quả học
+							tập</span>
+				</a></li>
+				<li><a th:href="@{/faculty}"> <span class="icon"><span
+							class="mif-room"></span></span> <span class="caption">Khoa - viện</span>
+				</a></li>
 
-                    <th:block th:each="role:${#authentication.getAuthorities()}">
-                        <li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN TRỊ</li>
-                    </th:block>
-                    <li>
-                        <a th:href="@{/account-management}">
-                            <span class="icon"><span class="mif-user"></span></span>
-                            <span class="caption">Quản lý Tài khoản</span>
-                        </a>
-                    </li>
-                    <li class="item-header">TẢI XUỐNG</li>
-                    <li>
-                        <a th:href="@{/download}">
-                            <span class="icon"><span class="mif-download"></span></span>
-                            <span class="caption">Template Excel</span>
-                        </a>
-                    </li>
-                </ul>
+				<th:block th:each="role:${#authentication.getAuthorities()}">
+					<li th:if="${role.getAuthority() == 'ADMIN'}" class="item-header">QUẢN
+						TRỊ</li>
+				</th:block>
+				<li><a th:href="@{/account-management}"> <span class="icon"><span
+							class="mif-user"></span></span> <span class="caption">Quản lý Tài
+							khoản</span>
+				</a></li>
+				<li class="item-header">TẢI XUỐNG</li>
+				<li><a th:href="@{/download}"> <span class="icon"><span
+							class="mif-download"></span></span> <span class="caption">Template
+							Excel</span>
+				</a></li>
+			</ul>
 
 
-            </div>
-            <div class="navview-content h-100">
-                <div data-role="appbar" class="pos-absolute bg-darkCyan fg-white">
-                    <a href="#" class="app-bar-item d-block d-none-lg" id="paneToggle"><span class="mif-menu"></span></a>
-                    <div class="app-bar-container ml-auto">
-                        <div class="app-bar-container">
-                            <a href="#" class="app-bar-item"><span class="ml-2 app-bar-name"
-                                                                   sec:authentication="principal"></span></a>
-                            <div class="user-block shadow-1" data-role="collapse" data-collapsed="true">
-                                <div class="bg-darkCyan fg-white p-2 text-center">
-                                    <div class="h4 mb-0" sec:authentication="principal"></div>
-                                    <div class="text-medium">Được phép truy cập</div>
-                                    <div class="inline-list">
-                                        <th:block th:each="role:${#authentication.getAuthorities()}">
-                                            <div class="items-list">
-                                                <button th:utext="${role}" class="button after-bg-lightIndigo ml-0"></button>
-                                            </div>
-                                        </th:block>
-                                    </div>
-                                    <div>#Name</div>
-                                </div>
-                                <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
-                                    <button class="button mr-1">Hồ sơ</button>
-                                    <button class="button ml-1 "><a th:href="@{/logout}">Đăng xuất</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div th:insert="${mainContent}" id="content-wrapper" class="content-inner h-100" style="overflow-y: auto">
-                    <!--All content here!-->
-                </div>
-            </div>
-        </div>
-        <th:block th:fragment="script">
-            <script src="/js/jquery-3.4.1.min.js"></script>
-            <script src="/js/metro.js"></script>
-            <script src="/js/index.js"></script>
-            <script src="/js/student.js"></script>
-            <script type="text/javascript" src="/js/student-preview.js"></script>
-            <script src="/js/edit-student.js"></script>
-            <script src="/js/announcement.js"></script>
-             <script src="/js/add-announcement.js"></script>
-        </th:block>
-    </body>
+		</div>
+		<div class="navview-content h-100">
+			<div data-role="appbar" class="pos-absolute bg-darkCyan fg-white">
+				<a href="#" class="app-bar-item d-block d-none-lg" id="paneToggle"><span
+					class="mif-menu"></span></a>
+				<div class="app-bar-container ml-auto">
+					<div class="app-bar-container">
+						<a href="#" class="app-bar-item"><span
+							class="ml-2 app-bar-name" sec:authentication="principal"></span></a>
+						<div class="user-block shadow-1" data-role="collapse"
+							data-collapsed="true">
+							<div class="bg-darkCyan fg-white p-2 text-center">
+								<div class="h4 mb-0" sec:authentication="principal"></div>
+								<div class="text-medium">Được phép truy cập</div>
+								<div class="inline-list">
+									<th:block th:each="role:${#authentication.getAuthorities()}">
+										<div class="items-list">
+											<button th:utext="${role}"
+												class="button after-bg-lightIndigo ml-0"></button>
+										</div>
+									</th:block>
+								</div>
+								<div>#Name</div>
+							</div>
+							<div
+								class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
+								<button class="button mr-1">Hồ sơ</button>
+								<button class="button ml-1 ">
+									<a th:href="@{/logout}">Đăng xuất</a>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:insert="${mainContent}" id="content-wrapper"
+				class="content-inner h-100" style="overflow-y: auto">
+				<!--All content here!-->
+			</div>
+		</div>
+	</div>
+	<th:block th:fragment="script">
+		<script src="/js/jquery-3.4.1.min.js"></script>
+		<script src="/js/metro.js"></script>
+		<script src="/js/index.js"></script>
+		<script src="/js/student-preview.js"></script>
+		<script src="/js/edit-student.js"></script>
+		<script src="/js/announcement.js"></script>
+		<script src="/js/student.js"></script>
+		<script src="/js/add-announcement.js"></script>
+		<script src="/js/attendance-preview.js"></script>
+		<script src="/js/attendance.js"></script>
+		<script src="/js/edit-lecturer.js"></script>
+		<script src="/js/grading-result-preview.js"></script>
+		<script src="/js/grading-result.js"></script>
+		<script src="/js/lecturer.js"></script>
+		<script src="/js/module-class-preview.js"></script>
+		<script src="/js/module-class.js"></script>
+		<script src="/js/time-table-preview.js"></script>
+		<script src="/js/time-table.js"></script>
+
+	</th:block>
+</body>
 </html>

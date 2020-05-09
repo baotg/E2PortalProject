@@ -32,5 +32,11 @@ public class GradingResult {
     private float practiceScore3;
     private float practiceScore4;
     private float practiceScore5;
+	@Override
+	public String toString() {
+		return "GradingResult [StudentId=" + student.getId() + " ModuleClassId=" + moduleClass.getModuleClassId() + "]";
+	}
+    
+    
     
 }
