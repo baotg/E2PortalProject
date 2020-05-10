@@ -8,7 +8,8 @@ function cancelImportModuleClass(url){
                 caption: "Hủy bỏ",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                    // $("#content-wrapper").load(url);
+                	Metro.dialog.close('#module-class-preview-dialog');
                 }
             },
             {
@@ -30,7 +31,9 @@ function confirmImportModuleClass(url){
                 caption: "Đồng ý",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                	Metro.dialog.close('#module-class-preview-dialog');
+                	callAjaxSave(url);
+                	// $("#content-wrapper").load(url);
                 }
             },
             {

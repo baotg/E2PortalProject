@@ -26,6 +26,7 @@ public class AnnouncementController {
     
     @GetMapping("")
     public String getAnnouncements(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax) {
+
         Page<Announcement> page = announcementService.findAll(pageable);
         model.addAttribute("page", page);
         if(ajax!=null)

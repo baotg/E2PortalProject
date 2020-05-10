@@ -7,7 +7,8 @@ function cancelImportGradingResult(url){
                 caption: "Hủy bỏ",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                   //  $("#content-wrapper").load(url);
+                    Metro.dialog.close('#grading-result-preview-dialog');
                 }
             },
             {
@@ -29,7 +30,8 @@ function confirmImportGradingResult(url){
                 caption: "Đồng ý",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                    Metro.dialog.close('#grading-result-preview-dialog');
+                    callAjaxSave(url);
                 }
             },
             {

@@ -7,7 +7,7 @@ function cancelImportAttendance(url){
                 caption: "Hủy bỏ",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                    Metro.dialog.close('#attendance-preview-dialog');
                 }
             },
             {
@@ -29,7 +29,8 @@ function confirmImportAttendance(url){
                 caption: "Đồng ý",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                    Metro.dialog.close('#attendance-preview-dialog');
+                    callAjaxSave(url);
                 }
             },
             {

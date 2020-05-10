@@ -12,7 +12,7 @@
             <h3 class="dashboard-section-title">Nhập Điểm danh<small>xem trước</small></h3>
         </div>
     </div>
-    <div class="m-3">
+    <div class="m-3" th:fragment="attendance-preview">
         <div class="p-1 bg-transparent">
             <div class="row">
                 <div class="cell-md-12 cell-xl-12">
@@ -40,10 +40,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a href="#attendance" class="button warning"
-								onclick="confirmImportAttendance('attendance/import/save')">Nhập</a> <a
-								href="#attendance" class="button primary"
-								onclick="cancelImportAttendance('attendance/import/cancel')">Hủy bỏ</a>
+                        
                     </div>
                 </div>
             </div>

@@ -36,7 +36,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="lecturer : ${lecturers}">
-                                <td><a href="#lecturer"
+                                <td><a href="#"
 											th:id=" 'ltr' + ${lecturer.id}"
 											onclick="viewLecturer(this.id)"><span
 												th:text="${lecturer.id}"></span></a></td>
@@ -48,7 +48,7 @@
                                 <td th:text="${lecturer.address}"></td>
                                 <td th:text="${lecturer.numberPhone}"></td>
                                 <td th:text="${lecturer.email}"></td>
-                                <td><a href="#student" class="button warning" th:id=" 'edt' + ${lecturer.id}" onclick="editLecturer(this.id)">Sửa</a></td>
+                                <td><a href="#" class="button warning" th:id=" 'edt' + ${lecturer.id}" onclick="editLecturer(this.id)">Sửa</a></td>
 								<td><a href="#" th:id=" 'dlt' + ${lecturer.id}" onclick="deleteLecturer(this.id)"	class="button alert">Xóa</a></td>
                             </tr>
                             </tbody>

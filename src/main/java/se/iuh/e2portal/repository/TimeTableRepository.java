@@ -6,5 +6,7 @@ import se.iuh.e2portal.model.TimeTable;
 
 @RepositoryRestResource(itemResourceRel = "timetable",collectionResourceRel = "timetable", path = "timetable")
 public interface TimeTableRepository extends CrudRepository<TimeTable, Long> {
+	Iterable<TimeTable> findByModuleClassModuleClassId(String id);
+	
 
 }

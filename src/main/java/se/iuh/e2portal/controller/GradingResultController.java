@@ -31,10 +31,13 @@ public class GradingResultController {
 	private ModuleClassService moduleClassService;
 	@Autowired
 	private ExcelFileHandlerService excelFileHandlerService;
+	@Autowired
+	private FacultyService facultyService;
 
 	@GetMapping("")
 	public String getAll(Model model, @Param("ajax")String ajax){
-		model.addAttribute("gradingresults",gradingResultService.findAll());
+		//model.addAttribute("gradingresults",gradingResultService.findAll());
+		model.addAttribute("faculties", facultyService.findAll());
 		if(ajax!=null)
 			return "grading-result::grading-result";
 		return "grading-result";
@@ -57,26 +60,29 @@ public class GradingResultController {
 		if(!validate) {
 			Message msg = Message.FILE_NOT_CORRECT;
 			model.addAttribute("msg", msg.getMessage());
-			model.addAttribute("timetables",gradingResultService.findAll());
-			return "grading-result::grading-result";
+			return "redirect:/handle";
 		}
 		ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
 		List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
 		excelFileHandlerService.setGradingResults(gradingResults);
 		model.addAttribute("gradingresults", gradingResults);
-		return "grading-result-preview";
+		return "grading-result-preview::grading-result-preview";
 	}
 
 	@GetMapping("/import/save")
-	public String saveAll(){
+	public String saveAll(Model model){
 		List<GradingResult> gradingResults = excelFileHandlerService.getGradingResults();
 		ModuleClass moduleClass = gradingResults.get(0).getModuleClass();	
+		Faculty faculty = moduleClass.getFaculty();
 		if(!moduleClassService.existsById(moduleClass.getModuleClassId())){
 			moduleClassService.save(moduleClass);
 		}
 		else {
 			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
 		}
+		if(facultyService.existsById(faculty.getFacultyId())) {
+        	faculty = facultyService.findById(faculty.getFacultyId()).get();
+        }
 		for(GradingResult gradingResult : gradingResults){
 			if(!studentService.existsById(gradingResult.getStudent().getId())) {
 				if(!mainClassService.existsById(gradingResult.getStudent().getMainClass().getClassId()))
@@ -87,7 +93,12 @@ public class GradingResultController {
 				gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
 		}
 		gradingResultService.saveAll(gradingResults);
-		return "redirect:/gradingresult";
+		model.addAttribute("faculties", facultyService.findAll());
+		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(faculty.getFacultyId()));
+		model.addAttribute("selectedModuleClass",moduleClass);
+		model.addAttribute("selectedFaculty",faculty);
+		model.addAttribute("gradingresults",gradingResultService.findByModuleClass(moduleClass.getModuleClassId()));
+		return "grading-result::grading-result";
 	}
 
 	@GetMapping("/import/cancel")

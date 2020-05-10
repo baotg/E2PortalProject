@@ -99,3 +99,19 @@ function callAjaxSave(url){
         }
     });  
 }
+function callAjaxGetWithLoading(id,url){
+	Metro.dialog.open('#loading-dialog');
+	$.ajax({
+        type: "GET",
+        url: url,
+        dataType: "html",
+        success: function(data) {
+        	Metro.dialog.close('#loading-dialog');
+        	$(id).html(data.toString());
+        },
+        error: function() {
+        	Metro.dialog.close('#loading-dialog');
+            alert('Đã có lỗi xảy ra, vui lòng thử lại!');
+        }
+    });  
+}

@@ -1,6 +1,8 @@
 package se.iuh.e2portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,6 +63,15 @@ public class UserAccountService implements UserDetailsService {
     public void delete(UserAccount userAccount) {
         userAccountRepository.delete(userAccount);
     }
+
+	public Page<UserAccount> findAll(Pageable pageable) {
+		
+		return userAccountRepository.findAll(pageable);
+	}
+
+	public Page<UserAccount> findAll(Pageable pageable, String id) {
+		return userAccountRepository.findAll(pageable,id);
+	}
 
 
 }

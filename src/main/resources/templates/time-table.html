@@ -6,8 +6,24 @@
 <head>
 <title>Time Table</title>
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="time-table">
-	
+<body id="main-content" class="m4-cloak h-vh-100" >
+	<div th:fragment="time-table">
+	<div id="time-table-preview-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Nhập thông Lịch học<small> Xem trước</small></h3>
+        </div>
+		</div>
+			<div id="time-table-preview-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				<a class="button warning"
+								onclick="confirmImportTimeTable('timetable/import/save')">Nhập</a> <a
+								 class="button primary"
+								onclick="cancelImportTimeTable('timetable/import/cancel')">Hủy bỏ</a>
+				</div>
+	</div>
 	<div id="time-table-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">
 		<form id="import-time-table" enctype="multipart/form-data">
@@ -24,11 +40,11 @@
 			</div>
 			<div class="dialog-actions right">
 				<button class="button" type="submit"
-					id="btnSubmitTimeTable">Nhập</button>
+					id="btnSubmitTimeTable" onclick="doImportTimeTable()">Nhập</button>
 			</div>
 		</form>
 	</div>
-	<div id="main-content">
+	<div >
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-4 text-center text-left-md">
 				<h3 class="dashboard-section-title">
@@ -44,8 +60,33 @@
 							Lịch học</button>
 						<span style="color: red" th:text="${msg}"></span>
 					</div>
-					<div class="cell-md-12 cell-xl-12">
-						<div class="p-1 p-6-lg bg-white mt-3">
+					<div class="cell-md-4 cell-xl-4" >
+					
+						Khoa: <select id="faculty-select" data-role="select" class="form-control"
+							data-on-item-select="getClassesTimeTable()">
+							<option value="empty">Chọn một mục</option>
+							<optgroup label="Khoa">
+							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
+								th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
+							</optgroup>
+						</select>
+					</div>
+
+					<div class="cell-md-4 cell-xl-4" id="select-classes">
+						<div th:fragment="select-classes">
+							Lớp: <select data-role="select" id="class-select" 
+								data-on-item-select="getTimeTables()">
+								<option value="empty">Chọn một mục</option>
+								<optgroup label="Lớp học phần">
+									<option th:each="i : ${moduleClasses}"
+										th:value="${i.moduleClassId}"
+										th:text="${i.moduleClassId + ' - ' + i.moduleClassName}" th:selected="${i==selectedModuleClass}"></option>
+								</optgroup>
+								</select>
+						</div>
+					</div>
+					<div class="cell-md-12 cell-xl-12" id="time-table-table">
+						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="time-table-table">
 							<table class="table striped table-border mt-4" data-role="table"
 								data-rows="10">
 								<thead>
@@ -77,6 +118,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

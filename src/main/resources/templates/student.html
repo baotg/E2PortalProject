@@ -34,7 +34,7 @@
 			<div id="student-edit-dialog-content" class="content-inner h-100"
 				style="overflow-y: auto"></div>
 				<div class="dialog-actions right">
-				<button type="submit" class="button success" id="btnSaveStudent">Lưu
+				<button type="submit" class="button success" onclick="saveStudent()" id="btnSaveStudent">Lưu
 									lại</button>
 								<input type="button" class="button" value="Hủy"
 									onclick="cancelEdtingStudent('student/')">
@@ -109,7 +109,6 @@
 							</select>
 						</div>
 					</div>
-
 					<div class="cell-md-12 cell-xl-12" id="students-table">
 						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="student-table">
 							<table class="table striped table-border mt-4" data-role="table"

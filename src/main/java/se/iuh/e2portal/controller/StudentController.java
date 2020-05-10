@@ -167,7 +167,6 @@ public class StudentController {
 		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(faculty.getFacultyId()));
 		model.addAttribute("selectedFaculty",faculty);
 		model.addAttribute("selectedMainClass",mainClass);
-		System.out.println(faculty.getFacultyId() + faculty.getName());
 		return "student::student";
 	}
 

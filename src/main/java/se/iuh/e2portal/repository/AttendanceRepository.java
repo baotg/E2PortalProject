@@ -12,4 +12,5 @@ import java.util.List;
 public interface AttendanceRepository extends CrudRepository<Attendance,Long> {
     @Query("select a from Attendance a where a.student = ?1")
     List<Attendance> findAllByStudent(Student student);
+    Iterable<Attendance> findByModuleClassModuleClassId(String id);
 }

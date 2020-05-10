@@ -13,7 +13,9 @@ public class GradingResultService {
 
     @Autowired
     private GradingResultRepository gradingResultRepository;
-
+    public Iterable<GradingResult> findByModuleClass(String id){
+        return gradingResultRepository.findByModuleClassModuleClassId(id);
+    }
 
     public GradingResult save(GradingResult gradingResult) {
         return null;

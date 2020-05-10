@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.TimeTable;
 import se.iuh.e2portal.repository.TimeTableRepository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,9 @@ public class TimeTableService {
 
     @Autowired
     private TimeTableRepository timeTableRepository;
+    public Iterable<TimeTable> findByModuleClassId(String id){
+        return timeTableRepository.findByModuleClassModuleClassId(id);
+    }
 
     public TimeTable save(TimeTable timeTable) {
         return timeTableRepository.save(timeTable);

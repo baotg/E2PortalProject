@@ -3,13 +3,14 @@ package se.iuh.e2portal.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-public class ModuleClass {
+public class ModuleClass implements Serializable {
 	
     @Id
     private String moduleClassId;
@@ -33,6 +34,8 @@ public class ModuleClass {
     private List<TimeTable> timeTables;
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<GradingResult> gradingResults;
+    @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
+    private List<Attendance> attendances;
 
     public String getFormattedStartDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");

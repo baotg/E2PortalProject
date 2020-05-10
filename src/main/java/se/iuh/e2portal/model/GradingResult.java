@@ -1,5 +1,6 @@
 package se.iuh.e2portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 
@@ -17,6 +18,7 @@ public class GradingResult {
     @Id
     @ManyToOne
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
+    @JsonIgnore
     private ModuleClass moduleClass;
 
     private float quiz1;

@@ -7,7 +7,7 @@ function cancelImportTimeTable(url){
                 caption: "Hủy bỏ",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                	Metro.dialog.close('#time-table-preview-dialog');
                 }
             },
             {
@@ -29,7 +29,8 @@ function confirmImportTimeTable(url){
                 caption: "Đồng ý",
                 cls: "js-dialog-close alert",
                 onclick: function(){
-                     $("#content-wrapper").load(url);
+                	Metro.dialog.close('#time-table-preview-dialog');
+                	callAjaxSave(url);
                 }
             },
             {

@@ -12,7 +12,7 @@
             <h3 class="dashboard-section-title">Nhập kết quả học tâp<small>Xem trước</small></h3>
         </div>
     </div>
-    <div class="m-3">
+    <div class="m-3" th:fragment="grading-result-preview">
         <div class="p-1 bg-transparent">
             <div class="row">
                 <div class="cell-md-12 cell-xl-12">
@@ -60,10 +60,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a href="#gradingresult" class="button warning"
-								onclick="confirmImportGradingResult('gradingresult/import/save')">Nhập</a> 
-						<a href="#gradingresult" class="button primary"
-								onclick="cancelImportGradingResult('gradingresult/import/cancel')">Hủy bỏ</a>
+
                     </div>
                 </div>
             </div>

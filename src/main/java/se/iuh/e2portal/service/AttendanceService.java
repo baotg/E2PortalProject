@@ -18,7 +18,9 @@ public class AttendanceService {
     public List<Attendance> findAllByStudent(Student student) {
         return attendanceRepository.findAllByStudent(student);
     }
-
+    public Iterable<Attendance> findByModuleClassId(String id){
+        return attendanceRepository.findByModuleClassModuleClassId(id);
+    }
 
     public <S extends Attendance> S save(S entity) {
         return attendanceRepository.save(entity);

@@ -1,4 +1,4 @@
-package se.iuh.e2portal.config.jwt;
+package se.iuh.e2portal.config;
 
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.context.ApplicationContext;
@@ -19,5 +19,6 @@ public class RestConfiguration implements RepositoryRestConfigurer {
         config.exposeIdsFor(Lecturer.class);
         config.exposeIdsFor(TimeTable.class);
         config.exposeIdsFor(Faculty.class);
+        config.exposeIdsFor(GradingResult.class);
     }
 }

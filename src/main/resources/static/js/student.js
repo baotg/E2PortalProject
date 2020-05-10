@@ -53,7 +53,7 @@ function fire_ajax_submit_student() {
                     		 return false;
                     	}
                     	$('#student-preview-dialog-content').html(data.toString());
-                   	 Metro.dialog.open('#student-preview-dialog');
+                    	Metro.dialog.open('#student-preview-dialog');
                     //	getStudentPreviewDialog('/student/import');
                     },
                     error: function() {
@@ -111,14 +111,17 @@ function deleteStudent(id){
 function getClasses() {
 	var faculty = document.getElementById("faculty-select");
 	var aClass = document.getElementById("class-select");
-
+	var urlnone = '/student/search/class?id=';
 	var facultyId = faculty.options[faculty.selectedIndex].value;
 	aClass = '';
 	if(facultyId=='empty'){
+		$('#students-table').load(urlnone);
+		$('#select-classes').load('/student/search?id=');
 		return;
 	}
 	var url = '/student/search?id=' + facultyId;
 	$('#select-classes').load(url);
+	$('#students-table').load(urlnone);
 }
 function getStudents() {
 	var aClass = document.getElementById("class-select");
@@ -127,8 +130,6 @@ function getStudents() {
 		classId='';
 	}
 	var url2 = '/student/search/class?id=' + classId;
-	
-		
 	$('#students-table').load(url2);
 }
 function getStudentPreviewDialog(url){

@@ -1,9 +1,13 @@
-$(document).ready(function () {
-    $("#btnSubmitGradingResult").click(function (event) {
-        event.preventDefault();
-        fire_ajax_submit_grading_result();
-    });
-});
+// $(document).ready(function () {
+//     $("#btnSubmitGradingResult").click(function (event) {
+//         event.preventDefault();
+//         fire_ajax_submit_grading_result();
+//     });
+// });
+function  doImportGradingResult() {
+    event.preventDefault();
+    fire_ajax_submit_grading_result();
+}
 
 function fire_ajax_submit_grading_result() {
 	var file = $("#file-grading-result").val();
@@ -26,8 +30,35 @@ function fire_ajax_submit_grading_result() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            if(data==='successful')
-            	retrieveGuests('/gradingresult/import');
+            if(data==='notMatch'){
+                console.log('nomatch');
+                var fileNotMatch = " *Tệp tin tải lên sai định dạng, vui lòng thử lại!";
+                $("#fileNotChosenGradingResult").html(fileNotMatch);
+                Metro.dialog.open('#grading-result-dialog');
+                return false;
+            }
+            if(data==='successful') {
+                $.ajax({
+                    type: "GET",
+                    url: '/gradingresult/import',
+                    dataType: "html",
+                    success: function (data) {
+                        Metro.dialog.close('#loading-dialog');
+                        if (data === 'notMatch') {
+                            var fileNotMatch = " *Tệp tin tải lên sai định dạng, vui lòng thử lại!";
+                            $("#fileNotChosenGradingResult").html(fileNotMatch);
+                            Metro.dialog.open('#grading-result-dialog');
+                            return false;
+                        }
+                        $('#grading-result-preview-dialog-content').html(data.toString());
+                        Metro.dialog.open('#grading-result-preview-dialog');
+                    },
+                    error: function () {
+                        Metro.dialog.close('#loading-dialog');
+                        alert('Đã có lỗi xảy ra, vui lòng thử lại!');
+                    }
+                });
+            }
         },
         error: function (e) {
 
@@ -39,4 +70,28 @@ function fire_ajax_submit_grading_result() {
         $("#content-wrapper").load(url);
     }
 
+}
+function getClassesGradingResult() {
+    var faculty = document.getElementById("faculty-select");
+    var aClass = document.getElementById("class-select");
+    var urlnone = '/gradingresult/search/class?id=';
+    var facultyId = faculty.options[faculty.selectedIndex].value;
+    aClass = '';
+    if(facultyId=='empty'){
+        $('#students-table').load(urlnone);
+        $('#select-classes').load('/gradingresult/search?id=');
+        return;
+    }
+    var url = '/gradingresult/search?id=' + facultyId;
+    $('#select-classes').load(url);
+    $('#time-table-table').load(urlnone);
+}
+function getGradingResult() {
+    var aClass = document.getElementById("class-select");
+    var classId = aClass.options[aClass.selectedIndex].value;
+    if(classId=='empty'){
+        classId='';
+    }
+    var url2 = '/gradingresult/search/class?id=' + classId;
+    $('#time-table-table').load(url2);
 }

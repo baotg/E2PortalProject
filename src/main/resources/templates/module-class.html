@@ -6,8 +6,24 @@
 <head>
     <title>Lớp học phần</title>
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="module-class">
-
+<body class="m4-cloak h-vh-100"  id="main-content">
+<div th:fragment="module-class">
+<div id="module-class-preview-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Nhập thông tin lớp học phần<small> Xem trước</small></h3>
+        </div>
+		</div>
+			<div id="module-class-preview-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				<a class="button warning"
+								onclick="confirmImportModuleClass('moduleclass/import/save')">Nhập</a> <a
+								 class="button primary"
+								onclick="cancelImportModuleClass('moduleclass/import/cancel')">Hủy bỏ</a>
+				</div>
+	</div>
 	<div id="module-class-dialog" class="dialog" data-role="dialog"
 		data-width="800" data-close-button="true">
 		<form id="import-module-class" enctype="multipart/form-data">
@@ -23,11 +39,11 @@
 				</div>
 			</div>
 			<div class="dialog-actions right">
-				<button class="button" type="submit" id="btnSubmitModuleClass">Nhập</button>
+				<button class="button" type="submit" id="btnSubmitModuleClass" onclick="doImportModuleClass()">Nhập</button>
 			</div>
 		</form>
 	</div>
-<div id="main-content">
+<div>
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
             <h3 class="dashboard-section-title">Quản lý Lớp học phần<small>Xem</small></h3>
@@ -41,9 +57,18 @@
 							thông tin lớp học phần</button>
 						<span style="color: red" th:text="${msg}"></span>
 					</div>
-                <div class="cell-md-12 cell-xl-12">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+					<div class="cell-md-4 cell-xl-4" >
+						Khoa: <select id="faculty-select" data-role="select" class="form-control" data-on-item-select="getModuleClasses()">
+							<option value="empty">Chọn một mục</option>
+							<optgroup label="Khoa">
+							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
+								th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
+							</optgroup>
+						</select>
+					</div>
+                <div class="cell-md-12 cell-xl-12" id="module-class-table">
+                    <div class="p-1 p-6-lg bg-white mt-3" th:fragment="module-class-table">
+                        <table id="mdctbl" class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
                                 <th>Mã lớp học phần</th>
@@ -76,6 +101,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

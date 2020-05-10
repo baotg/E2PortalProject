@@ -1,9 +1,13 @@
-$(document).ready(function () {
-    $("#btnSubmitModuleClass").click(function (event) {
-        event.preventDefault();
-        fire_ajax_submit_module_class();
-    });
-});
+//$(document).ready(function () {
+//    $("#btnSubmitModuleClass").click(function (event) {
+//        event.preventDefault();
+//        fire_ajax_submit_module_class();
+//    });
+//});
+function doImportModuleClass(){
+	event.preventDefault();
+    fire_ajax_submit_module_class();
+}
 
 function fire_ajax_submit_module_class() {
 	var file = $("#file-module-class").val();
@@ -26,8 +30,37 @@ function fire_ajax_submit_module_class() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            if(data==='successful')
-            	retrieveGuests('/moduleclass/import');
+        	if(data==='notMatch'){
+            	console.log('nomatch');
+            	var fileNotMatch = " *Tệp tin tải lên sai định dạng, vui lòng thử lại!";
+                $("#fileNotChosenModuleClass").html(fileNotMatch);
+                Metro.dialog.open('#module-class-dialog');
+                return false;
+            }
+            if(data==='successful'){
+            	$.ajax({
+                    type: "GET",
+                    url: '/moduleclass/import',
+                    dataType: "html",
+                    success: function(data) {
+                    	Metro.dialog.close('#loading-dialog');
+                    	if(data==='notMatch'){
+                    		var fileNotMatch = " *Tệp tin tải lên sai định dạng, vui lòng thử lại!";
+                    		 $("#fileNotChosenModuleClass").html(fileNotMatch);
+                    		 Metro.dialog.open('#module-class-dialog');
+                    		 return false;
+                    	}
+                    	$('#module-class-preview-dialog-content').html(data.toString());
+                    	Metro.dialog.open('#module-class-preview-dialog');
+                    //	getStudentPreviewDialog('/student/import');
+                    },
+                    error: function() {
+                    	Metro.dialog.close('#loading-dialog');
+                        alert('Đã có lỗi xảy ra, vui lòng thử lại!');
+                    }
+                }); 
+            	//retrieveGuests('/moduleclass/import');
+            }
         },
         error: function (e) {
 
@@ -40,15 +73,15 @@ function fire_ajax_submit_module_class() {
     }
 
 }
-function viewStudent(id) {
-	var url = '/moduleclass/' + id.replace('std','');
-	$("#content-wrapper").load(url);
-}
-function editStudent(id) {
-var url = '/moduleclass/edit?id=' + id.replace('edt','');
-	$("#content-wrapper").load(url);
-}
-function deleteStudent(id) {
-	var url = '/moduleclass/delete?id=' + id.replace('dlt','');
-	$("#content-wrapper").load(url);
+function getModuleClasses(){
+	var faculty = document.getElementById("faculty-select");
+	var facultyId = faculty.options[faculty.selectedIndex].value;
+	if(facultyId=='empty'){
+		var url = '/moduleclass/search?id=';
+		$('#module-class-table').load(url);
+		return;
+	}
+	var url = '/moduleclass/search?id=' + facultyId;
+	$('#module-class-table').load(url);
+	//callAjaxGetWithLoading('#module-class-table',url);
 }
