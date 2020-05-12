@@ -3,6 +3,9 @@ package se.iuh.e2portal.model;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,19 +24,25 @@ public class ModuleClass implements Serializable {
     private String semester; 
     private Date startDate;
     private Date endDate;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "facultyId", referencedColumnName = "facultyId")
     private Faculty faculty;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lecturerId", referencedColumnName = "id")
     private Lecturer lecturer;
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "student_moduleClass", joinColumns = @JoinColumn(name = "moduleClassId"), inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Student> students;
+    @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<TimeTable> timeTables;
+    @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<GradingResult> gradingResults;
+    @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<Attendance> attendances;
 

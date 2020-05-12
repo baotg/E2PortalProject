@@ -14,11 +14,12 @@ public class GradingResult {
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id", referencedColumnName = "id")
+    @JsonIgnore
     private Student student;
     @Id
     @ManyToOne
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
-    @JsonIgnore
+//    @JsonIgnore
     private ModuleClass moduleClass;
 
     private float quiz1;

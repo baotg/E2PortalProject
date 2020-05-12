@@ -1,28 +1,22 @@
 package se.iuh.e2portal.controller.api;
 
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import se.iuh.e2portal.config.jwt.JwtTokenProvider;
 import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.payload.LoginRequest;
 import se.iuh.e2portal.payload.LoginResponse;
-import se.iuh.e2portal.repository.UserAccountRepository;
-import se.iuh.e2portal.service.StudentService;
-
-import javax.naming.AuthenticationException;
+import se.iuh.e2portal.service.GradingResultService;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("/api")
@@ -32,9 +26,9 @@ public class MainRESTController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private StudentService studentService;
-    @Autowired
     private JwtTokenProvider tokenProvider;
+    @Autowired
+    private GradingResultService gradingResultService;
     
     @GetMapping("/random")
     @ResponseBody
@@ -44,6 +38,19 @@ public class MainRESTController {
         }
         return "Random number is : " + new Random().nextInt(value);
     }
+    
+    @GetMapping("/gradingresult")
+	public ResponseEntity<Object> getGradingResultByStudentIdAndModuleClassId(@RequestParam("studentId")String studentId, 
+																			  @RequestParam("moduleClassId")String moduleClassId) {
+		GradingResultPK id = new GradingResultPK();
+		id.setModuleClass(moduleClassId);
+		id.setStudent(studentId);
+		Optional<GradingResult> gradingResult = gradingResultService.findById(id);
+		if(gradingResult.isPresent())
+			return new ResponseEntity<Object>(gradingResult.get(),HttpStatus.OK);
+		return new ResponseEntity<Object>("not-found",HttpStatus.OK);
+		
+	}
     
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
