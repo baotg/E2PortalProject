@@ -109,6 +109,7 @@ function deleteStudent(id){
     });
 }
 function getClasses() {
+
 	var faculty = document.getElementById("faculty-select");
 	var aClass = document.getElementById("class-select");
 	var urlnone = '/student/search/class?id=';

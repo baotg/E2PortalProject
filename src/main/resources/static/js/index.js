@@ -90,11 +90,11 @@ function callAjaxSave(url){
         url: url,
         dataType: "html",
         success: function(data) {
-        	Metro.dialog.close('#loading-dialog');
+//        	Metro.dialog.close('#loading-dialog');
         	$("#content-wrapper").html(data.toString());
         },
         error: function() {
-        	Metro.dialog.close('#loading-dialog');
+//        	Metro.dialog.close('#loading-dialog');
             alert('Đã có lỗi xảy ra, vui lòng thử lại!');
         }
     });  
@@ -106,12 +106,19 @@ function callAjaxGetWithLoading(id,url){
         url: url,
         dataType: "html",
         success: function(data) {
-        	Metro.dialog.close('#loading-dialog');
+//        	Metro.dialog.close('#loading-dialog');
         	$(id).html(data.toString());
         },
         error: function() {
-        	Metro.dialog.close('#loading-dialog');
+//        	Metro.dialog.close('#loading-dialog');
             alert('Đã có lỗi xảy ra, vui lòng thử lại!');
         }
-    });  
+    });
 }
+
+$(document).ajaxStart(function(){
+    Metro.dialog.open("#loading-dialog");
+}).ajaxStop(function(){
+Metro.dialog.close("#loading-dialog");
+});
+

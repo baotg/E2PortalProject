@@ -16,7 +16,7 @@ public class Announcement {
     private Long announcementId;
     private String title;
     private String summary;
-    @Column(columnDefinition = "nvarchar(2000)")
+    @Column(columnDefinition = "nvarchar(8000)")
     private String contentDetail;
     private Date createdDate;
     

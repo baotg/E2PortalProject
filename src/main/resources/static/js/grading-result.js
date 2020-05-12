@@ -72,26 +72,28 @@ function fire_ajax_submit_grading_result() {
 
 }
 function getClassesGradingResult() {
+	
     var faculty = document.getElementById("faculty-select");
     var aClass = document.getElementById("class-select");
     var urlnone = '/gradingresult/search/class?id=';
     var facultyId = faculty.options[faculty.selectedIndex].value;
     aClass = '';
     if(facultyId=='empty'){
-        $('#students-table').load(urlnone);
+        $('#grading-result-table').load(urlnone);
         $('#select-classes').load('/gradingresult/search?id=');
         return;
     }
     var url = '/gradingresult/search?id=' + facultyId;
     $('#select-classes').load(url);
-    $('#time-table-table').load(urlnone);
+    $('#grading-result-table').load(urlnone);
 }
 function getGradingResult() {
+	
     var aClass = document.getElementById("class-select");
     var classId = aClass.options[aClass.selectedIndex].value;
     if(classId=='empty'){
         classId='';
     }
     var url2 = '/gradingresult/search/class?id=' + classId;
-    $('#time-table-table').load(url2);
+    $('#grading-result-table').load(url2);
 }

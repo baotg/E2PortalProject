@@ -14,6 +14,7 @@ import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.service.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/gradingresult")
@@ -41,6 +42,18 @@ public class GradingResultController {
 		if(ajax!=null)
 			return "grading-result::grading-result";
 		return "grading-result";
+	}
+	@GetMapping("/search")
+	public String getClasses(@RequestParam("id") String id, Model model) {
+		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(id));
+		return "grading-result::select-classes";
+	}
+	@GetMapping("/search/class")
+	public String getGradingResultByClassId(@RequestParam("id") String id, Model model) {
+		Optional<ModuleClass> moduleClass = moduleClassService.findById(id);
+		if(moduleClass.isPresent())
+			model.addAttribute("gradingresults",moduleClass.get().getGradingResults());
+		return "grading-result::grading-result-table";
 	}
 
 	@GetMapping("/{id}")

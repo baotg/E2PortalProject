@@ -8,6 +8,33 @@
 </head>
 <body class="m4-cloak h-vh-100" id="main-content" >
 <div th:fragment="grading-result">
+<script type="text/javascript">
+function getClassesGradingResult() {
+    var faculty = document.getElementById("faculty-select");
+    var aClass = document.getElementById("class-select");
+    var urlnone = '/gradingresult/search/class?id=';
+    var facultyId = faculty.options[faculty.selectedIndex].value;
+    aClass = '';
+    if(facultyId=='empty'){
+        $('#students-table').load(urlnone);
+        $('#select-classes').load('/gradingresult/search?id=');
+        return;
+    }
+    var url = '/gradingresult/search?id=' + facultyId;
+    $('#select-classes').load(url);
+    $('#grading-result-table').load(urlnone);
+}
+function getGradingResult() {
+	
+    var aClass = document.getElementById("class-select");
+    var classId = aClass.options[aClass.selectedIndex].value;
+    if(classId=='empty'){
+        classId='';
+    }
+    var url2 = '/gradingresult/search/class?id=' + classId;
+    $('#grading-result-table').load(url2);
+}
+</script>
     <div id="grading-result-preview-dialog" class="dialog" data-role="dialog"
          data-width="1200" data-height="800" data-close-button="true">
         <div>
@@ -61,7 +88,7 @@
                 <div class="cell-md-4 cell-xl-4" >
 
                     Khoa: <select id="faculty-select" data-role="select" class="form-control"
-                                  data-on-item-select="getClassesTimeTable()">
+                                  data-on-item-select="getClassesGradingResult()">
                     <option value="empty">Chọn một mục</option>
                     <optgroup label="Khoa">
                         <option th:each="i : ${faculties}" th:value="${i.facultyId}"
@@ -73,7 +100,7 @@
                 <div class="cell-md-4 cell-xl-4" id="select-classes">
                     <div th:fragment="select-classes">
                         Lớp: <select data-role="select" id="class-select"
-                                     data-on-item-select="getTimeTables()">
+                                     data-on-item-select="getGradingResult()">
                         <option value="empty">Chọn một mục</option>
                         <optgroup label="Lớp học phần">
                             <option th:each="i : ${moduleClasses}"
