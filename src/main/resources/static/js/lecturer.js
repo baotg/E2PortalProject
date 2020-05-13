@@ -2,9 +2,11 @@ function viewLecturer(id) {
 	var url = '/lecturer/' + id.replace('ltr','');
 	$("#content-wrapper").load(url);
 }
-function editLecturer(id) {
-var url = '/lecturer/edit?id=' + id.replace('edt','');
-	$("#content-wrapper").load(url);
+
+function editLecturer(id){
+	var url = '/lecturer/edit?id=' + id.replace('edt','');
+	$("#lecturer-edit-dialog-content").load(url);
+	Metro.dialog.open('#lecturer-edit-dialog');
 }
 function deleteLecturer(id){
     Metro.dialog.create({

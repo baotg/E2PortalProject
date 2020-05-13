@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.GradingResult;
 import se.iuh.e2portal.model.GradingResultPK;
-import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.repository.GradingResultRepository;
 
 import java.util.List;
@@ -27,23 +26,32 @@ public class GradingResultService {
         return gradingResultRepository.saveAll(entities);
     }
 
-    public List<GradingResult> findByStudent(Student student) {
-        return gradingResultRepository.findByStudent(student);
+    public boolean existsById(GradingResultPK gradingResultPK) {
+        return false;
     }
 
-
     public List<GradingResult> findAll() {
-        return (List<GradingResult>)gradingResultRepository.findAll();
+        return (List<GradingResult>) gradingResultRepository.findAll();
+    }
+
+    public Iterable<GradingResult> findAllById(Iterable<GradingResultPK> iterable) {
+        return null;
     }
 
     public long count() {
         return gradingResultRepository.count();
     }
 
-
-
     public void delete(GradingResult object) {
         gradingResultRepository.delete(object);
+    }
+
+    public void deleteAll(Iterable<? extends GradingResult> iterable) {
+
+    }
+
+    public void deleteAll() {
+
     }
 
 	public Optional<GradingResult> findById(GradingResultPK id) {

@@ -1,72 +1,75 @@
- $(document).ready(function () {
-        $("#btnSaveLecturer").click(function (event) {
-            event.preventDefault();
-            var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-            var firstName = $("#firstName").val();
-            var lastName = $("#lastName").val();
-            var address = $("#address").val();
-            var phoneNumber = $("#numberPhone").val();
-            var dateOfBirth = $("#dateOfBirth").val();
-            var email = $("#email").val();
+// $(document).ready(function () {
+//        $("#btnSaveLecturer").click(function (event) {
+//            
+//        	    });
+//        	   });
+ function saveEditingLecturer(){
+	 event.preventDefault();
+     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+     var firstName = $("#firstName").val();
+     var lastName = $("#lastName").val();
+     var address = $("#address").val();
+     var phoneNumber = $("#numberPhone").val();
+     var dateOfBirth = $("#dateOfBirth").val();
+     var email = $("#email").val();
 
-        	$("#errLecturerLastName").html('');
-        	$("#errLecturerFirstName").html('');
-        	$("#errLecturerAddress").html('');
-        	$("#errLecturerPhoneNumber").html('');
-        	$("#errLecturerDOB").html('');
-        	$("#errLecturerEmail").html('');
-        	 if(firstName =='' || lastName == '' || address == '' || phoneNumber == '' ||  email == '' ){
-        	    	if(firstName ==''){
-        				$('#errLecturerFirstName').html('*Thông tin này không được để trống!');
-        				
-        			}
-        			if(lastName ==''){
-        				$('#errLecturerLastName').html('*Thông tin này không được để trống!');
-        				
-        			}
-        			if(address ==''){
-        				$('#errLecturerAddress').html('*Thông tin này không được để trống!');
-        			
-        			}
-        			if(phoneNumber ==''){
-        				$('#errLecturerPhoneNumber').html('*Thông tin này không được để trống!');
-        			
-        			}
-        			if(dateOfBirth == ''){
-        				$('#errLecturerDOB').html('*Thông tin này không được để trống!');
-        			}
-        			if(email ==''){
-        				$('#errLecturerEmail').html('*Thông tin này không được để trống!');
-        			}
-        			
-        				return false;
-        	    }
-        	            
-        	        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        			if(!email.match(mailformat))
-        			{
-        				$('#errLecturerEmail').html(' *Địa chỉ email không hợp lệ');
-        				return false;
-        			}
-        			var yearOld = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
-        			if(yearOld<0 || yearOld>100){
-        				$('#errLecturerDOB').html(' *Ngày sinh không hợp lệ!');
-        				return false;
-        			}
-        				
-        			if(yearOld<18){
-        				$('#errLecturerDOB').html(' *Chưa đủ 18 tuổi!');
-        				return false;
-        			}
-        			
-        			if(vnf_regex.test(phoneNumber) == false){
-        				$("#errLecturerPhoneNumber").html(' *Số điện toại không đúng định dạng');
-        				return false;
-        			}
+ 	$("#errLecturerLastName").html('');
+ 	$("#errLecturerFirstName").html('');
+ 	$("#errLecturerAddress").html('');
+ 	$("#errLecturerPhoneNumber").html('');
+ 	$("#errLecturerDOB").html('');
+ 	$("#errLecturerEmail").html('');
+ 	 if(firstName =='' || lastName == '' || address == '' || phoneNumber == '' ||  email == '' ){
+ 	    	if(firstName ==''){
+ 				$('#errLecturerFirstName').html('*Thông tin này không được để trống!');
+ 				
+ 			}
+ 			if(lastName ==''){
+ 				$('#errLecturerLastName').html('*Thông tin này không được để trống!');
+ 				
+ 			}
+ 			if(address ==''){
+ 				$('#errLecturerAddress').html('*Thông tin này không được để trống!');
+ 			
+ 			}
+ 			if(phoneNumber ==''){
+ 				$('#errLecturerPhoneNumber').html('*Thông tin này không được để trống!');
+ 			
+ 			}
+ 			if(dateOfBirth == ''){
+ 				$('#errLecturerDOB').html('*Thông tin này không được để trống!');
+ 			}
+ 			if(email ==''){
+ 				$('#errLecturerEmail').html('*Thông tin này không được để trống!');
+ 			}
+ 			
+ 				return false;
+ 	    }
+ 	            
+ 	        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ 			if(!email.match(mailformat))
+ 			{
+ 				$('#errLecturerEmail').html(' *Địa chỉ email không hợp lệ');
+ 				return false;
+ 			}
+ 			var yearOld = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+ 			if(yearOld<0 || yearOld>100){
+ 				$('#errLecturerDOB').html(' *Ngày sinh không hợp lệ!');
+ 				return false;
+ 			}
+ 				
+ 			if(yearOld<18){
+ 				$('#errLecturerDOB').html(' *Chưa đủ 18 tuổi!');
+ 				return false;
+ 			}
+ 			
+ 			if(vnf_regex.test(phoneNumber) == false){
+ 				$("#errLecturerPhoneNumber").html(' *Số điện toại không đúng định dạng');
+ 				return false;
+ 			}
 
-        	        fire_ajax_submit_lecturer();
-        	    });
-        	   });
+ 	        fire_ajax_submit_lecturer();
+ }
 
     function fire_ajax_submit_lecturer() {
         var form = $('#lecturer-form')[0];
@@ -81,10 +84,13 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
+            	Metro.dialog.close('#lecturer-edit-dialog');
             	 $("#content-wrapper").html(data.toString());
-                console.log("OK!")
+            	 
+                
             },
             errLectureror: function (e) {
+            	Metro.dialog.close('#lecturer-edit-dialog');
                 alert('Lưu không thành công!');
             }
         });
@@ -100,7 +106,7 @@
                     caption: "Hủy bỏ",
                     cls: "js-dialog-close alert",
                     onclick: function(){
-                         $("#content-wrapper").load(url);
+                    	Metro.dialog.close('#lecturer-edit-dialog');
                     }
                 },
                 {

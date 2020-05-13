@@ -6,8 +6,33 @@
 <head>
     <title>Quản lý Giảng viên</title>
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="lecturer">
-<div id="main-content">
+<body id="main-content" class="m4-cloak h-vh-100" >
+<div th:fragment="lecturer">
+<script type="text/javascript">
+function searchLecturer(e){
+	 if (e.keyCode == 13) {
+		 var str = $("#lecturerId").val();
+			var root = '/lecturer/search?id=' + str + '&ajax=true'; 
+			$("#lecturer-table").load(root);
+	    }
+}
+</script>
+<div id="lecturer-edit-dialog" class="dialog" data-role="dialog"
+		data-width="1200" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Thông tin Giảng viên<small> Chỉnh sửa</small></h3>
+        </div>
+		</div>
+			<div id="lecturer-edit-dialog-content" class="content-inner h-100"
+				style="overflow-y: auto"></div>
+				<div class="dialog-actions right">
+				<button type="submit" class="button success" onclick="saveEditingLecturer()" id="btnSaveLecturer">Lưu
+									lại</button>
+								<input type="button" class="button" value="Hủy"
+									onclick="cancelEdtingStudent('student/')">
+				</div>
+	</div>
     <div class="row border-bottom bd-lightGray m-3">
         <div class="cell-md-4 text-center text-left-md">
             <h3 class="dashboard-section-title">Quản lý Giảng viên<small>Xem</small></h3>
@@ -16,9 +41,14 @@
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
-                <div class="cell-md-12 cell-xl-12">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+            
+                <div class="cell-md-12 cell-xl-12" >
+                <div class="p-1 p-6-lg bg-white mt-3">
+							<input type="text" data-prepend="Nhập ID hoặc Từ khóa cần tìm: " id="lecturerId" onkeyup="searchLecturer(event)" data-role="input" data-search-button="true">
+						</div>
+                    <div class="p-1 p-6-lg bg-white mt-3" id="lecturer-table">
+                    <div th:fragment="lecturer-table">
+                        <table class="table striped table-border mt-4" data-rows="10">
                             <thead>
                             <tr>
                                 <th>Mã số giảng viên</th>
@@ -35,7 +65,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="lecturer : ${lecturers}">
+                            <tr th:each="lecturer : ${page.content}">
                                 <td><a href="#"
 											th:id=" 'ltr' + ${lecturer.id}"
 											onclick="viewLecturer(this.id)"><span
@@ -53,6 +83,17 @@
                             </tr>
                             </tbody>
                         </table>
+                        <div class="d-flex flex-column flex-justify-center">
+									<ul class="pagination">
+										<li class="page-item" th:if="${page.hasPrevious()}"><a class="page-link" th:id="@{/lecturer(page=${page.number - 1},size=${page.size})}" onclick="goToPage(this.id)">Trang trước</a></li>
+										<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+											<li th:if="${page.number == i}" class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
+											<li class="page-item" th:unless="${page.number == i}"><a class="page-link" th:id="@{/lecturer(page=${i},size=${page.size})}" onclick="goToPage(this.id)">[[${i}+1]]</a></li>
+										</th:block>
+										<li class="page-item" th:if="${page.hasNext()}"><a class="page-link"  th:id="@{/lecturer(page=${page.number+1},size=${page.size})}" onclick="goToPage(this.id)">Trang sau</a></li>
+									</ul>
+								</div>
+								</div>
                     </div>
                 </div>
             </div>

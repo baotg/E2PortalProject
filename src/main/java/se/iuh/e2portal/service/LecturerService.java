@@ -1,6 +1,8 @@
 package se.iuh.e2portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.Lecturer;
 import se.iuh.e2portal.repository.LecturerRepository;
@@ -53,5 +55,16 @@ public class LecturerService  {
     public void delete(Lecturer object) {
         lecturerRepository.delete(object);
     }
+
+
+	public Page<Lecturer> findAll(Pageable pageable) {
+		
+		return lecturerRepository.findAll(pageable);
+	}
+
+
+	public Page<Lecturer> findAll(Pageable pageable, String id) {
+		return lecturerRepository.findAll(pageable,id);
+	}
 
 }

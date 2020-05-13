@@ -11,6 +11,7 @@ import java.util.Objects;
 public class GradingResultPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String student;
     private String moduleClass;
 

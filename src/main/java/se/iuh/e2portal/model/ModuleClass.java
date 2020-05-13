@@ -1,11 +1,8 @@
 package se.iuh.e2portal.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.Data;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +12,11 @@ import java.util.List;
 @Data
 public class ModuleClass implements Serializable {
 	
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8928562693457269605L;
+	@Id
     private String moduleClassId;
     private String moduleClassName;
     private int numOfTSession; 
@@ -39,8 +40,8 @@ public class ModuleClass implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
     private List<TimeTable> timeTables;
-    @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<GradingResult> gradingResults;
     @JsonIgnore
     @OneToMany(mappedBy = "moduleClass", cascade = CascadeType.REMOVE)
