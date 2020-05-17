@@ -3,7 +3,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import se.iuh.e2portal.service.ModuleClassService;
 import se.iuh.e2portal.service.StudentService;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +57,13 @@ public class StudentController {
 		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(id));
 		model.addAttribute("mainClasses", mainClassService.findByFacultyId(id));
 		return "student::select-classes";
+	}
+	@GetMapping("/search-id")
+	public String search(Model model,@Param("ajax")String ajax,@RequestParam("id")String id) {
+		Optional<Student> student = studentService.findById(id);
+		if(student.isPresent())
+		model.addAttribute("studentList",Arrays.asList(student.get()));
+		return "student::student-table";
 	}
 	@GetMapping("/search/class")
 	public String getStudentByClassId(@RequestParam("id") String id, Model model) {

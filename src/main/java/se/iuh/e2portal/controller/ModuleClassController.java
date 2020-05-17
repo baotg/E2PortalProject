@@ -85,6 +85,8 @@ public class ModuleClassController {
 		if(facultyService.existsById(faculty.getFacultyId())) {
 			faculty = facultyService.findById(faculty.getFacultyId()).get();
 		}
+		else
+			facultyService.save(faculty);
 		for(Student student : moduleClass.getStudents()){
 			if(!studentService.existsById(student.getId())) {
 				if(!mainClassService.existsById(student.getMainClass().getClassId()))

@@ -48,7 +48,6 @@ public class FacultyController {
 	}
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveFaculty(Faculty faculty, Model model){
-		System.out.println(faculty.getFacultyId() + " " + faculty.getName());
 		facultyService.save(faculty);
 		model.addAttribute("faculties", facultyService.findAll());
 		return "faculty::faculty-table";

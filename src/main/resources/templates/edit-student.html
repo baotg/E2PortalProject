@@ -21,7 +21,7 @@
 				<div class="cell-md-9 cell-xl-10">
 					<div class="p-1 p-6-lg bg-white mt-3">
 						<form th:object="${student}" id="student-form" action="#">
-							<input type="hidden" th:field="*{id}">
+							<input type="text" th:field="*{id}" th:value="${id}" hidden="true">
 							<div class="form-group">
 								<label>Họ đệm </label><span id="errLastName"
 									style="color: red; font-size: 10pt"></span> <input type="text"

@@ -8,10 +8,10 @@ function saveFaculty(){
 				return false;
 			}
 			Metro.dialog.close('#faculty-edit-dialog');
-	        fire_ajax_submit_student_edit();
+	        fire_ajax_submit_faculty_edit();
 }
 
-    function fire_ajax_submit_student_edit() {
+    function fire_ajax_submit_faculty_edit() {
         var form = $('#edit-faculty-form')[0];
         var data = new FormData(form);
 

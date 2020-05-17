@@ -137,6 +137,13 @@ function getStudentPreviewDialog(url){
 	$('#student-preview-dialog-content').load(url);
 	 Metro.dialog.open('#student-preview-dialog');
 }
+function searchStudent(e){
+	 if (e.keyCode == 13) {
+		 var str = $("#studentId").val();
+			var root = '/student/search-id?id=' + str + '&ajax=true'; 
+			$("#students-table").load(root);
+	    }
+}
 
 
    
