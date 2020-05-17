@@ -30,7 +30,7 @@ function searchLecturer(e){
 				<button type="submit" class="button success" onclick="saveEditingLecturer()" id="btnSaveLecturer">Lưu
 									lại</button>
 								<input type="button" class="button" value="Hủy"
-									onclick="cancelEdtingStudent('student/')">
+									onclick="cancelEdtingLecturer('lecturer/')">
 				</div>
 	</div>
     <div class="row border-bottom bd-lightGray m-3">
@@ -61,12 +61,11 @@ function searchLecturer(e){
                                 <th>Email</th>
                                 <th></th>
                                 <th></th>
-                                
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="lecturer : ${page.content}">
-                                <td><a href="#"
+                                <td><a 
 											th:id=" 'ltr' + ${lecturer.id}"
 											onclick="viewLecturer(this.id)"><span
 												th:text="${lecturer.id}"></span></a></td>

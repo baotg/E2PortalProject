@@ -14,5 +14,8 @@ public interface GradingResultRepository extends CrudRepository<GradingResult, G
     @Query("select g from GradingResult g where g.student.id = ?1")
     List<GradingResult> findByStudentId(String studentId);
 
+    @Query("select g from GradingResult g where g.student.id = ?1 and g.moduleClass.moduleClassId =?2")
+    GradingResult findByStudentIdAndModuleClassId(String studentId, String moduleClassId);
+
     Iterable<GradingResult> findByModuleClassModuleClassId(String id);
 }

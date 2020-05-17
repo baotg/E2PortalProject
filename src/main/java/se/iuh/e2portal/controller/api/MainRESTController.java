@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import se.iuh.e2portal.config.jwt.JwtTokenProvider;
 import se.iuh.e2portal.model.GradingResult;
 import se.iuh.e2portal.model.GradingResultPK;
+import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.payload.LoginRequest;
 import se.iuh.e2portal.payload.LoginResponse;
 import se.iuh.e2portal.service.StudentService;
@@ -67,6 +68,12 @@ public class MainRESTController {
 //        System.out.println("Principal :" + authentication.getPrincipal());
         String jwt = tokenProvider.generateToken(authentication.getPrincipal().toString());
         return new LoginResponse(jwt);
+    }
+    @GetMapping("/user/profile")
+    ResponseEntity<Student> getStudent(){
+        Optional<Student> optionalStudent = studentService.profile();
+        if(!optionalStudent.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok(optionalStudent.get());
     }
 //    @PostMapping(value = "/updatePassword")
 //    public ResponseEntity<Object> changePassword(@Valid @RequestBody String newPassword){

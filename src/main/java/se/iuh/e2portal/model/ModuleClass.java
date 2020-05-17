@@ -25,6 +25,8 @@ public class ModuleClass implements Serializable {
     private String semester; 
     private Date startDate;
     private Date endDate;
+    @Transient
+    private int totalDay;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "facultyId", referencedColumnName = "facultyId")
@@ -56,7 +58,6 @@ public class ModuleClass implements Serializable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(endDate);
     }
-
 	@Override
 	public String toString() {
 		return "ModuleClass [moduleClassId=" + moduleClassId + ", moduleClassName=" + moduleClassName

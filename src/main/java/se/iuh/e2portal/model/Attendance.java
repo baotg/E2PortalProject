@@ -1,5 +1,6 @@
 package se.iuh.e2portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
@@ -20,9 +21,11 @@ public class Attendance {
     private Long attendanceId;
     private Date dateOff;
     private boolean allowed;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id")
     private Student student;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "moduleClassId")
     private ModuleClass moduleClass;
@@ -30,5 +33,8 @@ public class Attendance {
     public String getFormattedDateOff(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(dateOff);
+    }
+    public String getModuleClassId(){
+        return moduleClass.getModuleClassId();
     }
 }

@@ -129,8 +129,8 @@
 									</tr>
 								</thead>
 								<tbody>
-
 									<tr th:each="student : ${studentList}">
+									
 										<td><a href="#"	th:id=" 'std' + ${student.id}" onclick="viewStudent(this.id)"><span
 												th:text="${student.id}"></span></a></td>
 										<td th:text="${student.lastName}"></td>

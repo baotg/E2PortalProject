@@ -75,6 +75,7 @@ function saveStudent(){
 				$("#errParentPhoneNumber").html(' *Số điện toại không đúng định dạng');
 				return false;
 			}
+			Metro.dialog.close('#student-edit-dialog');
 	        fire_ajax_submit_student_edit();
 }
 //$(document).ready(function () {
@@ -172,9 +173,9 @@ function saveStudent(){
             cache: false,
             timeout: 600000,
             success: function (data) {
-              
+            	
                 $("#students-table").html(data.toString());
-                Metro.dialog.close('#student-edit-dialog');
+                
                
             },
             error: function (e) {

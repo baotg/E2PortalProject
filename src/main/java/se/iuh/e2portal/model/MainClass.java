@@ -1,5 +1,6 @@
 package se.iuh.e2portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class MainClass {
     @JoinColumn(name ="facultyId",referencedColumnName = "facultyId")
     private Faculty faculty;
     private String year;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name ="lecturerId")
     private Lecturer lecturer;
+    @JsonIgnore
     @OneToMany(mappedBy = "mainClass", cascade = CascadeType.REMOVE)
     private List<Student> students;
 	@Override

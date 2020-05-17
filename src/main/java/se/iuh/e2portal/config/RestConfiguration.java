@@ -6,6 +6,7 @@ import se.iuh.e2portal.model.*;
 
 @Configuration
 public class RestConfiguration implements RepositoryRestConfigurer {
+
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Student.class);
@@ -17,4 +18,5 @@ public class RestConfiguration implements RepositoryRestConfigurer {
         config.exposeIdsFor(GradingResult.class);
         config.exposeIdsFor(GradingResultPK.class);
     }
+
 }

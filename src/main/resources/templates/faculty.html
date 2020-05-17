@@ -7,19 +7,34 @@
 <title>Sinh viên</title>
 <meta charset="UTF-8">
 </head>
-<body class="m4-cloak h-vh-100" th:fragment="faculty">
-	<div id="main-content">
+<body  id="main-content" class="m4-cloak h-vh-100" >
+<div th:fragment="faculty">
+<div id="faculty-edit-dialog" data-role="dialog"
+		data-width="600" data-height="800" data-close-button="true">
+		<div>
+		<div class="dialog-title cell-md-12 text-center text-left-md">
+            <h3 class="dashboard-section-title">Chỉnh sửa<small> Khoa - viện</small></h3>
+        </div>
+		</div>
+			<div id="faculty-edit-dialog-content" class="content-inner h-100">
+			</div>
+			<div class="dialog-actions right">
+				<button type="submit" class="button success" onclick="saveFaculty()" id="btnSaveFaculty">Lưu lại</button>
+				<input type="button" class="button" value="Hủy" onclick="cancelEdtingFaculty('/faculty')">
+			</div>
+	</div>
+	<div>
 		<div class="row border-bottom bd-lightGray m-3">
 			<div class="cell-md-4 text-center text-left-md">
 				<h3 class="dashboard-section-title">
-					Quản lý Khoa - Viện<small>Xem</small>
+					Quản lý Khoa - Viện<small> Xem</small>
 				</h3>
 			</div>
 		</div>
 		<div class="m-3">
 			<div class="p-1 bg-transparent">
 				<div class="row">
-					<div class="cell-md-12 cell-xl-12" id="facultys-table">
+					<div class="cell-md-12 cell-xl-12" id="faculty-table">
 						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="faculty-table">
 							<table class="table striped table-border mt-4" data-role="table"
 								data-rows="10">
@@ -36,9 +51,9 @@
 										<td th:text="${faculty.facultyId}"></td>
 										<td th:text="${faculty.name}"></td>
 										<td><a href="#" class="button warning"
-											th:id=" 'edt' + ${faculty.facultyId}" onclick="editfaculty(this.id)">Sửa</a></td>
+											th:id=" 'edt' + ${faculty.facultyId}" onclick="getFacultyEditDialog(this.id)">Sửa</a></td>
 										<td><a th:if="${#lists.isEmpty(faculty.moduleClasses) && #lists.isEmpty(faculty.mainClassList)}"  href="#faculty" th:id=" 'dlt' + ${faculty.facultyId}"
-											onclick="deletefaculty(this.facultyId)" class="button alert">Xóa</a></td>
+											onclick="deleteFaculty(this.id)" class="button alert">Xóa</a></td>
 									</tr>	
 								</tbody>
 							</table>
@@ -47,6 +62,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

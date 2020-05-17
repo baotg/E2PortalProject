@@ -16,9 +16,18 @@
     <div class="m-3">
         <div class="p-1 bg-transparent">
             <div class="row">
-                <div class="cell-md-12 cell-xl-12">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-role="table" data-rows="10">
+            <div class="cell-md-4 cell-xl-4" >
+						Khoa: <select id="faculty-select" data-role="select" class="form-control" data-on-item-select="getMainClasses()">
+							<option value="empty">Chọn một mục</option>
+							<optgroup label="Khoa">
+							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
+								th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
+							</optgroup>
+						</select>
+					</div>
+                <div class="cell-md-12 cell-xl-12" id="main-class-table">
+                    <div class="p-1 p-6-lg bg-white mt-3" th:fragment="main-class-table">
+                        <table id="mctbl" class="table striped table-border mt-4" data-role="table" data-rows="10">
                             <thead>
                             <tr>
                                 <th>Mã lớp</th>

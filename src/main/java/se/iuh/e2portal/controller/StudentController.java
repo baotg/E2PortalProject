@@ -136,8 +136,8 @@ public class StudentController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveStudent(Student student, Model model){
-		model.addAttribute("studentList", studentService.findByMainClass(student.getMainClass()));
 		studentService.save(student);
+		model.addAttribute("studentList", studentService.findByMainClass(student.getMainClass()));
 		return "student::student-table";
 	}
 

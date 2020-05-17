@@ -36,4 +36,7 @@ public class TimeTable {
         return simpleDateFormat.format(endDate);
     }
 
+    public String getModuleClassId(){
+        return moduleClass.getModuleClassId();
+    }
 }

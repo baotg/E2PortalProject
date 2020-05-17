@@ -12,6 +12,8 @@ public class UserAccount{
     @Id
     private String accountId;
     private String password;
+    @Transient
+    private String owner;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userAccount_Role", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles;

@@ -24,10 +24,11 @@ import se.iuh.e2portal.service.UserAccountService;
 public class MultiHttpSecurityConfig {
 	@Autowired
     private UserAccountService userAccountService;
-	
+
     @Configuration
     @Order(1)
     public class ApiSecurityAdapter extends WebSecurityConfigurerAdapter {
+
         @Bean
         public JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter() {
             return new JwtTokenAuthenticationFilter();

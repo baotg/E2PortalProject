@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import se.iuh.e2portal.service.ExcelFileHandlerService;
+import se.iuh.e2portal.service.ModuleClassService;
 
 
 @Controller
@@ -20,10 +21,13 @@ public class MainController {
 
 	@Autowired
 	private ExcelFileHandlerService excelFileHandlerService;
+	@Autowired
+	ModuleClassService moduleClassService;
 
 	@GetMapping(value = {"/home","/"})
 	public String index(Model model, @Param("ajax")String ajax) {
-		String s = "This is text";
+		int sum = moduleClassService.findById("420300048764").get().getTotalDay();
+		String s = "This is text :" + sum;
 		model.addAttribute("msg", s);
 		if(ajax!=null)
 			return "home::home";

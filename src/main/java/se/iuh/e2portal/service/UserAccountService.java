@@ -18,59 +18,66 @@ import java.util.*;
 
 @Service
 public class UserAccountService implements UserDetailsService {
-	
-    @Autowired
-    private UserAccountRepository userAccountRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if(username.isEmpty()) throw new UsernameNotFoundException("ID Not Empty!");
-        UserAccountDetails userAccount = findById(username);
-        if(userAccount == null) throw new UsernameNotFoundException(username);
-        return new User(userAccount.getId().toString(),userAccount.getPassword(),userAccount.getAuthorities());
-    }
-    
-    public UserAccount save(UserAccount userAccount) {
-        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-        return userAccountRepository.save(userAccount);
-    }
 
-    public UserAccountDetails findById(String id) {
-        Optional<UserAccount> user = userAccountRepository.findById(id);
-        if (!user.isPresent()) throw new UsernameNotFoundException("Id not found :" + id);
-        return new UserAccountDetails(user.get());
-    }
+	@Autowired
+	private UserAccountRepository userAccountRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PersonService personService;
 
-    public boolean existsById(String id) {
-        return userAccountRepository.existsById(id);
-    }
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		if(username.isEmpty()) throw new UsernameNotFoundException("ID Not Empty!");
+		UserAccountDetails userAccount = findById(username);
+		if(userAccount == null) throw new UsernameNotFoundException(username);
+		return new User(userAccount.getId().toString(),userAccount.getPassword(),userAccount.getAuthorities());
+	}
 
-    public long count() {
-        return userAccountRepository.count();
-    }
+	public UserAccount save(UserAccount userAccount) {
+		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+		return userAccountRepository.save(userAccount);
+	}
 
-    public void deleteById(String id) {
-        userAccountRepository.deleteById(id);
-    }
-    
-    public Iterable<UserAccount> findAll(){
-    	return userAccountRepository.findAll();
-    }
+	public UserAccountDetails findById(String id) {
+		Optional<UserAccount> user = userAccountRepository.findById(id);
+		if (!user.isPresent()) throw new UsernameNotFoundException("Id not found :" + id);
+		return new UserAccountDetails(user.get());
+	}
 
-    public void delete(UserAccount userAccount) {
-        userAccountRepository.delete(userAccount);
-    }
+	public boolean existsById(String id) {
+		return userAccountRepository.existsById(id);
+	}
+
+	public long count() {
+		return userAccountRepository.count();
+	}
+
+	public void deleteById(String id) {
+		userAccountRepository.deleteById(id);
+	}
+
+	public Iterable<UserAccount> findAll(){
+		return userAccountRepository.findAll();
+	}
+
+	public void delete(UserAccount userAccount) {
+		userAccountRepository.delete(userAccount);
+	}
 
 	public Page<UserAccount> findAll(Pageable pageable) {
-		
-		return userAccountRepository.findAll(pageable);
+		Page<UserAccount> page = userAccountRepository.findAll(pageable);
+		page.get().forEach(z->{z.setOwner(personService.getName(z.getAccountId()));
+		});
+		return page;
 	}
 
 	public Page<UserAccount> findAll(Pageable pageable, String id) {
-		return userAccountRepository.findAll(pageable,id);
+		Page<UserAccount> page = userAccountRepository.findAll(pageable,id);
+		page.get().forEach(x->{x.setOwner(personService.getName(x.getAccountId()));});
+		return page;
+
 	}
 
 

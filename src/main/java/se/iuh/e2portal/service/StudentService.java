@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentService {
+public class StudentService{
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -108,5 +108,9 @@ public class StudentService {
 
     public List<Student> findByMainClass(MainClass clazz) {
         return studentRepository.findByMainClass(clazz);
+    }
+
+    public Optional<Student> profile() {
+        return studentRepository.profile();
     }
 }

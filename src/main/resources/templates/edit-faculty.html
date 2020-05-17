@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
+      >
+<head>
+    <title></title>
+</head>
+<body class="m4-cloak h-vh-100">
+<div id="main-content">
+    <div class="row border-bottom bd-lightGray m-3">
+        <div class="cell-md-4 text-center text-left-md">
+            <h3 class="dashboard-section-title">Khoa <small>Tạo mới</small></h3>
+        </div>
+    </div>
+    <div class="m-3" >
+        <div class="row" th:fragment="edit-faculty">
+            <div class="cell-md-9 cell-xl-10">
+                <div class="p-1 p-6-lg bg-white mt-3">
+                    <form id="edit-faculty-form" th:object="${faculty}" action="#" method="post">
+                        <div class="form-group">
+                           
+                            <input type="text" th:field="*{facultyId}" th:value="${facultyId}" placeholder="Mã khoa" required hidden="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Tên khoa </label><span id = "errFacultyName" style="color:red; font-size: 10pt"></span>
+                            <input type="text" th:field="*{name}" placeholder="Tên khoa" id = "facultyName" required/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

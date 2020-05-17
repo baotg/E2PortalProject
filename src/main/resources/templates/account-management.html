@@ -57,7 +57,7 @@ function searchAccount(e){
 									<tbody>
 										<tr th:each="account : ${page.content}">
 											<td th:text="${account.accountId}"></td>
-											<td></td>
+											<td th:text="${account.owner}"></td>
 											<td>
 											<span  th:each="role : ${account.roles}">
 											<span th:if="${role.roleName} =='USER'">[người dùng]</span> 
