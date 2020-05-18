@@ -81,15 +81,6 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 //		initAnnouncement();
 //		initModuleClassAndTimeTable();
 	}
-	
-	private void initAnnouncement(){
-		Announcement announcement = new Announcement();
-		announcement.setSummary("Test sum");
-		announcement.setCreatedDate(new Date());
-		announcement.setTitle("Test title");
-		announcementService.save(announcement);
-	}
-	
 //	public void initModuleClassAndTimeTable(){
 //		ModuleClass moduleClass = new ModuleClass();
 //		Lecturer lecturer = new Lecturer();

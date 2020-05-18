@@ -109,11 +109,13 @@
 						</div>
 					</div>
 					<div class="cell-md-4 cell-xl-4">
+					<form action="javascript:" onsubmit="searchStudentClick(event);">
 						Tìm kiếm: <input type="text" data-prepend="Nhập mã số sinh viên: " id="studentId" onkeyup="searchStudent(event)" data-role="input" data-search-button="true">
+					</form>
 					</div>
 					<div class="cell-md-12 cell-xl-12" id="students-table">
 						<div class="p-1 p-6-lg bg-white mt-3" th:fragment="student-table">
-							<table class="table striped table-border mt-4" data-role="table"
+							<table class="table striped table-border mt-4" data-role="table" data-horizontal-scroll="true"
 								data-rows="10" data-show-search="false">
 								<thead>
 									<tr>

@@ -75,8 +75,14 @@ public class GradingResultController {
 			model.addAttribute("msg", msg.getMessage());
 			return "redirect:/handle";
 		}
-		ModuleClass moduleClass = gradingResultReader.getModuleClass(sheet);
-		List<GradingResult> gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
+		ModuleClass moduleClass = null;
+		List<GradingResult> gradingResults = null;
+		 try {
+			 moduleClass = gradingResultReader.getModuleClass(sheet);
+			 gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
+			} catch (Exception e) {
+				return "redirect:/handle";
+			}
 		excelFileHandlerService.setGradingResults(gradingResults);
 		model.addAttribute("gradingresults", gradingResults);
 		return "grading-result-preview::grading-result-preview";

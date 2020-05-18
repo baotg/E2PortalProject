@@ -77,8 +77,14 @@ public class TimeTableController {
 			model.addAttribute("msg", msg.getMessage());
 			return "redirect:/handle";
 		}
-        ModuleClass moduleClass = timeTableReader.getModuleClass(sheet);
-        List<TimeTable> timeTableList = timeTableReader.getListTimeTable(sheet,moduleClass);
+        ModuleClass moduleClass = null;
+        List<TimeTable> timeTableList = null;
+        try {
+        	moduleClass = timeTableReader.getModuleClass(sheet);
+        	timeTableList = timeTableReader.getListTimeTable(sheet,moduleClass);
+		} catch (Exception e) {
+			return "redirect:/handle";
+		}
         excelFileHandlerService.setTimeTables(timeTableList);
         model.addAttribute("timeTables", timeTableList);
         return "time-table-preview::time-table-preview";

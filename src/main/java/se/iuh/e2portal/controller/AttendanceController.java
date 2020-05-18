@@ -75,8 +75,14 @@ public class AttendanceController {
 			model.addAttribute("msg", msg.getMessage());
 			return "redirect:/handle";
 		}
-		ModuleClass moduleClass = attendanceReader.getModuleClass(sheet);
-		List<Attendance> attendances = attendanceReader.getListAttendance(sheet,moduleClass);
+		ModuleClass moduleClass = null;
+		List<Attendance> attendances = null;
+		 try {
+			 moduleClass = attendanceReader.getModuleClass(sheet);
+			 attendances = attendanceReader.getListAttendance(sheet,moduleClass);
+			} catch (Exception e) {
+				return "redirect:/handle";
+			}
 		excelFileHandlerService.setAttendances(attendances);
 		model.addAttribute("attendances",attendances);
 		return "attendance-preview::attendance-preview";

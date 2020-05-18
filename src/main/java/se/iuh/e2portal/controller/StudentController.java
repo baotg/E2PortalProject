@@ -3,12 +3,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -137,8 +132,14 @@ public class StudentController {
 			model.addAttribute("msg", msg.getMessage());
 			return "redirect:/handle";
 		}
-		MainClass mainClass = studentReader.getMainClass(sheet);
-		List<Student> students = studentReader.getListStudent(sheet, mainClass);
+		MainClass mainClass = null;
+		List<Student> students = null;
+		try {
+			mainClass = studentReader.getMainClass(sheet);
+			students = studentReader.getListStudent(sheet, mainClass);
+		} catch (Exception e) {
+			return "redirect:/handle";
+		}
 		excelFileHandlerService.setStudents(students);
 		model.addAttribute("mainClass",mainClass);
 		model.addAttribute("students", students);

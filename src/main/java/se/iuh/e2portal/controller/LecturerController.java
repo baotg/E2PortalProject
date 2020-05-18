@@ -10,12 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import se.iuh.e2portal.model.Announcement;
 import se.iuh.e2portal.model.Lecturer;
-import se.iuh.e2portal.model.ModuleClass;
-import se.iuh.e2portal.model.UserAccount;
-import se.iuh.e2portal.service.FacultyService;
 import se.iuh.e2portal.service.LecturerService;
 import se.iuh.e2portal.service.ModuleClassService;
 

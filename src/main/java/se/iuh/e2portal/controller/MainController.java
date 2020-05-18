@@ -26,9 +26,6 @@ public class MainController {
 
 	@GetMapping(value = {"/home","/"})
 	public String index(Model model, @Param("ajax")String ajax) {
-		int sum = moduleClassService.findById("420300048764").get().getTotalDay();
-		String s = "This is text :" + sum;
-		model.addAttribute("msg", s);
 		if(ajax!=null)
 			return "home::home";
 		return "home";
@@ -49,10 +46,12 @@ public class MainController {
 			return new ResponseEntity<String>("successful", HttpStatus.OK);
 		}
 	}
+	
 	@GetMapping("/handle")
 	public ResponseEntity<String> doReturn(){
 		return new ResponseEntity<String>("notMatch", HttpStatus.OK);
 	}
+	
 	@GetMapping("/download")
 	public String download(@Param("ajax")String ajax) {
 		if(ajax!=null)

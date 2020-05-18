@@ -3,13 +3,8 @@ package se.iuh.e2portal.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.web.bind.annotation.RestController;
 import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Student;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

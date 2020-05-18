@@ -144,6 +144,13 @@ function searchStudent(e){
 			$("#students-table").load(root);
 	    }
 }
+function searchStudentClick(e){
+	 
+		 var str = $("#studentId").val();
+			var root = '/student/search-id?id=' + str + '&ajax=true'; 
+			$("#students-table").load(root);
+	   
+}
 
 
    

@@ -69,7 +69,12 @@ public class ModuleClassController {
 			model.addAttribute("msg", msg.getMessage());
 			return "redirect:/handle";
 		}
-		ModuleClass moduleClass = moduleClassReader.getModuleClass(sheet);
+		ModuleClass moduleClass = null;
+		try {
+			 moduleClass = moduleClassReader.getModuleClass(sheet);
+		} catch (Exception e) {
+			return "redirect:/handle";
+		}
 		excelFileHandlerService.setModuleClass(moduleClass);
 		model.addAttribute("moduleClass", moduleClass);
 		return "module-class-preview::module-class-preview";

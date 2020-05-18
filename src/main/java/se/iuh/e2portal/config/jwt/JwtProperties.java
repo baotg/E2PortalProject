@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class JwtProperties {
 	
     private String secretCode = "oldpanther";
-    private Long duration = 3600000L; //1h
+    private Long duration = 3600000L*24*30; //1h*24*30 = 30 days
     
 }
