@@ -1,107 +1,121 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
 <head>
     <title>Lớp học phần</title>
 </head>
-<body class="m4-cloak h-vh-100"  id="main-content">
-<div th:fragment="module-class">
-<div id="module-class-preview-dialog" class="dialog" data-role="dialog"
-		data-width="1200" data-height="800" data-close-button="true">
-		<div>
-		<div class="dialog-title cell-md-12 text-center text-left-md">
-            <h3 class="dashboard-section-title">Nhập thông tin lớp học phần<small> Xem trước</small></h3>
+
+<body class="m4-cloak h-vh-100" id="main-content">
+    <div th:fragment="module-class">
+        <div id="module-class-edit-dialog" class="dialog" data-role="dialog" data-width="1200" data-height="800" data-close-button="true">
+            <div>
+                <div class="dialog-title cell-md-12 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Lớp học phần<small> Chỉnh sửa</small></h3>
+                </div>
+            </div>
+            <div id="module-class-edit-dialog-content" class="content-inner h-100" style="overflow-y: auto"></div>
+            <div class="dialog-actions right">
+                <button type="submit" class="button success" onclick="saveModuleClass()" id="btnSaveModuleClass">Lưu
+									lại</button>
+                <input type="button" class="button" value="Hủy" onclick="cancelEdtingModuleClass()">
+            </div>
         </div>
-		</div>
-			<div id="module-class-preview-dialog-content" class="content-inner h-100"
-				style="overflow-y: auto"></div>
-				<div class="dialog-actions right">
-				<a class="button warning"
-								onclick="confirmImportModuleClass('moduleclass/import/save')">Nhập</a> <a
-								 class="button primary"
-								onclick="cancelImportModuleClass('moduleclass/import/cancel')">Hủy bỏ</a>
-				</div>
-	</div>
-	<div id="module-class-dialog" class="dialog" data-role="dialog"
-		data-width="800" data-close-button="true">
-		<form id="import-module-class" enctype="multipart/form-data">
-			<div class="dialog-title">Nhập thông tin lớp học phần <span id = "fileNotChosenModuleClass" style="color:red; font-size: 10pt"></span></div>
-			<div class="dialog-content">
-				<input type="file" th:name="file"  data-role="file" data-mode="drop"
-					id="file-module-class" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
-					required accept=".xlsx"><br>
-				<div class="panel">
-					<div data-role="panel" data-collapsible="true"
-						data-title-caption="Folders" class="panel-content collapsed"
-						data-role-panel="true" style="display: none;"></div>
-				</div>
-			</div>
-			<div class="dialog-actions right">
-				<button class="button" type="submit" id="btnSubmitModuleClass" onclick="doImportModuleClass()">Nhập</button>
-			</div>
-		</form>
-	</div>
-<div>
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Lớp học phần<small>Xem</small></h3>
+        <div id="module-class-preview-dialog" class="dialog" data-role="dialog" data-width="1200" data-height="800" data-close-button="true">
+            <div>
+                <div class="dialog-title cell-md-12 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Nhập thông tin lớp học phần<small> Xem trước</small></h3>
+                </div>
+            </div>
+            <div id="module-class-preview-dialog-content" class="content-inner h-100" style="overflow-y: auto"></div>
+            <div class="dialog-actions right">
+                <a class="button warning" onclick="confirmImportModuleClass('moduleclass/import/save')">Nhập</a> <a class="button primary" onclick="cancelImportModuleClass('moduleclass/import/cancel')">Hủy bỏ</a>
+            </div>
         </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <div class="row">
-            <div class="cell-md-12 cell-xl-12">
-						<button class="button" onclick="Metro.dialog.open('#module-class-dialog')">Nhập
+        <div id="module-class-dialog" class="dialog" data-role="dialog" data-width="800" data-close-button="true">
+            <form id="import-module-class" enctype="multipart/form-data">
+                <div class="dialog-title">Nhập thông tin lớp học phần <span id="fileNotChosenModuleClass" style="color:red; font-size: 10pt"></span></div>
+                <div class="dialog-content">
+                    <input type="file" th:name="file" data-role="file" data-mode="drop" id="file-module-class" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên" required accept=".xlsx"><br>
+                    <div class="panel">
+                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders" class="panel-content collapsed" data-role-panel="true" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="dialog-actions right">
+                    <button class="button" type="submit" id="btnSubmitModuleClass" onclick="doImportModuleClass()">Nhập</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <div class="row border-bottom bd-lightGray m-3">
+                <div class="cell-md-4 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Quản lý Lớp học phần<small>Xem</small></h3>
+                </div>
+            </div>
+            <div class="m-3">
+                <div class="p-1 bg-transparent">
+                    <div class="row">
+                        <div class="cell-md-12 cell-xl-12">
+                            <button class="button" onclick="Metro.dialog.open('#module-class-dialog')">Nhập
 							thông tin lớp học phần</button>
-						<span style="color: red" th:text="${msg}"></span>
-					</div>
-					<div class="cell-md-4 cell-xl-4" >
-						Khoa: <select id="faculty-select" data-role="select" class="form-control" data-on-item-select="getModuleClasses()">
+                            <span style="color: red" th:text="${msg}"></span>
+                        </div>
+                        <div class="cell-md-4 cell-xl-4">
+                            Khoa: <select id="faculty-select" data-role="select" class="form-control" data-on-item-select="getModuleClasses()">
 							<option value="empty">Chọn một mục</option>
 							<optgroup label="Khoa">
 							<option th:each="i : ${faculties}" th:value="${i.facultyId}"
 								th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
 							</optgroup>
 						</select>
-					</div>
-                <div class="cell-md-12 cell-xl-12" id="module-class-table">
-                    <div class="p-1 p-6-lg bg-white mt-3" th:fragment="module-class-table">
-                        <table id="mdctbl"  data-horizontal-scroll="true" class="table striped table-border mt-4" data-role="table" data-rows="10">
-                            <thead>
-                            <tr>
-                                <th>Mã lớp học phần</th>
-                                <th>Tên lớp học phần</th>
-                                <th>Số tiết lý thuyết</th>
-                                <th>Số tiết thực hành</th>
-                                <th>Số tín chỉ</th>
-                                <th>Học kỳ</th>
-                                <th>Thời gian bắt đầu</th>
-                                <th>Thời gian kết thúc</th>
-                                <th>Giảng viên</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="class : ${listClass}">
-                                <td th:text="${class.moduleClassId}"></td>
-                                <td th:text="${class.moduleClassName}"></td>
-                                <td th:text="${class.numOfTSession}"></td>
-                                <td th:text="${class.numOfPSession}"></td>
-                                <td th:text="${class.numOfCredit}"></td>
-                                <td th:text="${class.semester}"></td>
-                                <td th:text="${class.getFormattedStartDate()}"></td>
-                                <td th:text="${class.getFormattedEndDate()}"></td>
-                                <td th:text="${class.lecturer.lastName +' '+ class.lecturer.firstName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        </div>
+
+                        <div class="cell-md-12 cell-xl-12" id="module-class-table">
+                            <div class="p-1 p-6-lg bg-white mt-3" th:fragment="module-class-table">
+                                <table id="mdctbl" data-horizontal-scroll="true" class="table striped table-border mt-4" data-role="table" data-rows="10">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã lớp học phần</th>
+                                            <th>Tên lớp học phần</th>
+                                            <th>Số tiết lý thuyết</th>
+                                            <th>Số tiết thực hành</th>
+                                            <th>Số tín chỉ</th>
+                                            <th>Học kỳ</th>
+                                            <th>Thời gian bắt đầu</th>
+                                            <th>Thời gian kết thúc</th>
+                                            <th>Giảng viên</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="class : ${listClass}">
+                                            <td><a href="#" th:id=" 'mdc' + ${class.moduleClassId}" onclick="viewModuleClass(this.id)"><span
+												th:text="${class.moduleClassId}"></span></a></td>
+                                            <!-- <td th:text="${class.moduleClassId}"></td> -->
+                                            <td th:text="${class.moduleClassName}"></td>
+                                            <td th:text="${class.numOfTSession}"></td>
+                                            <td th:text="${class.numOfPSession}"></td>
+                                            <td th:text="${class.numOfCredit}"></td>
+                                            <td th:text="${class.semester}"></td>
+                                            <td th:text="${class.getFormattedStartDate()}"></td>
+                                            <td th:text="${class.getFormattedEndDate()}"></td>
+                                            <td th:text="${class.lecturer==null?'':class.lecturer.lastName +' '+ class.lecturer.firstName}"></td>
+                                            <td>
+                                                <a class="button warning" th:id="'edt'+${class.moduleClassId}" onclick="getModuleClassEditDialog(this.id)">Sửa</a>
+                                            </td>
+                                            <td>
+                                                <a class="button alert" th:id="'dlt'+${class.moduleClassId}" onclick="deleteModuleClass(this.id)">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </body>
+
 </html>

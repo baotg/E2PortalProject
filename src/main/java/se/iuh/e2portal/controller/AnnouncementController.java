@@ -1,8 +1,11 @@
 package se.iuh.e2portal.controller;
 
+import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -20,45 +23,47 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/announcement")
 public class AnnouncementController {
-	
+
     @Autowired
     private AnnouncementService announcementService;
-    
+
     @GetMapping("")
-    public String getAnnouncements(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax) {
-      Page<Announcement> page = announcementService.findAll(pageable);
-        model.addAttribute("page", page);
-        if(ajax!=null)
+    public String getAnnouncements(@PageableDefault(size = 10, sort="createdDate", direction = Sort.Direction.DESC) Pageable pageable,Sort sort, Model model,
+            @Param("ajax") String ajax) {
+        Page<Announcement> pages = announcementService.findAll(pageable);
+        model.addAttribute("page", pages);
+        if (ajax != null)
             return "announcement::announcement";
         return "announcement";
     }
-    
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addAnnouncement(Model model,@Param("ajax")String ajax){
+    public String addAnnouncement(Model model, @Param("ajax") String ajax) {
         model.addAttribute("announcement", new Announcement());
-        if(ajax!=null)
-        	return "add-announcement::add-announcement";
+        if (ajax != null)
+            return "add-announcement::add-announcement";
         return "add-announcement";
     }
-    
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAnnouncement(Announcement announcement,@PageableDefault(size = 10) Pageable pageable, Model model){
+    public String saveAnnouncement(Announcement announcement, @PageableDefault(size = 10) Pageable pageable,
+            Model model) {
         announcement.setCreatedDate(new Date());
         announcementService.save(announcement);
         Page<Announcement> page = announcementService.findAll(pageable);
         model.addAttribute("page", page);
         return "announcement::announcement";
     }
-    
+
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editAnnouncement(@RequestParam("id") Long id, Model model) {
         Optional<Announcement> announcementEdit = announcementService.findById(id);
         announcementEdit.ifPresent(announcement -> model.addAttribute("announcement", announcement));
         return "add-announcement::add-announcement";
     }
-    
+
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String deleteAnnouncement(@RequestParam("id") Long id, Model model){
+    public String deleteAnnouncement(@RequestParam("id") Long id, Model model) {
         announcementService.deleteById(id);
         return "redirect:/announcement?ajax=true";
 

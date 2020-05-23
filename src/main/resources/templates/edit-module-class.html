@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
+<head>
+    <title></title>
+</head>
+
+<body class="m4-cloak h-vh-100">
+    <div id="main-content">
+        <div class="row border-bottom bd-lightGray m-3">
+            <div class="cell-md-4 text-center text-left-md">
+                <h3 class="dashboard-section-title">Lớp học phần <small>Tạo mới</small></h3>
+            </div>
+        </div>
+        <div class="m-3">
+            <div class="row" th:fragment="edit-module-class">
+                <div class="cell-md-9 cell-xl-10">
+                    <div class="p-1 p-6-lg bg-white mt-3">
+                        <form id="edit-module-class-form" th:object="${moduleClass}" action="#" method="post">
+                            <div class="form-group">
+                                <input type="text" th:field="*{moduleClassId}" th:value="${moduleClassId}" placeholder="Mã lớp học phần" required hidden="true" />
+                            </div>
+                            <div class="form-group">
+                                <label>Tên lớp học phần </label><span id="errModuleClassName" style="color:red; font-size: 10pt"></span>
+                                <input type="text" th:field="*{moduleClassName}" placeholder="Tên lớp học phần" id="moduleClassName" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Số tín chỉ </label><span id="errModuleClassCredit" style="color:red; font-size: 10pt"></span>
+                                <input type="number" th:field="*{numOfCredit}" placeholder="Số tiết lý thuyết" id="moduleClassCredit" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Số tiết lý thuyết </label><span id="errModuleClassTSession" style="color:red; font-size: 10pt"></span>
+                                <input type="number" th:field="*{numOfTSession}" placeholder="Số tiết lý thuyết" id="moduleClassTsession" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Số tiết thực hành </label><span id="errModuleClassPSession" style="color:red; font-size: 10pt"></span>
+                                <input type="number" th:field="*{numOfPSession}" placeholder="Số tiết thực hành" id="moduleClassPsession" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Học kỳ </label><span id="errModuleSemester" style="color:red; font-size: 10pt"></span>
+                                <input type="text" th:field="*{semester}" placeholder="Học kỳ" id="moduleClassSemester" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày bắt đầu </label><span id="errModuleStart" style="color:red; font-size: 10pt"></span>
+                                <input type="date" th:field="*{startDate}" placeholder="Ngày bắt đầu" id="moduleClassStart" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày kết thúc </label><span id="errModuleEnd" style="color:red; font-size: 10pt"></span>
+                                <input type="date" th:field="*{endDate}" placeholder="Ngày bắt đầu" id="moduleClassEnd" required/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

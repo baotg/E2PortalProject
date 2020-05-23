@@ -17,17 +17,15 @@ public class GradingResult implements Serializable {
 	 */
 	private static final long serialVersionUID = -4047795934575386735L;
 	@Id
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id", referencedColumnName = "id")
     @JsonIgnore
     private Student student;
     @Id
     @ManyToOne
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
-
     @JsonIgnore
     private ModuleClass moduleClass;
-
     private float quiz1;
     private float quiz2;
     private float quiz3;

@@ -1,93 +1,91 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
 <head>
     <title>Home</title>
 </head>
+
 <body class="m4-cloak h-vh-100" id="main-content">
-<div th:fragment="announcement">
-<div id="announcememt-add-dialog" class="dialog" data-role="dialog"
-		data-width="1200" data-height="800" data-close-button="true">
-		<div>
-		<div class="dialog-title cell-md-12 text-center text-left-md">
-            <h3 class="dashboard-section-title">Thông báo<small> thêm</small></h3>
-        </div>
-		</div>
-			<div id="announcement-add-dialog-content" class="content-inner h-100"
-				style="overflow-y: auto"></div>
-				<div class="dialog-actions right">
-				 <button type="submit" class="button success" id="btnSaveAnnouncement" onclick="doSaveAnnouncement()">Gửi</button>
-                            <a><input type="button" class="button" value="Hủy" onclick="cancelAddingAnnouncement('/announcement')"/></a>
-				</div>
-	</div>
-<div>
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Thông báo <small>Xem</small></h3>
-        </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <div class="row">
-                <div class="cell-md-3 cell-xl-2">
-                    <a class="button mb-3 success" onclick="addAnnouncement()" >Tạo thông báo</a>
-                    <div class="panel">
-                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders"
-                             class="panel-content collapsed" data-role-panel="true" style="display: none;" >
-                        </div>
-                    </div>
+    <div th:fragment="announcement">
+        <div id="announcememt-add-dialog" class="dialog" data-role="dialog" data-width="1200" data-height="800" data-close-button="true">
+            <div>
+                <div class="dialog-title cell-md-12 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Thông báo<small> thêm</small></h3>
                 </div>
-                <div class="cell-md-9 cell-xl-10">
-                    <div class="p-1 p-6-lg bg-white mt-3">
-                        <table class="table striped table-border mt-4" data-show-rows-steps="false" data-show-search="false" data-show-pagination="false" data-horizontal-scroll="true" data-role="table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tiêu đề</th>
-                                <th>Tóm tắt</th>
-                                <th>Ngày tạo</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="announcement : ${page.content}">
-                                <td th:text="${announcement.announcementId}"></td>
-                                <td th:text="${announcement.title}"></td>
-                                <td th:text="${announcement.summary}"></td>
-                                <td th:text="${announcement.getFormattedCreatedDate()}"></td>
-                                <td>
-                                    <a class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
-                                </td>
-                                <td>
-                                    <a class="button alert" th:id="'dlt'+${announcement.announcementId}"  onclick="deleteAnnouncement(this.id)">Xóa</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="d-flex flex-column flex-justify-center">
-                            <ul class="pagination">
-                                <li class="page-item" th:if="${page.hasPrevious()}">
-                                    <a class="page-link" th:id="@{/announcement(page=${page.number - 1},size=${page.size})}" onclick="goToPage(this.id)">Trang trước</a>
-                                </li>
-                                <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                                    <li th:if="${page.number == i}" class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
-                                    <li class="page-item" th:unless="${page.number == i}">
-                                        <a class="page-link" th:id="@{/announcement(page=${i},size=${page.size})}" onclick="goToPage(this.id)">[[${i}+1]]</a>
-                                    </li>
-                                </th:block>
-                                <li class="page-item" th:if="${page.hasNext()}">
-                                    <a class="page-link"  th:id="@{/announcement(page=${page.number+1},size=${page.size})}" onclick="goToPage(this.id)">Trang sau</a>
-                                </li>
-                            </ul>
+            </div>
+            <div id="announcement-add-dialog-content" class="content-inner h-100" style="overflow-y: auto"></div>
+            <div class="dialog-actions right">
+                <button type="submit" class="button success" id="btnSaveAnnouncement" onclick="doSaveAnnouncement()">Gửi</button>
+                <a><input type="button" class="button" value="Hủy" onclick="cancelAddingAnnouncement('/announcement')" /></a>
+            </div>
+        </div>
+        <div>
+            <div class="row border-bottom bd-lightGray m-3">
+                <div class="cell-md-4 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Thông báo <small>Xem</small></h3>
+                </div>
+            </div>
+            <div class="m-3">
+                <div class="p-1 bg-transparent">
+                    <div class="row">
+                        <div class="cell-md-3 cell-xl-2">
+                            <a class="button mb-3 success" onclick="addAnnouncement()">Tạo thông báo</a>
+                            <div class="panel">
+                                <div data-role="panel" data-collapsible="true" data-title-caption="Folders" class="panel-content collapsed" data-role-panel="true" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-md-9 cell-xl-10">
+                            <div class="p-1 p-6-lg bg-white mt-3">
+                                <table class="table striped table-border mt-4" data-show-rows-steps="false" data-show-search="false" data-show-pagination="false" data-horizontal-scroll="true" data-role="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tiêu đề</th>
+                                            <th>Tóm tắt</th>
+                                            <th>Ngày tạo</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="announcement : ${page.content}">
+                                            <td th:text="${announcement.announcementId}"></td>
+                                            <td th:text="${announcement.title}"></td>
+                                            <td th:text="${announcement.summary}"></td>
+                                            <td th:text="${announcement.getFormattedCreatedDate()}"></td>
+                                            <td>
+                                                <a class="button warning" th:id="'edt'+${announcement.announcementId}" onclick="editAnnouncement(this.id)">Sửa</a>
+                                            </td>
+                                            <td>
+                                                <a class="button alert" th:id="'dlt'+${announcement.announcementId}" onclick="deleteAnnouncement(this.id)">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex flex-column flex-justify-center">
+                                    <ul class="pagination">
+                                        <li class="page-item" th:if="${page.hasPrevious()}">
+                                            <a class="page-link" th:id="@{/announcement(page=${page.number - 1},size=${page.size})}" onclick="goToPage(this.id)">Trang trước</a>
+                                        </li>
+                                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                                            <li th:if="${page.number == i}" class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
+                                            <li class="page-item" th:unless="${page.number == i}">
+                                                <a class="page-link" th:id="@{/announcement(page=${i},size=${page.size})} + '&sort=createdDate,DESC'" onclick="goToPage(this.id)">[[${i}+1]]</a>
+                                            </li>
+                                        </th:block>
+                                        <li class="page-item" th:if="${page.hasNext()}">
+                                            <a class="page-link" th:id="@{/announcement(page=${page.number+1},size=${page.size})} + '&sort=createdDate,DESC'" onclick="goToPage(this.id)">Trang sau</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </body>
+
 </html>

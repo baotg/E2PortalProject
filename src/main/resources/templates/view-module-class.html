@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
+<head>
+    <title>Lớp học phần</title>
+    <meta charset="UTF-8">
+</head>
+
+<body id="main-content" class="m4-cloak h-vh-100">
+    <div th:fragment="view-module-class">
+        <div>
+            <div class="row border-bottom bd-lightGray m-3">
+                <div class="cell-md-4 text-center text-left-md">
+                    <h3 class="dashboard-section-title">
+                        Danh sác sinh viên - Lớp học phần<small> Xem</small><span id="errMessageImportStudent"></span>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-3">
+                <div class="p-1 bg-transparent">
+                    <div class="row">
+                        <div class="cell-md-12 cell-xl-12" id="students-table">
+                            <div class="p-1 p-6-lg bg-white mt-3" th:fragment="student-table">
+                                <table class="table striped table-border mt-4" data-role="table" data-horizontal-scroll="true" data-rows="10" data-show-search="false">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã số sinh viên</th>
+                                            <th>Họ đệm</th>
+                                            <th>Tên</th>
+                                            <th>Giới tính</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Điện thoại</th>
+                                            <th>Email</th>
+                                            <th>Điện thoại người thân</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="student : ${moduleClass.students}">
+                                            <td><a href="#" th:id=" 'std' + ${student.id}" onclick="viewStudent(this.id)"><span
+												th:text="${student.id}"></span></a></td>
+                                            <td th:text="${student.lastName}"></td>
+                                            <td th:text="${student.firstName}"></td>
+                                            <td th:if="${student.gender} == true">Nam</td>
+                                            <td th:if="${student.gender} == false">Nữ</td>
+                                            <td th:text="${student.getFormatedDate()}"></td>
+                                            <td th:text="${student.address}"></td>
+                                            <td th:text="${student.numberPhone}"></td>
+                                            <td th:text="${student.email}"></td>
+                                            <td th:text="${student.familyNumber}"></td>
+                                            <td><a th:id=" 'dlt' + ${student.id}" onclick="deleteStudentFromModuleClass(this)" th:data-moduleid="${moduleClass.moduleClassId}" class="button alert">Xóa</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

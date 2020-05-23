@@ -2,6 +2,8 @@ package se.iuh.e2portal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -22,8 +24,10 @@ public class ModuleClass implements Serializable {
     private int numOfTSession; 
     private int numOfPSession; 
     private int numOfCredit; 
-    private String semester; 
+    private String semester;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     @Transient
     private int totalDay;

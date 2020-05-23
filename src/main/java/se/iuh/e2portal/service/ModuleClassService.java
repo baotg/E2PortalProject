@@ -64,6 +64,7 @@ public class ModuleClassService  {
 	public void delete(ModuleClass object) {
 		moduleClassRepository.delete(object);
 	}
+
 	public int getTotalDay(String id) {
 		try {
 			Optional<ModuleClass> moduleClass = moduleClassRepository.findById(id);

@@ -17,7 +17,7 @@ public class MainClass {
     private String speciality; // Chuyên ngành
     private String level; // Bậc học
     private String type; // Loại hình đào tạo
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name ="facultyId",referencedColumnName = "facultyId")
     private Faculty faculty;
     private String year;

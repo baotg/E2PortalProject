@@ -25,7 +25,7 @@ public class JwtTokenProvider {
     
     public boolean validateToken(String token) {
         try {
-            System.out.println("Validate : " + token);
+            // System.out.println("Validate : " + token);
             Jwts.parser().setSigningKey(jwtProperties.getSecretCode()).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException ex) {

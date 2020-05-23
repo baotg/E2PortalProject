@@ -33,26 +33,28 @@ public class StudentService{
     private RoleRepository roleRepository;
 
     public <S extends Student> S save(S entity) {
-    	UserAccount userAccount = new UserAccount();
-		userAccount.setAccountId(entity.getId());
-		userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
-		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
-		userAccountRepository.save(userAccount);
+        if(!userAccountRepository.existsById(entity.getId())){
+            UserAccount userAccount = new UserAccount();
+            userAccount.setAccountId(entity.getId());
+            userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
+            userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+            userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
+            userAccountRepository.save(userAccount);
+        }
         return studentRepository.save(entity);
     }
 
     public <S extends Student> Iterable<S> saveAll(Iterable<S> entities) {
-    	List<UserAccount> userAccounts = new ArrayList<UserAccount>();
     	for(Student student : entities) {
-    		UserAccount userAccount = new UserAccount();
-    		userAccount.setAccountId(student.getId());
-    		userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
-    		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-    		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
-    		userAccounts.add(userAccount);
+            if(!userAccountRepository.existsById(student.getId())){
+                UserAccount userAccount = new UserAccount();
+                userAccount.setAccountId(student.getId());
+                userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
+                userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+                userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
+                userAccountRepository.save(userAccount);
+            }
     	}
-    	userAccountRepository.saveAll(userAccounts);
         return studentRepository.saveAll(entities);
     }
 

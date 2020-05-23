@@ -55,10 +55,21 @@ public class GradingResultController {
 			model.addAttribute("gradingresults",moduleClass.get().getGradingResults());
 		return "grading-result::grading-result-table";
 	}
-
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteGradingResult(@RequestParam("studentId") String studentId, @RequestParam("moduleClassId") String moduleClassId , Model model){
+		GradingResultPK gradingResultPK = new GradingResultPK();
+		gradingResultPK.setModuleClass(moduleClassId);
+		gradingResultPK.setStudent(studentId);
+		Optional<GradingResult> gradingResult = gradingResultService.findById(gradingResultPK);
+		if(gradingResult.isPresent()){
+			gradingResultService.delete(gradingResult.get());
+			model.addAttribute("gradingresults",gradingResult.get().getModuleClass().getGradingResults());
+			return "grading-result::grading-result-table";
+		}
+		return "redirect:/gradingresult?ajax=true";
+    }
 	@GetMapping("/{id}")
 	public String getGradingResultByStudent(@PathVariable("id") String id, Model model){
-
 		return "redirect:/";
 	}
 
@@ -93,15 +104,18 @@ public class GradingResultController {
 		List<GradingResult> gradingResults = excelFileHandlerService.getGradingResults();
 		ModuleClass moduleClass = gradingResults.get(0).getModuleClass();	
 		Faculty faculty = moduleClass.getFaculty();
+		if(facultyService.existsById(faculty.getFacultyId())) {
+        	faculty = facultyService.findById(faculty.getFacultyId()).get();
+        }
+		else {
+			facultyService.save(faculty);
+		}
 		if(!moduleClassService.existsById(moduleClass.getModuleClassId())){
 			moduleClassService.save(moduleClass);
 		}
 		else {
 			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
 		}
-		if(facultyService.existsById(faculty.getFacultyId())) {
-        	faculty = facultyService.findById(faculty.getFacultyId()).get();
-        }
 		for(GradingResult gradingResult : gradingResults){
 			if(!studentService.existsById(gradingResult.getStudent().getId())) {
 				if(!mainClassService.existsById(gradingResult.getStudent().getMainClass().getClassId()))

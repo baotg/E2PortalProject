@@ -26,6 +26,16 @@ public class UserAccountService implements UserDetailsService {
 	@Autowired
 	private PersonService personService;
 
+	@Transactional
+	public boolean changePassword(String id, String newPassword){
+		if(id.isEmpty()) return false;
+		Optional<UserAccount> userAccount = userAccountRepository.findById(id);
+		if(!userAccount.isPresent()) return false;
+		userAccount.get().setPassword(newPassword);
+		// System.out.println(newPassword);
+		save(userAccount.get());
+		return true;
+	}
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

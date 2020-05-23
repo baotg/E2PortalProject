@@ -1,106 +1,94 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}"
-     >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
 <head>
     <title>KQHT</title>
 </head>
-<body class="m4-cloak h-vh-100" id="main-content" >
-<div th:fragment="grading-result">
-<script type="text/javascript">
-function getClassesGradingResult() {
-    var faculty = document.getElementById("faculty-select");
-    var aClass = document.getElementById("class-select");
-    var urlnone = '/gradingresult/search/class?id=';
-    var facultyId = faculty.options[faculty.selectedIndex].value;
-    aClass = '';
-    if(facultyId=='empty'){
-        $('#students-table').load(urlnone);
-        $('#select-classes').load('/gradingresult/search?id=');
-        return;
-    }
-    var url = '/gradingresult/search?id=' + facultyId;
-    $('#select-classes').load(url);
-    $('#grading-result-table').load(urlnone);
-}
-function getGradingResult() {
-	
-    var aClass = document.getElementById("class-select");
-    var classId = aClass.options[aClass.selectedIndex].value;
-    if(classId=='empty'){
-        classId='';
-    }
-    var url2 = '/gradingresult/search/class?id=' + classId;
-    $('#grading-result-table').load(url2);
-}
-</script>
-    <div id="grading-result-preview-dialog" class="dialog" data-role="dialog"
-         data-width="1200" data-height="800" data-close-button="true">
-        <div>
-            <div class="dialog-title cell-md-12 text-center text-left-md">
-                <h3 class="dashboard-section-title">Nhập Kết quả học tập<small> Xem trước</small></h3>
+
+<body class="m4-cloak h-vh-100" id="main-content">
+    <div th:fragment="grading-result">
+        <script type="text/javascript">
+            function getClassesGradingResult() {
+                var faculty = document.getElementById("faculty-select");
+                var aClass = document.getElementById("class-select");
+                var urlnone = '/gradingresult/search/class?id=';
+                var facultyId = faculty.options[faculty.selectedIndex].value;
+                aClass = '';
+                if (facultyId == 'empty') {
+                    $('#students-table').load(urlnone);
+                    $('#select-classes').load('/gradingresult/search?id=');
+                    return;
+                }
+                var url = '/gradingresult/search?id=' + facultyId;
+                $('#select-classes').load(url);
+                $('#grading-result-table').load(urlnone);
+            }
+
+            function getGradingResult() {
+
+                var aClass = document.getElementById("class-select");
+                var classId = aClass.options[aClass.selectedIndex].value;
+                if (classId == 'empty') {
+                    classId = '';
+                }
+                var url2 = '/gradingresult/search/class?id=' + classId;
+                $('#grading-result-table').load(url2);
+            }
+        </script>
+        <div id="grading-result-preview-dialog" class="dialog" data-role="dialog" data-width="1200" data-height="800" data-close-button="true">
+            <div>
+                <div class="dialog-title cell-md-12 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Nhập Kết quả học tập<small> Xem trước</small></h3>
+                </div>
+            </div>
+            <div id="grading-result-preview-dialog-content" class="content-inner h-100" style="overflow-y: auto"></div>
+            <div class="dialog-actions right">
+                <a href="#" class="button warning" onclick="confirmImportGradingResult('gradingresult/import/save')">Nhập</a>
+                <a href="#" class="button primary" onclick="cancelImportGradingResult('gradingresult/import/cancel')">Hủy bỏ</a>
             </div>
         </div>
-        <div id="grading-result-preview-dialog-content" class="content-inner h-100"
-             style="overflow-y: auto"></div>
-        <div class="dialog-actions right">
-            <a href="#" class="button warning"
-               onclick="confirmImportGradingResult('gradingresult/import/save')">Nhập</a>
-            <a href="#" class="button primary"
-               onclick="cancelImportGradingResult('gradingresult/import/cancel')">Hủy bỏ</a>
+        <div id="grading-result-dialog" class="dialog" data-role="dialog" data-width="800" data-close-button="true">
+            <form id="import-grading-result" enctype="multipart/form-data">
+                <div class="dialog-title">Nhập Kết quả học tập <span id="fileNotChosenGradingResult" style="color:red; font-size: 10pt"></span></div>
+                <div class="dialog-content">
+                    <input type="file" th:name="file" data-role="file" data-mode="drop" id="file-grading-result" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên" required accept=".xlsx"><br>
+                    <div class="panel">
+                        <div data-role="panel" data-collapsible="true" data-title-caption="Folders" class="panel-content collapsed" data-role-panel="true" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="dialog-actions right">
+                    <button class="button" type="submit" id="btnSubmitGradingResult" onclick="doImportGradingResult()">Nhập</button>
+                </div>
+            </form>
         </div>
-    </div>
-<div id="grading-result-dialog" class="dialog" data-role="dialog"
-		data-width="800" data-close-button="true">
-		<form id="import-grading-result" enctype="multipart/form-data">
-			<div class="dialog-title">Nhập Kết quả học tập <span id = "fileNotChosenGradingResult" style="color:red; font-size: 10pt"></span></div>
-			<div class="dialog-content">
-				<input type="file" th:name="file" data-role="file" data-mode="drop"
-					id="file-grading-result" data-prepend="Chọn tệp tin Excel để bắt đầu tải lên"
-					required accept=".xlsx"><br>
-				<div class="panel">
-					<div data-role="panel" data-collapsible="true"
-						data-title-caption="Folders" class="panel-content collapsed"
-						data-role-panel="true" style="display: none;"></div>
-				</div>
-			</div>
-			<div class="dialog-actions right">
-				<button class="button" type="submit"
-					id="btnSubmitGradingResult" onclick="doImportGradingResult()">Nhập</button>
-			</div>
-		</form>
-	</div>
-<div>
-    <div class="row border-bottom bd-lightGray m-3">
-        <div class="cell-md-4 text-center text-left-md">
-            <h3 class="dashboard-section-title">Quản lý Kết quả học tập<small>Xem</small></h3>
-        </div>
-    </div>
-    <div class="m-3">
-        <div class="p-1 bg-transparent">
-            <div class="row">
-                <div class="cell-md-12 cell-xl-12">
-						<button class="button" onclick="Metro.dialog.open('#grading-result-dialog')">Nhập
+        <div>
+            <div class="row border-bottom bd-lightGray m-3">
+                <div class="cell-md-4 text-center text-left-md">
+                    <h3 class="dashboard-section-title">Quản lý Kết quả học tập<small>Xem</small></h3>
+                </div>
+            </div>
+            <div class="m-3">
+                <div class="p-1 bg-transparent">
+                    <div class="row">
+                        <div class="cell-md-12 cell-xl-12">
+                            <button class="button" onclick="Metro.dialog.open('#grading-result-dialog')">Nhập
 							Kết quả học tập</button>
-						<span style="color: red" th:text="${msg}"></span>
-					</div>
-                <div class="cell-md-4 cell-xl-4" >
+                            <span style="color: red" th:text="${msg}"></span>
+                        </div>
+                        <div class="cell-md-4 cell-xl-4">
 
-                    Khoa: <select id="faculty-select" data-role="select" class="form-control"
-                                  data-on-item-select="getClassesGradingResult()">
+                            Khoa: <select id="faculty-select" data-role="select" class="form-control" data-on-item-select="getClassesGradingResult()">
                     <option value="empty">Chọn một mục</option>
                     <optgroup label="Khoa">
                         <option th:each="i : ${faculties}" th:value="${i.facultyId}"
                                 th:text="${i.facultyId + ' - ' + i.name}" th:selected="${i==selectedFaculty}"></option>
                     </optgroup>
                 </select>
-                </div>
+                        </div>
 
-                <div class="cell-md-4 cell-xl-4" id="select-classes">
-                    <div th:fragment="select-classes">
-                        Lớp: <select data-role="select" id="class-select"
-                                     data-on-item-select="getGradingResult()">
+                        <div class="cell-md-4 cell-xl-4" id="select-classes">
+                            <div th:fragment="select-classes">
+                                Lớp: <select data-role="select" id="class-select" data-on-item-select="getGradingResult()">
                         <option value="empty">Chọn một mục</option>
                         <optgroup label="Lớp học phần">
                             <option th:each="i : ${moduleClasses}"
@@ -108,59 +96,64 @@ function getGradingResult() {
                                     th:text="${i.moduleClassId + ' - ' + i.moduleClassName}" th:selected="${i==selectedModuleClass}"></option>
                         </optgroup>
                     </select>
-                    </div>
-                </div>
-                <div class="cell-md-12 cell-xl-12" id="grading-result-table">
-                    <div class="p-1 p-6-lg bg-white mt-3" th:fragment="grading-result-table">
-                        <table class="table striped table-border mt-4" data-role="table" data-horizontal-scroll="true" data-rows="10">
-                            <thead>
-                            <tr>
-                                <th>Mã số sinh viên</th>
-                                <th>Tên</th>
-                                <th>Họ đệm</th>
-                                <th>TK1</th>
-                                <th>TK2</th>
-                                <th>TK3</th>
-                                <th>TK4</th>
-                                <th>TK5</th>
-                                <th>Giữa kỳ</th>
-                                <th>TH1</th>
-                                <th>TH2</th>
-                                <th>TH3</th>
-                                <th>TH4</th>
-                                <th>TH5</th>
-                                <th>Cuối kỳ</th>
-                                <th>Trung bình</th>
+                            </div>
+                        </div>
+                        <div class="cell-md-12 cell-xl-12" id="grading-result-table">
+                            <div class="p-1 p-6-lg bg-white mt-3" th:fragment="grading-result-table">
+                                <table class="table striped table-border mt-4" data-role="table" data-horizontal-scroll="true" data-rows="10">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã số sinh viên</th>
+                                            <th>Tên</th>
+                                            <th>Họ đệm</th>
+                                            <th>TK1</th>
+                                            <th>TK2</th>
+                                            <th>TK3</th>
+                                            <th>TK4</th>
+                                            <th>TK5</th>
+                                            <th>Giữa kỳ</th>
+                                            <th>TH1</th>
+                                            <th>TH2</th>
+                                            <th>TH3</th>
+                                            <th>TH4</th>
+                                            <th>TH5</th>
+                                            <th>Cuối kỳ</th>
+                                            <th>Trung bình</th>
+                                            <th></th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="gradingresult : ${gradingresults}">
-                                <td th:text="${gradingresult.student.id}"></td>
-                                <td th:text="${gradingresult.student.lastName}"></td>
-                                <td th:text="${gradingresult.student.firstName}"></td>
-                                <td th:text="${gradingresult.quiz1}"></td>
-                                <td th:text="${gradingresult.quiz2}"></td>
-                                <td th:text="${gradingresult.quiz3}"></td>
-                                <td th:text="${gradingresult.quiz4}"></td>
-                                <td th:text="${gradingresult.quiz5}"></td>
-                                <td th:text="${gradingresult.midScore}"></td>
-                                <td th:text="${gradingresult.practiceScore1}"></td>
-                                <td th:text="${gradingresult.practiceScore2}"></td>
-                                <td th:text="${gradingresult.practiceScore3}"></td>
-                                <td th:text="${gradingresult.practiceScore4}"></td>
-                                <td th:text="${gradingresult.practiceScore5}"></td>
-                                <td th:text="${gradingresult.endScore}"></td>
-                                <td th:text="${gradingresult.averageScore}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="gradingresult : ${gradingresults}">
+                                            <td th:text="${gradingresult.student.id}"></td>
+                                            <td th:text="${gradingresult.student.lastName}"></td>
+                                            <td th:text="${gradingresult.student.firstName}"></td>
+                                            <td th:text="${gradingresult.quiz1}"></td>
+                                            <td th:text="${gradingresult.quiz2}"></td>
+                                            <td th:text="${gradingresult.quiz3}"></td>
+                                            <td th:text="${gradingresult.quiz4}"></td>
+                                            <td th:text="${gradingresult.quiz5}"></td>
+                                            <td th:text="${gradingresult.midScore}"></td>
+                                            <td th:text="${gradingresult.practiceScore1}"></td>
+                                            <td th:text="${gradingresult.practiceScore2}"></td>
+                                            <td th:text="${gradingresult.practiceScore3}"></td>
+                                            <td th:text="${gradingresult.practiceScore4}"></td>
+                                            <td th:text="${gradingresult.practiceScore5}"></td>
+                                            <td th:text="${gradingresult.endScore}"></td>
+                                            <td th:text="${gradingresult.averageScore}"></td>
+                                            <td>
+                                                <a class="button alert" th:data-std="${gradingresult.student.id}" th:data-mdc="${gradingresult.moduleClass.moduleClassId}" onclick="deleteGradingResult(this)">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </body>
+
 </html>

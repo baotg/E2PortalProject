@@ -13,6 +13,7 @@ import se.iuh.e2portal.config.Message;
 import se.iuh.e2portal.model.Attendance;
 import se.iuh.e2portal.model.Faculty;
 import se.iuh.e2portal.model.ModuleClass;
+import se.iuh.e2portal.model.TimeTable;
 import se.iuh.e2portal.service.*;
 
 import java.io.IOException;
@@ -61,6 +62,16 @@ public class AttendanceController {
 
 		return "redirect:/";
 	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteTimeTable(@RequestParam("id") long id, Model model){
+        Optional<Attendance> result = attendanceService.findById(id);
+        if(result.isPresent()){
+            attendanceService.delete(result.get());
+            model.addAttribute("attendances",attendanceService.findByModuleClassId(result.get().getModuleClassId()));
+            return "attendance::attendance-table";
+        }
+        return "redirect:/";
+    }
 	
 	@GetMapping("/import")
 	public String mapReadExcelDatatoDB(Model model) throws IOException {
@@ -95,16 +106,18 @@ public class AttendanceController {
 			return "redirect:/";
 		ModuleClass moduleClass = attendances.get(0).getModuleClass();
 		Faculty faculty = moduleClass.getFaculty();
-
+		if(facultyService.existsById(faculty.getFacultyId())) {
+			faculty = facultyService.findById(faculty.getFacultyId()).get();
+		}
+		else
+			facultyService.save(faculty);
 		if(!moduleClassService.existsById(moduleClass.getModuleClassId())){
 			moduleClassService.save(moduleClass);
 		}
 		else {
 			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
 		}
-		if(facultyService.existsById(faculty.getFacultyId())) {
-			faculty = facultyService.findById(faculty.getFacultyId()).get();
-		}
+	
 		for(Attendance attendance : attendances){
 			if(!studentService.existsById(attendance.getStudent().getId()))
 				studentService.save(attendance.getStudent());

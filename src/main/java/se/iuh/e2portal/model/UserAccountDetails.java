@@ -32,6 +32,7 @@ public class UserAccountDetails implements UserDetails {
     public String getPassword() {
         return userAccount.getPassword();
     }
+
     public String getId(){
         return userAccount.getAccountId();
     }

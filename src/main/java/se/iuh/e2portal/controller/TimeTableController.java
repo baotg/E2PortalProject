@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import se.iuh.e2portal.component.TimeTableReader;
@@ -50,6 +51,16 @@ public class TimeTableController {
         if(ajax!=null)
         return "time-table::time-table";
         return "time-table";
+    }
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteTimeTable(@RequestParam("id") long id, Model model){
+        Optional<TimeTable> result = timeTableService.findById(id);
+        if(result.isPresent()){
+            timeTableService.delete(result.get());
+            model.addAttribute("timetables",timeTableService.findByModuleClassId(result.get().getModuleClassId()));
+            return "time-table::time-table-table";
+        }
+        return "redirect:/";
     }
     @GetMapping("/search")
 	public String getClasses(@RequestParam("id") String id, Model model) {
@@ -104,6 +115,8 @@ public class TimeTableController {
         if(facultyService.existsById(faculty.getFacultyId())) {
         	faculty = facultyService.findById(faculty.getFacultyId()).get();
         }
+        else
+        	facultyService.save(faculty);
         if(!moduleClassService.findById(moduleClass.getModuleClassId()).isPresent()){
             moduleClassService.save(moduleClass);
         }
