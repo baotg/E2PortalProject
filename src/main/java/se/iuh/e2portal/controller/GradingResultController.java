@@ -92,6 +92,7 @@ public class GradingResultController {
 			 moduleClass = gradingResultReader.getModuleClass(sheet);
 			 gradingResults = gradingResultReader.getListGradingResult(sheet,moduleClass);
 			} catch (Exception e) {
+				e.printStackTrace();
 				return "redirect:/handle";
 			}
 		excelFileHandlerService.setGradingResults(gradingResults);
@@ -125,7 +126,7 @@ public class GradingResultController {
 			else
 				gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
 		}
-		gradingResultService.saveAll(gradingResults);
+		gradingResultService.mergeAll(gradingResults);
 		model.addAttribute("faculties", facultyService.findAll());
 		model.addAttribute("moduleClasses", moduleClassService.findByFacultyId(faculty.getFacultyId()));
 		model.addAttribute("selectedModuleClass",moduleClass);

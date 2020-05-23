@@ -26,19 +26,19 @@ public class GradingResult implements Serializable {
     @JoinColumn(name = "moduleClassId", referencedColumnName = "moduleClassId")
     @JsonIgnore
     private ModuleClass moduleClass;
-    private float quiz1;
-    private float quiz2;
-    private float quiz3;
-    private float quiz4;
-    private float quiz5;
-    private float midScore;
-    private float endScore;
-    private float averageScore;
-    private float practiceScore1;
-    private float practiceScore2;
-    private float practiceScore3;
-    private float practiceScore4;
-    private float practiceScore5;
+    private Float quiz1;
+    private Float quiz2;
+    private Float quiz3;
+    private Float quiz4;
+    private Float quiz5;
+    private Float midScore;
+    private Float endScore;
+    private Float averageScore;
+    private Float practiceScore1;
+    private Float practiceScore2;
+    private Float practiceScore3;
+    private Float practiceScore4;
+    private Float practiceScore5;
 
     public String getModuleClassId(){
         return moduleClass.getModuleClassId();

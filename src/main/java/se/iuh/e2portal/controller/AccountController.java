@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,5 +52,19 @@ public class AccountController {
 		model.addAttribute("msg", msg.getMessage() + account.getId());
 		return "account-management::reset-message";
 	}
+	@GetMapping("/change-password")
+	public ResponseEntity<String> changePassword(@RequestParam(value = "pass") String pass) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id;
+        if (principal instanceof UserDetails) {
+             id = ((UserDetails) principal).getUsername();
+        } else {
+            id = principal.toString();
+        }
+        accountService.changePassword(id, pass);
+        return new ResponseEntity<String>("changed", HttpStatus.OK);
+    }
+		
+	
 
 }

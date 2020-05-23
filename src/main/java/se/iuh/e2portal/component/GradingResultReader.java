@@ -17,10 +17,10 @@ import java.util.List;
 
 @Component
 public class GradingResultReader {
-	
-	private static String CODE = "GDR";
-	private static int ROW_CODE = 2;
-	private static int COL_CODE = 0;
+
+    private static String CODE = "GDR";
+    private static int ROW_CODE = 2;
+    private static int COL_CODE = 0;
     private static int ROW_MODULE_CLASS = 1;
     private static int COL_MODULE_CLASS_ID = 0;
     private static int COL_MODULE_CLASS_NAME = 1;
@@ -53,17 +53,17 @@ public class GradingResultReader {
     private static int COL_AVG = 17;
 
     public boolean validdateFile(Sheet sheet) {
-      	 Row row = sheet.getRow(ROW_CODE);
-      	 String code =null;
-      	 try {
-   			 code = getCellValue(row.getCell(COL_CODE));
-   		} catch (Exception e) {
-   			return false;
-   		}
-      	return code.equalsIgnoreCase(CODE)?true:false;
-      }
-    
-    public ModuleClass getModuleClass(Sheet sheet){
+        Row row = sheet.getRow(ROW_CODE);
+        String code = null;
+        try {
+            code = getCellValue(row.getCell(COL_CODE));
+        } catch (Exception e) {
+            return false;
+        }
+        return code.equalsIgnoreCase(CODE) ? true : false;
+    }
+
+    public ModuleClass getModuleClass(Sheet sheet) {
         Row row = sheet.getRow(ROW_MODULE_CLASS);
         ModuleClass moduleClass = new ModuleClass();
         Lecturer lecturer = new Lecturer();
@@ -74,26 +74,26 @@ public class GradingResultReader {
         moduleClass.setNumOfCredit(Integer.parseInt(getCellValue(row.getCell(COL_NUM_OF_CREDIT))));
         moduleClass.setSemester(getCellValue(row.getCell(COL_SEMESTER)));
         Date startDate = new Date();
-        if(DateUtil.isCellDateFormatted(row.getCell(COL_START_DATE)))
+        if (DateUtil.isCellDateFormatted(row.getCell(COL_START_DATE)))
             startDate = row.getCell(COL_START_DATE).getDateCellValue();
         moduleClass.setStartDate(startDate);
         Date endDate = new Date();
-        if(DateUtil.isCellDateFormatted(row.getCell(COL_END_DATE)))
+        if (DateUtil.isCellDateFormatted(row.getCell(COL_END_DATE)))
             endDate = row.getCell(COL_END_DATE).getDateCellValue();
         moduleClass.setEndDate(endDate);
         lecturer.setId(getCellValue(row.getCell(COL_LECTURER_ID)));
         String fullName = getCellValue(row.getCell(COL_LECTURER_NAME));
         List<String> fullNames = Arrays.asList(fullName.split(" "));
-        lecturer.setFirstName(fullNames.get(fullNames.size()-1));
-        lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size()-1),"").trim());
+        lecturer.setFirstName(fullNames.get(fullNames.size() - 1));
+        lecturer.setLastName(fullName.replace(fullNames.get(fullNames.size() - 1), "").trim());
         Faculty faculty = new Faculty();
         faculty.setFacultyId(getCellValue(row.getCell(COL_FACULTY_ID)));
         moduleClass.setFaculty(faculty);
         moduleClass.setLecturer(lecturer);
         return moduleClass;
     }
-    
-    public List<GradingResult> getListGradingResult(Sheet sheet, ModuleClass moduleClass){
+
+    public List<GradingResult> getListGradingResult(Sheet sheet, ModuleClass moduleClass) {
         List<GradingResult> gradingResultList = new ArrayList<>();
         for (Row currentRow : sheet) {
             if (currentRow.getRowNum() < ROW_GRADING_RESULT) {
@@ -105,8 +105,8 @@ public class GradingResultReader {
         }
         return gradingResultList;
     }
-    
-    private GradingResult getGradingResult(Row row){
+
+    private GradingResult getGradingResult(Row row) {
         GradingResult gradingResult = new GradingResult();
         Student student = new Student();
         MainClass mainClass = new MainClass();
@@ -116,30 +116,81 @@ public class GradingResultReader {
         mainClass.setClassId(getCellValue(row.getCell(COL_MAIN_CLASS_ID)));
         student.setMainClass(mainClass);
         gradingResult.setStudent(student);
-        gradingResult.setQuiz1(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_1))));
-        gradingResult.setQuiz2(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_2))));
-        gradingResult.setQuiz3(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_3))));
-        gradingResult.setQuiz4(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_4))));
-        gradingResult.setQuiz5(Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_5))));
-        gradingResult.setMidScore(Float.parseFloat(getCellValue(row.getCell(COL_MID))));
-        gradingResult.setPracticeScore1(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_1))));
-        gradingResult.setPracticeScore2(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_2))));
-        gradingResult.setPracticeScore3(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_3))));
-        gradingResult.setPracticeScore4(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_4))));
-        gradingResult.setPracticeScore5(Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_5))));
-        gradingResult.setEndScore(Float.parseFloat(getCellValue(row.getCell(COL_END))));
-        gradingResult.setAverageScore(Float.parseFloat(getCellValue(row.getCell(COL_AVG))));
+        Float quiz1 = null;
+        if (getCellValue(row.getCell(COL_QUIZ_1)) != null
+                && !String.valueOf(row.getCell(COL_QUIZ_1)).equalsIgnoreCase(""))
+            quiz1 = Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_1)));
+        gradingResult.setQuiz1(quiz1);
+        Float quiz2 = null;
+        if (getCellValue(row.getCell(COL_QUIZ_2)) != null
+                && !String.valueOf(row.getCell(COL_QUIZ_2)).equalsIgnoreCase(""))
+            quiz2 = Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_2)));
+        gradingResult.setQuiz2(quiz2);
+        Float quiz3 = null;
+        if (getCellValue(row.getCell(COL_QUIZ_3)) != null
+                && !String.valueOf(row.getCell(COL_QUIZ_3)).equalsIgnoreCase(""))
+            quiz3 = Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_3)));
+        gradingResult.setQuiz3(quiz3);
+        Float quiz4 = null;
+        if (getCellValue(row.getCell(COL_QUIZ_4)) != null
+                && !String.valueOf(row.getCell(COL_QUIZ_4)).equalsIgnoreCase(""))
+            quiz4 = Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_4)));
+        gradingResult.setQuiz4(quiz4);
+        Float quiz5 = null;
+        if (getCellValue(row.getCell(COL_QUIZ_5)) != null
+                && !String.valueOf(row.getCell(COL_QUIZ_5)).equalsIgnoreCase(""))
+            quiz5 = Float.parseFloat(getCellValue(row.getCell(COL_QUIZ_5)));
+        gradingResult.setQuiz5(quiz5);
+
+        Float mid = null;
+        if (getCellValue(row.getCell(COL_MID)) != null && !String.valueOf(row.getCell(COL_MID)).equalsIgnoreCase(""))
+            mid = Float.parseFloat(getCellValue(row.getCell(COL_MID)));
+        gradingResult.setMidScore(mid);
+        Float prc1 = null;
+        if (getCellValue(row.getCell(COL_PRACTICE_1)) != null
+                && !String.valueOf(row.getCell(COL_PRACTICE_1)).equalsIgnoreCase(""))
+            prc1 = Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_1)));
+        gradingResult.setPracticeScore1(prc1);
+        Float prc2 = null;
+        if (getCellValue(row.getCell(COL_PRACTICE_2)) != null
+                && !String.valueOf(row.getCell(COL_PRACTICE_2)).equalsIgnoreCase(""))
+            prc2 = Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_2)));
+        gradingResult.setPracticeScore2(prc2);
+        Float prc3 = null;
+        if (getCellValue(row.getCell(COL_PRACTICE_3)) != null
+                && !String.valueOf(row.getCell(COL_PRACTICE_3)).equalsIgnoreCase(""))
+            prc3 = Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_3)));
+        gradingResult.setPracticeScore3(prc3);
+        Float prc4 = null;
+        if (getCellValue(row.getCell(COL_PRACTICE_4)) != null
+                && !String.valueOf(row.getCell(COL_PRACTICE_4)).equalsIgnoreCase(""))
+            prc4 = Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_4)));
+        gradingResult.setPracticeScore4(prc4);
+        Float prc5 = null;
+        if (getCellValue(row.getCell(COL_PRACTICE_5)) != null
+                && !String.valueOf(row.getCell(COL_PRACTICE_5)).equalsIgnoreCase(""))
+            prc5 = Float.parseFloat(getCellValue(row.getCell(COL_PRACTICE_5)));
+        gradingResult.setPracticeScore5(prc5);
+        Float end = null;
+        if (getCellValue(row.getCell(COL_END)) != null && !String.valueOf(row.getCell(COL_END)).equalsIgnoreCase(""))
+            end = Float.parseFloat(getCellValue(row.getCell(COL_END)));
+        gradingResult.setEndScore(end);
+        Float avg = null;
+        if (getCellValue(row.getCell(COL_AVG)) != null && !String.valueOf(row.getCell(COL_AVG)).equalsIgnoreCase(""))
+            avg = Float.parseFloat(getCellValue(row.getCell(COL_AVG)));
+        gradingResult.setAverageScore(avg);
         gradingResult.setStudent(student);
 
         return gradingResult;
     }
-    
+
     public Sheet readFile(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
         Workbook workbook = getWorkbook(inputStream, file.getAbsolutePath());
         Sheet sheet = workbook.getSheetAt(0);
         return sheet;
     }
+
     // Get Workbook
     private Workbook getWorkbook(InputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
@@ -153,6 +204,7 @@ public class GradingResultReader {
 
         return workbook;
     }
+
     // Get cell value
     private String getCellValue(Cell cell) {
         cell.setCellType(CellType.STRING);

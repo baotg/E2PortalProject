@@ -17,6 +17,33 @@
             url += '?ajax=true';
             $("#content-wrapper").load(url);
         }
+
+        function changePassword() {
+            $("#errPass").html('');
+            var pass1 = $('#password1').val();
+            var pass2 = $('#password2').val();
+            if (pass1 != pass2) {
+                $("#errPass").html('Mật khẩu không khớp!');
+                return false;
+            }
+            var url = '/account-management/change-password?pass=' + pass1;
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "html",
+                success: function(data) {
+                    if (data == 'changed') {
+                        alert("Đã thay đổi mật khẩu!");
+                        Metro.dialog.close('#change-password-dialog');
+                    }
+                },
+                error: function() {
+                    Metro.dialog.close('#change-password-dialog');
+                    alert('Đã có lỗi xảy ra, vui lòng thử lại!');
+                }
+            });
+
+        }
     </script>
 </head>
 <div id="loading-dialog" class="dialog text-center" data-role="dialog" data-overlay="true" data-width="400" data-height="100">
@@ -25,6 +52,32 @@
         <div data-role="activity" data-type="metro" data-style="color"></div>
         <span>Đang xử lý, vui lòng chờ trong giây lát...</span>
     </div>
+</div>
+<div id="change-password-dialog" class="dialog" data-role="dialog" data-width="600" data-close-button="true">
+    <form action="#" onsubmit="changePassword()">
+        <div>
+            <div class="dialog-title cell-md-12 text-center text-left-md">
+                <h3 class="dashboard-section-title">Thay đổi mật khẩu <small id="errPass"></small></h3>
+            </div>
+        </div>
+        <div class="dialog-content">
+
+            <div class="form-group">
+                <label>Mật khẩu mới</label>
+                <input type="password" id="password1" placeholder="Nhập mật khẩu mới" required/>
+            </div>
+            <div class="form-group">
+                <label>Nhập lại mật khẩu mới</label>
+                <input type="password" id="password2" placeholder="Nhập mật khẩu mới" required/>
+            </div>
+
+        </div>
+        <div class="dialog-actions right">
+            <button type="submit" class="button success">Lưu
+                            lại</button>
+            <input type="button" class="button" value="Hủy" onclick="Metro.dialog.close('#change-password-dialog')">
+        </div>
+    </form>
 </div>
 
 <body class="m4-cloak h-vh-100">
@@ -138,7 +191,7 @@
                                 <div>#Name</div>
                             </div>
                             <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
-                                <button class="button mr-1">Đổi mật khẩu</button>
+                                <button class="button mr-1" onclick="Metro.dialog.open('#change-password-dialog')">Đổi mật khẩu</button>
                                 <button class="button ml-1 ">
 									<a th:href="@{/logout}">Đăng xuất</a>
 								</button>
