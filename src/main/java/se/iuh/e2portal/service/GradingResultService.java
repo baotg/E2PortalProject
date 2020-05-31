@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iuh.e2portal.model.GradingResult;
 import se.iuh.e2portal.model.GradingResultPK;
+import se.iuh.e2portal.model.ModuleClass;
 import se.iuh.e2portal.repository.GradingResultRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +65,9 @@ public class GradingResultService {
             key.setStudent(result.getStudentId());
             if (gradingResultRepository.existsById(key))
                 merge(result);
-            else
+            else{
                 save(result);
+            }
 
         }
 

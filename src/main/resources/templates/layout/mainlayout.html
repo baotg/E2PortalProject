@@ -82,7 +82,7 @@
 
 <body class="m4-cloak h-vh-100">
     <div data-role="navview" data-toggle="#paneToggle" data-expanded="lg" data-compact="md" data-active-state="true" th:fragment="navbar">
-        <div class="navview-pane">
+        <div class="navview-pane" id="nav-pane">
             <div class="bg-cyan d-flex flex-align-center">
                 <button class="pull-button m-0 bg-darkCyan-hover">
 					<span class="mif-menu fg-white"></span>
@@ -188,7 +188,6 @@
                                         </div>
                                     </th:block>
                                 </div>
-                                <div>#Name</div>
                             </div>
                             <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
                                 <button class="button mr-1" onclick="Metro.dialog.open('#change-password-dialog')">Đổi mật khẩu</button>
@@ -229,6 +228,7 @@
         <script src="/js/main-class.js"></script>
         <script src="/js/edit-module-class.js"></script>
         <script src="/js/view-module-class.js"></script>
+        <script src="/js/charts.js"></script>
     </th:block>
 </body>
 

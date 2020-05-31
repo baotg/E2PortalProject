@@ -13,6 +13,7 @@ import se.iuh.e2portal.config.Message;
 import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.service.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,13 +119,27 @@ public class GradingResultController {
 			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
 		}
 		for(GradingResult gradingResult : gradingResults){
-			if(!studentService.existsById(gradingResult.getStudent().getId())) {
+			Optional<Student> student = studentService.findById(gradingResult.getStudent().getId());
+			if(!student.isPresent()) {
 				if(!mainClassService.existsById(gradingResult.getStudent().getMainClass().getClassId()))
 					mainClassService.save(gradingResult.getStudent().getMainClass());
-				studentService.save(gradingResult.getStudent());
+					studentService.save(gradingResult.getStudent());
+
 			}  
-			else
-				gradingResult.setStudent(studentService.findById(gradingResult.getStudent().getId()).get());
+			
+			else {
+				gradingResult.setStudent(student.get());
+			}
+			student = studentService.findById(gradingResult.getStudent().getId());
+			if(moduleClass.getStudents()==null || !moduleClass.getStudents().contains(student.get())) {
+				if(moduleClass.getStudents()==null) {
+					moduleClass.setStudents(new ArrayList<Student>());
+				}
+				moduleClass.getStudents().add(student.get());
+				moduleClassService.save(moduleClass);
+			}
+				
+			
 		}
 		gradingResultService.mergeAll(gradingResults);
 		model.addAttribute("faculties", facultyService.findAll());

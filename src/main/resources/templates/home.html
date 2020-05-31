@@ -1,13 +1,103 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+
 <head>
     <title>Home</title>
 </head>
+
 <body class="m4-cloak h-vh-100" th:fragment="home">
     <div id="main-content">
-    
+
+        <div class="row border-bottom bd-lightGray m-3">
+            <div class="cell-md-8 d-flex flex-align-center">
+                <h3 class="dashboard-section-title  text-center text-left-md w-100">Hệ thống sổ tay liên lạc điện tử <br><small>Phiên bản 1.0</small></h3>
+            </div>
+
+            <div class="cell-md-4 d-flex flex-justify-center flex-justify-end-md flex-align-center">
+                <ul class="breadcrumbs bg-transparent">
+                    <li class="page-item"><a class="page-link">Trang quản lý</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="m-3">
+
+            <div class="row border-bottom">
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-cyan fg-white home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0" th:text="${totalStudent}"></h2>
+                            <div>Tổng số sinh viên</div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-school"></span>
+                        </div>
+                        <a th:href="@{/student}" class="more"> Quản lý Sinh viên <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-green fg-white .home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0" th:text="${totalLecturer}"></h2>
+                            <div>Tổng số Giảng viên</div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-users"></span>
+                        </div>
+                        <a th:href="@{/lecturer}" class="more"> Quản lý Giảng viên <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-orange fg-white .home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0" th:text="${totalFaculty}">44</h2>
+                            <div> Tổng số Khoa - Viện </div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-dashboard"></span>
+                        </div>
+                        <a th:href="@{/faculty}" class="more"> Quản lý Khoa viện <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-red fg-white .home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0" th:text="${totalClass}">10,000</h2>
+                            <div>Tổng số lớp học</div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-enter"></span>
+                        </div>
+                        <a th:href="@{/moduleclass}" class="more"> Quản lý Lớp học phần <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-orange fg-white .home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0" th:text="${totalAnnouncement}"></h2>
+                            <div> Tổng số thông báo </div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-bell"></span>
+                        </div>
+                        <a th:href="@{/announcement}" class="more"> Quản lý thông báo <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+                <div class="cell-lg-4 cell-md-6 mt-2">
+                    <div class="more-info-box bg-green fg-white .home-link">
+                        <div class="content">
+                            <h2 class="text-bold mb-0">10.0</h2>
+                            <div>Quản lý điểm</div>
+                        </div>
+                        <div class="icon">
+                            <span class="mif-assignment"></span>
+                        </div>
+                        <a th:href="@{/gradingresult}" class="more"> Quản lý điểm <span class="mif-arrow-right"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>

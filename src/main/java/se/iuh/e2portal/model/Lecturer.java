@@ -22,5 +22,4 @@ public class Lecturer extends Person {/**
 	List<ModuleClass> moduleClasses;
 	@OneToMany(mappedBy = "lecturer", cascade = CascadeType.REMOVE)
 	List<MainClass> mainClasses;
-
 }

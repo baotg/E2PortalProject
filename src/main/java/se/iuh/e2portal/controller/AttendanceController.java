@@ -119,8 +119,14 @@ public class AttendanceController {
 		}
 	
 		for(Attendance attendance : attendances){
-			if(!studentService.existsById(attendance.getStudent().getId()))
+			if(!studentService.existsById(attendance.getStudent().getId())){
 				studentService.save(attendance.getStudent());
+				if(!attendance.getModuleClass().getStudents().contains(attendance.getStudent())){
+					moduleClass.getStudents().add(attendance.getStudent());
+					moduleClassService.save(moduleClass);
+				}
+			}
+
 			else
 				attendance.setStudent(studentService.findById(attendance.getStudent().getId()).get());
 		}

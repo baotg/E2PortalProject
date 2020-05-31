@@ -18,8 +18,8 @@ import java.util.*;
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
 	
-	private final static String ADMIN_ID = "101010";
-	private final static String ADMIN_PWD = "101010";
+	private final static String ADMIN_ID = "admin";
+	private final static String ADMIN_PWD = "admin";
 	private final static String USER_ID = "10101010";
 	private final static String USER_PWD = "10101010";
 	@Autowired

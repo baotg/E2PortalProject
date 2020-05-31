@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import se.iuh.e2portal.service.ExcelFileHandlerService;
-import se.iuh.e2portal.service.ModuleClassService;
+import se.iuh.e2portal.service.*;
 
 
 @Controller
@@ -23,11 +22,38 @@ public class MainController {
 	private ExcelFileHandlerService excelFileHandlerService;
 	@Autowired
 	ModuleClassService moduleClassService;
+	@Autowired
+	MainClassService mainClassService;
+	@Autowired
+	GradingResultService gradingResultService;
+	@Autowired
+	AnnouncementService announcementService;
+	@Autowired
+	StudentService studentService;
+	@Autowired
+	LecturerService lecturerService;
+	@Autowired
+	FacultyService facultyService;
 
 	@GetMapping(value = {"/home","/"})
 	public String index(Model model, @Param("ajax")String ajax) {
+		long totalClass = 0;
+		long totalStudent = 0;
+		long totalFaculty = 0;
+		long totalAnnouncement = 0;
+		long totalLecturer = lecturerService.count();
+		totalClass = mainClassService.count() + moduleClassService.count();
+		totalStudent = studentService.count();
+		totalFaculty = facultyService.count();
+		totalAnnouncement = announcementService.count();
+		model.addAttribute("totalAnnouncement",totalAnnouncement);
+		model.addAttribute("totalFaculty",totalFaculty);
+		model.addAttribute("totalStudent",totalStudent);
+		model.addAttribute("totalClass",totalClass);
+		model.addAttribute("totalLecturer",totalLecturer);
 		if(ajax!=null)
 			return "home::home";
+		
 		return "home";
 	}
 

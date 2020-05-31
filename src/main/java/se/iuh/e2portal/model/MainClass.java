@@ -32,6 +32,8 @@ public class MainClass {
 	public String toString() {
 		return "MainClass [classId=" + classId + ", className=" + className + "]";
 	}
-    
-    
+
+	public String getLecturerId(){
+	    return lecturer.getId();
+    }
 }

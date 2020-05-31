@@ -50,9 +50,9 @@ public class AnnouncementController {
             Model model) {
         announcement.setCreatedDate(new Date());
         announcementService.save(announcement);
-        Page<Announcement> page = announcementService.findAll(pageable);
-        model.addAttribute("page", page);
-        return "announcement::announcement";
+        // Page<Announcement> page = announcementService.findAll(pageable);
+        // model.addAttribute("page", page);
+        return "redirect:/announcement?ajax=true";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)

@@ -48,7 +48,7 @@
         <div>
             <div class="row border-bottom bd-lightGray m-3">
                 <div class="cell-md-4 text-center text-left-md">
-                    <h3 class="dashboard-section-title">Quản lý Lớp học phần<small>Xem</small></h3>
+                    <h3 class="dashboard-section-title">Quản lý Lớp học phần<small> Xem</small></h3>
                 </div>
             </div>
             <div class="m-3">
@@ -101,7 +101,7 @@
                                             <td th:text="${class.getFormattedEndDate()}"></td>
                                             <td th:text="${class.lecturer==null?'':class.lecturer.lastName +' '+ class.lecturer.firstName}"></td>
                                             <td>
-                                                <a class="button warning" th:id="'edt'+${class.moduleClassId}" onclick="getModuleClassEditDialog(this.id)">Sửa</a>
+                                                <!-- <a class="button warning" th:id="'edt'+${class.moduleClassId}" onclick="getModuleClassEditDialog(this.id)">Sửa</a> -->
                                             </td>
                                             <td>
                                                 <a class="button alert" th:id="'dlt'+${class.moduleClassId}" onclick="deleteModuleClass(this.id)">Xóa</a>

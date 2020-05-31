@@ -168,8 +168,7 @@ public class ModuleClassController {
 				if (!mainClassService.existsById(student.getMainClass().getClassId()))
 					mainClassService.save(student.getMainClass());
 				studentService.save(student);
-			} else
-				student = studentService.findById(student.getId()).get();
+			}
 		}
 		moduleClassService.save(moduleClass);
 		model.addAttribute("faculties", facultyService.findAll());
