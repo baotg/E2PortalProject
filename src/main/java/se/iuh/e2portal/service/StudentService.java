@@ -39,13 +39,14 @@ public class StudentService{
             if(!userParent.isPresent()){
                 UserAccount user = new UserAccount();
                 user.setAccountId(entity.getFamilyNumber());
-                user.setPassword(UserAccount.DEFAULT_PASSWORD);
+                user.setPassword(passwordEncoder.encode(UserAccount.DEFAULT_PASSWORD));
+                user.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER),roleRepository.findByRoleName(Role.PARENT))));
                 userAccountRepository.save(user);
             }
             userAccount.setAccountId(entity.getId());
             userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
             userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-            userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
+            userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER), roleRepository.findByRoleName(Role.STUDENT))));
             userAccountRepository.save(userAccount);
         }
         return studentRepository.save(entity);
