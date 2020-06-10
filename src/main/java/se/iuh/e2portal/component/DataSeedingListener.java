@@ -1,20 +1,31 @@
 package se.iuh.e2portal.component;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
+import se.iuh.e2portal.config.Message;
 import se.iuh.e2portal.model.*;
 import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
-import se.iuh.e2portal.service.AnnouncementService;
-import se.iuh.e2portal.service.LecturerService;
-import se.iuh.e2portal.service.ModuleClassService;
-import se.iuh.e2portal.service.RoleService;
-import se.iuh.e2portal.service.UserAccountService;
+import se.iuh.e2portal.service.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
-
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
 	
@@ -35,20 +46,46 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	@Autowired
 	private LecturerService lecturerService;
 	@Autowired
+	private FacultyService facultyService;
+	@Autowired
+	private MainClassService mainClassService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
 	private RoleService roleService;
-
-
+	@Autowired
+	private StudentReader studentReader;
+	@Autowired
+	ResourceLoader resourceLoader;
+	@Autowired
+	ModuleClassReader moduleClassReader;
+	@Autowired
+	ExcelFileHandlerService excelFileHandlerService;
+	@Value("classpath:static/excels/DANHSACH_SINHVIEN_TEMPLATE.xlsx")
+	Resource resourceStudent;
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		Role role_user = null ;
 		Role role_admin = null ;
+		Role role_student = null ;
+		Role role_parent = null ;
 		role_user = roleService.findByName(Role.USER);
+		role_student = roleService.findByName(Role.STUDENT);
+		role_parent = roleService.findByName(Role.PARENT);
 		role_admin = roleService.findByName(Role.ADMIN);
-		if(role_admin==null)
+		if(role_student == null) {
+			roleService.save(new Role(Role.STUDENT));
+		}
+		if(role_parent == null) {
+			roleService.save(new Role(Role.PARENT));
+		}
+		if(role_admin==null){
 			roleService.save(new Role(Role.ADMIN));
-		if(role_user==null)
+		}
+		if(role_user==null){
 			roleService.save(new Role(Role.USER));
+		}
 		//Initial User & Admin account
 		UserAccount admin_default = new UserAccount();
 		admin_default.setAccountId(ADMIN_ID);
@@ -58,74 +95,78 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		roles_admin.add(role_user);
 		admin_default.setRoles(roles_admin);
 		userAccountService.save(admin_default);
-		//
-//		Student student = new Student();
-//		student.setFullName("Trần Gia Bảo");
-//		student.setSpeciality("Kỹ thuật Phần mềm");
-//		student.setYear(2016);
-//		student.setPhoneNumber("0987654321");
-//		student.setAddress("49 Lê Lợi, phường 4, quận Gò Vấp, TP. Hồ Chí Minh");
-//		student.setFaculty("Công nghệ Thông tin");
-//		student.setDateOfBirth(new GregorianCalendar(1998,Calendar.FEBRUARY,24).getTime());
-//		student.setPersonId("16059211l");
-//		student.setEmail("tgiabao1340@gmail.com");
-//		student.setGender(true);
-//		student.setStatus("Đang học");
-//
-//		UserAccount userAccount = new UserAccount();
-//		userAccount.setUser(student);
-//		userAccount.setPassword(USER_PWD);
-//		student.setUserAccount(userAccount);
-//		userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName("USER"))));
-//		userAccountService.save(userAccount);
-//		initAnnouncement();
-//		initModuleClassAndTimeTable();
+		//autoImport();
 	}
-//	public void initModuleClassAndTimeTable(){
-//		ModuleClass moduleClass = new ModuleClass();
-//		Lecturer lecturer = new Lecturer();
-//		lecturer.setPersonId("1000000l");
-//		lecturer.setAddress("12 Nguyễn Văn Bảo, phường 4, quận Gò Vấp");
-//		lecturer.setEmail("cuongt.trinh@iuh.edu.vn");
-//		lecturer.setFaculty("Ngoại ngữ");
-//		lecturer.setFullName("Trịnh Thị Cương");
-//		lecturer.setGender(false);
-//		lecturer.setPhoneNumber("0987898765");
-//		lecturer.setStatus("Đang dạy");
-//		lecturer.setDateOfBirth(new GregorianCalendar(1977,Calendar.FEBRUARY,2).getTime());
-//		moduleClass.setModuleClassId("422108808");
-//		moduleClass.setModuleClassName("AV4_ABET_CLC_HK3_2020");
-//		moduleClass.setLecturer(lecturer);
-//		moduleClass.setStartDate(new GregorianCalendar(2020,Calendar.APRIL,26).getTime());
-//		moduleClass.setEndDate(new GregorianCalendar(2020,Calendar.AUGUST,26).getTime());
-//		moduleClass.setSubjectName("Anh Văn 4");
-//		moduleClass.setSemester("HK3 2019-2020");
-//		moduleClass.setNumOfCredit(4);
-//		moduleClass.setNumOfWeek(8);
-//		Student student = studentRepository.findById("16059211l").get();
-//		student.setModuleClasses(new ArrayList<>(Arrays.asList(moduleClass)));
-//		moduleClass.setStudents(new ArrayList<>(Arrays.asList(student)));
-//
-//		TimeTable timeTable1 = new TimeTable();
-//		timeTable1.setModuleClass(moduleClass);
-//		timeTable1.setMon("1,3;6,8");
-//		timeTable1.setWeek(1);
-//
-//		TimeTable timeTable2 = new TimeTable();
-//		timeTable2.setModuleClass(moduleClass);
-//		timeTable2.setMon("1,3;6,8");
-//		timeTable2.setWeek(2);
-//
-//		TimeTable timeTable3 = new TimeTable();
-//		timeTable3.setModuleClass(moduleClass);
-//		timeTable3.setMon("1,3;6,8");
-//		timeTable3.setWeek(3);
-//		moduleClass.setTimeTables(new ArrayList<>(Arrays.asList(timeTable1,timeTable2,timeTable3)));
-//
-//		lecturerService.save(lecturer);
-//		moduleClassService.save(moduleClass);
-//		studentRepository.save(student);
-//
-//	}
-
+	public void autoImport(){
+		ClassPathResource studentFile = new ClassPathResource("static/excels/DANHSACH_SINHVIEN_TEMPLATE.xlsx");
+		ClassPathResource attendacneFile = new ClassPathResource("static/excels/DANHSACH_DIEMDANH_TEMPLATE.xlsx");
+		ClassPathResource moduleClassFile = new ClassPathResource("static/excels/DANHSACH_LOP_HOC_PHAN.xlsx");
+		ClassPathResource gradingResultFile = new ClassPathResource("static/excels/DANHSACHDIEM_TEMPLATE.xlsx");
+		ClassPathResource timetableFile = new ClassPathResource("static/excels/LICHHOC_TEMPLATE.xlsx");
+		try {
+			importStudent(studentFile);
+			//importModuleClass(moduleClassFile);
+		}catch (Exception e){
+			System.err.println(e);
+		}
+	}
+	// UNDER CONSTRUCTION - CAN'T NOT IMPORT FILEINPUTSTREAM TO POI  :(( NEED HEEELP!!!
+	private void importStudent(ClassPathResource studentFile) throws IOException {
+		//System.out.println(studentFile.getFilename());
+		FileInputStream fileInputStream = new FileInputStream(resourceStudent.getFile());
+		@SuppressWarnings("resource")
+		Workbook workbook = new XSSFWorkbook(fileInputStream);
+		Sheet sheet = workbook.getSheetAt(0);
+		boolean validate = studentReader.validdateFile(sheet);
+		MainClass mainClass = null;
+		List<Student> students = null;
+		if(!validate) {
+			System.out.println("STUDENT SEEDING ERROR!");
+			return;
+		}
+		mainClass = students.get(0).getMainClass();
+		Faculty faculty = mainClass.getFaculty();
+		Lecturer lecturer = mainClass.getLecturer();
+		if(!facultyService.findById(faculty.getFacultyId()).isPresent())
+			facultyService.save(faculty);
+		else
+			faculty = facultyService.findById(faculty.getFacultyId()).get();
+		mainClass.setFaculty(faculty);
+		if(!lecturerService.existsById(lecturer.getId()))
+			lecturerService.save(lecturer);
+		else
+			lecturer = lecturerService.findById(lecturer.getId()).get();
+		mainClass.setLecturer(lecturer);
+		mainClassService.save(mainClass);
+		studentService.saveAll(students);
+		excelFileHandlerService.getStudents().clear();
+	}
+	private void importModuleClass(ClassPathResource moduleClassFile) throws IOException {
+		Workbook workbook = new XSSFWorkbook(moduleClassFile.getInputStream());
+		Sheet sheet = workbook.getSheetAt(0);
+		boolean validate = moduleClassReader.validdateFile(sheet);
+		ModuleClass moduleClass = null;
+		try {
+			moduleClass = moduleClassReader.getModuleClass(sheet);
+		} catch (Exception e) {
+			System.out.println("MODULECLASS SEEDING ERROR!");
+			return;
+		}
+		Faculty faculty = moduleClass.getFaculty();
+		if (moduleClassService.existsById(moduleClass.getModuleClassId())) {
+			moduleClass = moduleClassService.findById(moduleClass.getModuleClassId()).get();
+		}
+		if (facultyService.existsById(faculty.getFacultyId())) {
+			faculty = facultyService.findById(faculty.getFacultyId()).get();
+		} else
+			facultyService.save(faculty);
+		for (Student student : moduleClass.getStudents()) {
+			if (!studentService.existsById(student.getId())) {
+				if (!mainClassService.existsById(student.getMainClass().getClassId()))
+					mainClassService.save(student.getMainClass());
+				studentService.save(student);
+			}
+		}
+		moduleClassService.save(moduleClass);
+	}
 }

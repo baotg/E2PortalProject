@@ -20,5 +20,6 @@ public interface StudentRepository extends PagingAndSortingRepository<Student,St
     @Query("select  s from  Student s where s.id = ?#{ principal.id}")
     Optional<Student> profile();
 
-
+    @Query("select  s from  Student s where s.familyNumber = ?#{ principal.id}")
+    List<Student> getByParent();
 }

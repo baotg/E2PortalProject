@@ -1,5 +1,6 @@
 package se.iuh.e2portal.controller.api;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -60,25 +61,10 @@ public class MainRESTController {
         return "Random number is : " + new Random().nextInt(value) + " Check " + authentication.getPrincipal().toString();
     }
     
-//    @GetMapping("/gradingresult")
-//	public ResponseEntity<Object> getGradingResultByStudentIdAndModuleClassId(@RequestParam("studentId")String studentId,
-//																			  @RequestParam("moduleClassId")String moduleClassId) {
-//		GradingResultPK id = new GradingResultPK();
-//		id.setModuleClass(moduleClassId);
-//		id.setStudent(studentId);
-//		Optional<GradingResult> gradingResult = gradingResultService.findById(id);
-//		if(gradingResult.isPresent())
-//			return new ResponseEntity<Object>(gradingResult.get(),HttpStatus.OK);
-//		return new ResponseEntity<Object>("not-found",HttpStatus.OK);
-//
-//	}
-    
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getId(),loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        System.out.println(authentication);
-//        System.out.println("Principal :" + authentication.getPrincipal());
         String jwt = tokenProvider.generateToken(authentication.getPrincipal().toString());
         return new LoginResponse(jwt);
     }
@@ -88,6 +74,12 @@ public class MainRESTController {
         Optional<Student> optionalStudent = studentService.profile();
         if(!optionalStudent.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok(optionalStudent.get());
+    }
+    @GetMapping("/user/parent")
+    ResponseEntity<List<Student>> getParent(){
+        List<Student> listStudent = studentService.getByParent();
+        if(!listStudent.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok(listStudent);
     }
 
     @RequestMapping(value = "/module_class/{moduleClassId}/totalDay", method = RequestMethod.GET)

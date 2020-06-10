@@ -35,6 +35,13 @@ public class StudentService{
     public <S extends Student> S save(S entity) {
         if(!userAccountRepository.existsById(entity.getId())){
             UserAccount userAccount = new UserAccount();
+            Optional<UserAccount> userParent = userAccountRepository.findById(entity.getFamilyNumber());
+            if(!userParent.isPresent()){
+                UserAccount user = new UserAccount();
+                user.setAccountId(entity.getFamilyNumber());
+                user.setPassword(UserAccount.DEFAULT_PASSWORD);
+                userAccountRepository.save(user);
+            }
             userAccount.setAccountId(entity.getId());
             userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
             userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
@@ -47,12 +54,7 @@ public class StudentService{
     public <S extends Student> Iterable<S> saveAll(Iterable<S> entities) {
     	for(Student student : entities) {
             if(!userAccountRepository.existsById(student.getId())){
-                UserAccount userAccount = new UserAccount();
-                userAccount.setAccountId(student.getId());
-                userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
-                userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-                userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER))));
-                userAccountRepository.save(userAccount);
+                save(student);
             }
     	}
         return studentRepository.saveAll(entities);
@@ -114,5 +116,9 @@ public class StudentService{
 
     public Optional<Student> profile() {
         return studentRepository.profile();
+    }
+
+    public List<Student> getByParent() {
+       return studentRepository.getByParent();
     }
 }
