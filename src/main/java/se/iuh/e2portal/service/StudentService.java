@@ -14,11 +14,7 @@ import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
 import se.iuh.e2portal.repository.UserAccountRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class StudentService{
@@ -30,7 +26,7 @@ public class StudentService{
     @Autowired
     private UserAccountRepository userAccountRepository;
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleService roleService;
 
     public <S extends Student> S save(S entity) {
         if(!userAccountRepository.existsById(entity.getId())){
@@ -40,13 +36,19 @@ public class StudentService{
                 UserAccount user = new UserAccount();
                 user.setAccountId(entity.getFamilyNumber());
                 user.setPassword(passwordEncoder.encode(UserAccount.DEFAULT_PASSWORD));
-                user.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER),roleRepository.findByRoleName(Role.PARENT))));
+                Set<Role> roles = new HashSet<>();
+                roles.add(roleService.findByName(Role.USER));
+                roles.add(roleService.findByName(Role.PARENT));
+                user.setRoles(roles);
                 userAccountRepository.save(user);
             }
             userAccount.setAccountId(entity.getId());
             userAccount.setPassword(UserAccount.DEFAULT_PASSWORD);
             userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-            userAccount.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRoleName(Role.USER), roleRepository.findByRoleName(Role.STUDENT))));
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleService.findByName(Role.USER));
+            roles.add(roleService.findByName(Role.STUDENT));
+            userAccount.setRoles(roles);
             userAccountRepository.save(userAccount);
         }
         return studentRepository.save(entity);

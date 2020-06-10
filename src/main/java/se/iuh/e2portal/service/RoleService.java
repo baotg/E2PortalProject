@@ -29,7 +29,6 @@ public class RoleService {
     	for(Role role : roles) {
     		if(role.getRoleName().equalsIgnoreCase(name))
     			return role;
-    		
     	}
     	return null;
     }

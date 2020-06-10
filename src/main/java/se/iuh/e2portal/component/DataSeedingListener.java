@@ -65,15 +65,10 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	Resource resourceStudent;
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-
-		Role role_user = null ;
-		Role role_admin = null ;
-		Role role_student = null ;
-		Role role_parent = null ;
-		role_user = roleService.findByName(Role.USER);
-		role_student = roleService.findByName(Role.STUDENT);
-		role_parent = roleService.findByName(Role.PARENT);
-		role_admin = roleService.findByName(Role.ADMIN);
+		Role role_user = roleService.findByName(Role.USER);
+		Role role_student = roleService.findByName(Role.STUDENT);
+		Role role_parent = roleService.findByName(Role.PARENT);
+		Role role_admin = roleService.findByName(Role.ADMIN);
 		if(role_student == null) {
 			roleService.save(new Role(Role.STUDENT));
 		}
@@ -91,8 +86,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		admin_default.setAccountId(ADMIN_ID);
 		admin_default.setPassword(ADMIN_PWD);
 		Set<Role> roles_admin = new HashSet<Role>();
-		roles_admin.add(role_admin);
-		roles_admin.add(role_user);
+		roles_admin.add(roleService.findByName(Role.USER));
+		roles_admin.add(roleService.findByName(Role.ADMIN));
 		admin_default.setRoles(roles_admin);
 		userAccountService.save(admin_default);
 		//autoImport();
