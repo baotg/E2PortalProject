@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{layout/mainlayout::main-fragment(~{::title}, ~{::#main-content})}">
 
 <head>
-    <title>Sinh viên</title>
-    <meta charset="UTF-8">
+<title>Sinh viên</title>
+<meta charset="UTF-8">
 </head>
 
 <body class="m4-cloak h-vh-100" id="main-content">
-<div th:fragment="account-management">
-    <script type="text/javascript">
+	<div th:fragment="account-management">
+		<script type="text/javascript">
         function resetPassword(id) {
             var url = '/account-management/reset?id=' +
                 id.replace('rst', '') + '&ajax=true';
@@ -18,121 +19,243 @@
 
         }
 
-        function searchAccount(e) {
+        function searchAccountParentClick(e) {
+            var str = $("#parent-accountId").val();
+            var root = '/account-management/search-parent?id=' + str +
+                '&ajax=true';
+            $("#parent-account-table").load(root);
+        }
+        
+		function searchAccountParent(e) {
+			if (e.keyCode == 13) {
+				var str = $("#parent-accountId").val();
+				var root = '/account-management/search-parent?id=' + str +
+						'&ajax=true';
+				$("#parent-account-table").load(root);
+			}
+		}
+		
+		function searchAccountStudent(e) {
             if (e.keyCode == 13) {
-                var str = $("#accountId").val();
+                var str = $("#student-accountId").val();
                 var root = '/account-management/search?id=' + str +
                     '&ajax=true';
-                $("#account-table").load(root);
+                $("#student-account-table").load(root);
             }
         }
-
-        function searchAccountClick(e) {
-            var str = $("#accountId").val();
+		
+        function searchAccountStudentClick(e) {
+            var str = $("#student-accountId").val();
             var root = '/account-management/search?id=' + str +
                 '&ajax=true';
-            $("#account-table").load(root);
+            $("#student-account-table").load(root);
         }
     </script>
-    <div>
-        <div class="row border-bottom bd-lightGray m-3">
-            <div class="cell-md-4 text-center text-left-md">
-                <h3 class="dashboard-section-title">
-                    Quản lý Tài khoản<small> Xem</small>
-                </h3>
-            </div>
-        </div>
-        <div class="m-3">
-            <div class="p-1 bg-transparent">
-                <div class="row">
-                    <div class="cell-md-12 cell-xl-12">
-                        <div id="reset-message-div">
-                            <span style="color: green" th:text="${msg}" th:fragment="reset-message"></span>
-                        </div>
-                        <div class="p-1 p-6-lg bg-white mt-3">
-                            <form action="javascript:" onsubmit="searchAccountClick(event)">
-                                <input type="text" data-prepend="Nhập ID cần tìm: " id="accountId"
-                                       onkeyup="searchAccount(event)" data-role="input" data-search-button="true">
-                            </form>
-                        </div>
+		<div>
+			<div class="row border-bottom bd-lightGray m-3">
+				<div class="cell-md-4 text-center text-left-md">
+					<h3 class="dashboard-section-title">
+						Quản lý Tài khoản<small> Xem</small>
+					</h3>
+				</div>
+			</div>
+			<div class="m-3">
+				<div class="p-1 bg-transparent">
+					<div class="row">
+						<div class="cell-md-12 cell-xl-12">
+							<div id="reset-message-div">
+								<span style="color: green" th:text="${msg}"
+									th:fragment="reset-message"></span>
+							</div>
+							<div class="cell-lg-12 cell-md-6">
+								<div class="bg-white p-4">
+									<ul data-role="tabs" data-expand="true">
+										<li><a href="#student-accounts">Sinh viên</a></li>
+										<li><a href="#parent-accounts">Phụ huynh</a></li>
+									</ul>
 
-                        <div class="p-1 p-6-lg bg-white mt-3">
-                            <button class="image-button">
-                                <span class="mif-user mif-lg fg-yellow"></span>
-                                <span class="caption">Người dùng</span>
-                            </button>
-                            <button class="image-button">
-                                <span class="mif-user mif-lg fg-green"></span>
-                                <span class="caption">Phụ huynh</span>
-                            </button>
-                            <button class="image-button">
-                                <span class="mif-user mif-lg fg-blue"></span>
-                                <span class="caption">Học sinh</span>
-                            </button>
-                            <button class="image-button">
-                                <span class="mif-user mif-lg fg-red"></span>
-                                <span class="caption">Quản lý</span>
-                            </button>
-                            <div th:fragment="account-table" id="account-table">
-                                <table class="table striped table-border mt-4" data-rows="10">
-                                    <thead>
-                                    <tr>
-                                        <th>Tài khoản</th>
-                                        <th>Người sở hữu</th>
-                                        <th>Quyền truy cập</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="account : ${page.content}">
-                                        <td th:text="${account.accountId}"></td>
-                                        <td th:text="${account.owner}"></td>
-                                        <td><span th:each="role : ${account.roles}">
-                                                    <span th:if="${role.roleName} =='USER'"
-                                                          class="mif-user mif-lg fg-yellow"></span>
-                                                    <span th:if="${role.roleName} =='PARENT'"
-                                                          class="mif-user mif-lg fg-green"></span>
-                                                    <span th:if="${role.roleName} =='STUDENT'"
-                                                          class="mif-user mif-lg fg-blue"></span>
-                                                    <span th:if="${role.roleName} =='ADMIN'"
-                                                          class="mif-user mif-lg fg-red"></span>
-                                                    </span>
-                                        </td>
-                                        <td><a href="#" th:id=" 'rst' + ${account.accountId}" class="button alert"
-                                               onclick="resetPassword(this.id)">Đặt
-                                            lại mật khẩu</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="d-flex flex-column flex-justify-center">
-                                    <ul class="pagination">
-                                        <li class="page-item" th:if="${page.hasPrevious()}"><a class="page-link"
-                                                                                               th:id="@{/account-management(page=${page.number - 1},size=${page.size})}"
-                                                                                               onclick="goToPage(this.id)">Trang
-                                            trước</a></li>
-                                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                                            <li th:if="${page.number == i}" class="page-item active"><a
-                                                    class="page-link">[[${i}+1]]</a></li>
-                                            <li class="page-item" th:unless="${page.number == i}"><a class="page-link"
-                                                                                                     th:id="@{/account-management(page=${i},size=${page.size})}"
-                                                                                                     onclick="goToPage(this.id)">[[${i}+1]]</a>
-                                            </li>
-                                        </th:block>
-                                        <li class="page-item" th:if="${page.hasNext()}"><a class="page-link"
-                                                                                           th:id="@{/account-management(page=${page.number+1},size=${page.size})}"
-                                                                                           onclick="goToPage(this.id)">Trang
-                                            sau</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+									<div id="student-tab">
+										<div id="student-accounts">
+											<div class="p-1 p-6-lg bg-white mt-3">
+												<form action="javascript:"
+													onsubmit="searchAccountStudentClick(event)">
+													<input type="text" data-prepend="Nhập ID cần tìm: "
+														id="student-accountId" onkeyup="searchAccountStudent(event)"
+														data-role="input" data-search-button="true">
+												</form>
+											</div>
+											<div class="p-1 p-6-lg bg-white mt-3">
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-yellow"></span> <span
+														class="caption">Người dùng</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-green"></span> <span
+														class="caption">Phụ huynh</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-blue"></span> <span
+														class="caption">Học sinh</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-red"></span> <span
+														class="caption">Quản lý</span>
+												</button>
+												<div th:fragment="student-account-table" id="student-account-table">
+													<table class="table striped table-border mt-4"
+														data-rows="10">
+														<thead>
+															<tr>
+																<th>Tài khoản</th>
+																<th>Người sở hữu</th>
+																<th>Quyền truy cập</th>
+																<th></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="account : ${pageStudent.content}">
+																<td th:text="${account.accountId}"></td>
+																<td th:text="${account.owner}"></td>
+																<td><span th:each="role : ${account.roles}">
+																		<span th:if="${role.roleName} =='USER'"
+																		class="mif-user mif-lg fg-yellow"></span> <span
+																		th:if="${role.roleName} =='PARENT'"
+																		class="mif-user mif-lg fg-green"></span> <span
+																		th:if="${role.roleName} =='STUDENT'"
+																		class="mif-user mif-lg fg-blue"></span> <span
+																		th:if="${role.roleName} =='ADMIN'"
+																		class="mif-user mif-lg fg-red"></span>
+																</span></td>
+																<td><a href="#"
+																	th:id=" 'rst' + ${account.accountId}"
+																	class="button alert" onclick="resetPassword(this.id)">Đặt
+																		lại mật khẩu</a></td>
+															</tr>
+														</tbody>
+													</table>
+													<div class="d-flex flex-column flex-justify-center">
+														<ul class="pagination">
+															<li class="page-item"
+																th:if="${pageStudent.hasPrevious()}"><a
+																class="page-link"
+																th:id="@{/account-management(page=${pageStudent.number - 1},size=${pageStudent.size})}"
+																onclick="goToPage(this.id)">Trang trước</a></li>
+															<th:block
+																th:each="i: ${#numbers.sequence(0, pageStudent.totalPages - 1)}">
+																<li th:if="${pageStudent.number == i}"
+																	class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
+																<li class="page-item"
+																	th:unless="${pageStudent.number == i}"><a
+																	class="page-link"
+																	th:id="@{/account-management(page=${i},size=${pageStudent.size})}"
+																	onclick="goToPage(this.id)">[[${i}+1]]</a></li>
+															</th:block>
+															<li class="page-item" th:if="${pageStudent.hasNext()}"><a
+																class="page-link"
+																th:id="@{/account-management(page=${pageStudent.number+1},size=${pageStudent.size})}"
+																onclick="goToPage(this.id)">Trang sau</a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="parent-tab">
+										<div id="parent-accounts">
+											<div class="p-1 p-6-lg bg-white mt-3">
+											<!-- <form action="javascript:"
+													onsubmit="searchAccountParentClick(event)">
+													<input type="text" data-prepend="Nhập ID cần tìm: "
+														id="parent-accountId" onkeyup="searchAccountParent(event)"
+														data-role="input" data-search-button="true">
+												</form> -->	
+											</div>
+											<div class="p-1 p-6-lg bg-white mt-3">
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-yellow"></span> <span
+														class="caption">Người dùng</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-green"></span> <span
+														class="caption">Phụ huynh</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-blue"></span> <span
+														class="caption">Học sinh</span>
+												</button>
+												<button class="image-button">
+													<span class="mif-user mif-lg fg-red"></span> <span
+														class="caption">Quản lý</span>
+												</button>
+												<div th:fragment="parent-account-table"
+													id="parent-account-table">
+													<table class="table striped table-border mt-4"
+														data-rows="10">
+														<thead>
+															<tr>
+																<th>Tài khoản</th>
+																<th>Phụ huynh em</th>
+																<th>Quyền truy cập</th>
+																<th></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="account : ${pageParent.content}">
+																<td th:text="${account.accountId}"></td>
+																<td th:text="${account.owner}"></td>
+																<td><span th:each="role : ${account.roles}">
+																		<span th:if="${role.roleName} =='USER'"
+																		class="mif-user mif-lg fg-yellow"></span> <span
+																		th:if="${role.roleName} =='PARENT'"
+																		class="mif-user mif-lg fg-green"></span> <span
+																		th:if="${role.roleName} =='STUDENT'"
+																		class="mif-user mif-lg fg-blue"></span> <span
+																		th:if="${role.roleName} =='ADMIN'"
+																		class="mif-user mif-lg fg-red"></span>
+																</span></td>
+																<td><a href="#"
+																	th:id=" 'rst' + ${account.accountId}"
+																	class="button alert" onclick="resetPassword(this.id)">Đặt
+																		lại mật khẩu</a></td>
+															</tr>
+														</tbody>
+													</table>
+													<div class="d-flex flex-column flex-justify-center">
+														<ul class="pagination">
+															<li class="page-item" th:if="${pageParent.hasPrevious()}"><a
+																class="page-link"
+																th:id="@{/account-management(page=${pageParent.number - 1},size=${pageParent.size})}"
+																onclick="goToPage(this.id)">Trang trước</a></li>
+															<th:block
+																th:each="i: ${#numbers.sequence(0, pageParent.totalPages - 1)}">
+																<li th:if="${pageParent.number == i}"
+																	class="page-item active"><a class="page-link">[[${i}+1]]</a></li>
+																<li class="page-item"
+																	th:unless="${pageParent.number == i}"><a
+																	class="page-link"
+																	th:id="@{/account-management(page=${i},size=${pageParent.size})}"
+																	onclick="goToPage(this.id)">[[${i}+1]]</a></li>
+															</th:block>
+															<li class="page-item" th:if="${pageParent.hasNext()}"><a
+																class="page-link"
+																th:id="@{/account-management(page=${pageParent.number+1},size=${pageParent.size})}"
+																onclick="goToPage(this.id)">Trang sau</a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

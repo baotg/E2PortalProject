@@ -28,18 +28,28 @@ public class AccountController {
 
 	@GetMapping("")
 	public String getAllAccount(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax) {
-		Page<UserAccount> page = accountService.findAll(pageable);
-		  model.addAttribute("page", page);
+		Page<UserAccount> pageStudent = accountService.findAllStudent(pageable);
+		Page<UserAccount> pageParent = accountService.findAllParent(pageable);
+		  model.addAttribute("pageStudent", pageStudent);
+		  model.addAttribute("pageParent", pageParent);
 		if(ajax!=null)
 			return "account-management::account-management";
 		return "account-management";
 	}
 	@GetMapping("/search")
 	public String search(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax,@RequestParam("id")String id) {
-		Page<UserAccount> page = accountService.findAll(pageable,id);
-		  model.addAttribute("page", page);
+		Page<UserAccount> page = accountService.findAllStudentById(pageable,id);
+		  model.addAttribute("pageStudent", page);
 		if(ajax!=null)
-			return "account-management::account-table";
+			return "account-management::student-account-table";
+		return "account-management";
+	}
+	@GetMapping("/search-parent")
+	public String searchParent(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax,@RequestParam("id")String id) {
+		Page<UserAccount> page = accountService.findAllParentById(pageable,id);
+		model.addAttribute("pageParent", page);
+		if(ajax!=null)
+			return "account-management::parent-account-table";
 		return "account-management";
 	}
 	@GetMapping("/reset")

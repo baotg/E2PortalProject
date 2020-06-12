@@ -10,7 +10,6 @@ import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.model.Student;
 import se.iuh.e2portal.model.UserAccount;
-import se.iuh.e2portal.repository.RoleRepository;
 import se.iuh.e2portal.repository.StudentRepository;
 import se.iuh.e2portal.repository.UserAccountRepository;
 
@@ -123,5 +122,30 @@ public class StudentService{
 
     public List<Student> getByParent() {
        return studentRepository.getByParent();
+    }
+    
+    public String getStudentNameByParent(String parentId){
+        List<String> listName = studentRepository.getStudentNameByParent(parentId);
+        String names = "" ;
+        for (int i = 0; i<listName.size();i++){
+            names += joinName(listName.get(i));
+            if(i<listName.size()-1) {
+            	names+=", ";
+            }
+           
+        }
+        return names;
+    }
+    private String joinName(String nameList){
+        if(nameList!=null && !nameList.isEmpty()){
+            String[] temp = nameList.split(",");
+            String name = "";
+            for(String s : temp) {
+                name += " ";
+                name += s;
+            }
+            return name.trim();
+        }
+        return "";
     }
 }

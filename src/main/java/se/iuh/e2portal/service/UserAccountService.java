@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.model.UserAccount;
 import se.iuh.e2portal.model.UserAccountDetails;
 import se.iuh.e2portal.repository.UserAccountRepository;
@@ -25,6 +26,8 @@ public class UserAccountService implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private PersonService personService;
+	@Autowired
+	private StudentService studentService;
 
 	@Transactional
 	public boolean changePassword(String id, String newPassword){
@@ -88,6 +91,31 @@ public class UserAccountService implements UserDetailsService {
 		page.get().forEach(x->{x.setOwner(personService.getName(x.getAccountId()));});
 		return page;
 
+	}
+
+	public Page<UserAccount> findAllStudentById(Pageable pageable, String id) {
+		Page<UserAccount> page = userAccountRepository.findAllByRoleAndId(pageable,Role.STUDENT,id);
+		page.get().forEach(x->{x.setOwner(personService.getName(x.getAccountId()));});
+		return page;
+	}
+
+	public  Page<UserAccount> findAllParent(Pageable pageable){
+		Page<UserAccount> page = userAccountRepository.findAllByRoleName(pageable, Role.PARENT);
+		page.get().forEach(x->{
+				x.setOwner(studentService.getStudentNameByParent(x.getAccountId()));});
+		return page;
+	}
+
+	public  Page<UserAccount> findAllParentById(Pageable pageable, String id){
+		Page<UserAccount> page = userAccountRepository.findAllByRoleAndId(pageable, Role.PARENT,id);
+		page.get().forEach(x->{
+			x.setOwner(studentService.getStudentNameByParent(x.getAccountId()));});
+		return page;
+	}
+	public  Page<UserAccount> findAllStudent(Pageable pageable){
+		Page<UserAccount> page = userAccountRepository.findAllByRoleName(pageable, Role.STUDENT);
+		page.get().forEach(x->{x.setOwner(personService.getName(x.getAccountId()));});
+		return page;
 	}
 
 

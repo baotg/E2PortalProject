@@ -2,6 +2,7 @@ package se.iuh.e2portal.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import se.iuh.e2portal.model.MainClass;
 import se.iuh.e2portal.model.Student;
@@ -22,4 +23,7 @@ public interface StudentRepository extends PagingAndSortingRepository<Student,St
 
     @Query("select  s from  Student s where s.familyNumber = ?#{ principal.id}")
     List<Student> getByParent();
+
+    @Query("select p.lastName, p.firstName from Student p where p.familyNumber = :parentId")
+	List<String> getStudentNameByParent(@Param("parentId") String parentId);
 }
