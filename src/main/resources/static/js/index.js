@@ -123,3 +123,9 @@ $(document).ajaxStart(function() {
 }).ajaxStop(function() {
     Metro.dialog.close("#loading-dialog");
 });
+function goToPageAjax(id,el_id){
+	var href=document.location.href;
+	window.history.pushState(href, href, id);
+	var url = id += '&ajax=true'
+	$(el_id).load(id);
+}
