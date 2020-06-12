@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import se.iuh.e2portal.config.jwt.JwtAuthenticationEntryPoint;
 import se.iuh.e2portal.config.jwt.JwtTokenAuthenticationFilter;
+import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.service.UserAccountService;
 
 @EnableWebSecurity
@@ -80,6 +81,7 @@ public class MultiHttpSecurityConfig {
             http
                     .authorizeRequests()
                     .antMatchers("/login").permitAll().and().csrf().disable().authorizeRequests()
+                    .antMatchers("/home").hasAnyAuthority(Role.ADMIN)
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
