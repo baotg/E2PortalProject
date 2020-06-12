@@ -12,45 +12,45 @@
 <body class="m4-cloak h-vh-100" id="main-content">
 	<div th:fragment="account-management">
 		<script type="text/javascript">
-        function resetPassword(id) {
-            var url = '/account-management/reset?id=' +
-                id.replace('rst', '') + '&ajax=true';
-            $("#reset-message-div").load(url);
+			function resetPassword(id) {
+				var url = '/account-management/reset?id='
+						+ id.replace('rst', '') + '&ajax=true';
+				$("#reset-message-div").load(url);
 
-        }
+			}
 
-        function searchAccountParentClick(e) {
-            var str = $("#parent-accountId").val();
-            var root = '/account-management/search-parent?id=' + str +
-                '&ajax=true';
-            $("#parent-account-table").load(root);
-        }
-        
-		function searchAccountParent(e) {
-			if (e.keyCode == 13) {
+			function searchAccountParentClick(e) {
 				var str = $("#parent-accountId").val();
-				var root = '/account-management/search-parent?id=' + str +
-						'&ajax=true';
+				var root = '/account-management/search-parent?id=' + str
+						+ '&ajax=true';
 				$("#parent-account-table").load(root);
 			}
-		}
-		
-		function searchAccountStudent(e) {
-            if (e.keyCode == 13) {
-                var str = $("#student-accountId").val();
-                var root = '/account-management/search?id=' + str +
-                    '&ajax=true';
-                $("#student-account-table").load(root);
-            }
-        }
-		
-        function searchAccountStudentClick(e) {
-            var str = $("#student-accountId").val();
-            var root = '/account-management/search?id=' + str +
-                '&ajax=true';
-            $("#student-account-table").load(root);
-        }
-    </script>
+
+			function searchAccountParent(e) {
+				if (e.keyCode == 13) {
+					var str = $("#parent-accountId").val();
+					var root = '/account-management/search-parent?id=' + str
+							+ '&ajax=true';
+					$("#parent-account-table").load(root);
+				}
+			}
+
+			function searchAccountStudent(e) {
+				if (e.keyCode == 13) {
+					var str = $("#student-accountId").val();
+					var root = '/account-management/search?id=' + str
+							+ '&ajax=true';
+					$("#student-account-table").load(root);
+				}
+			}
+
+			function searchAccountStudentClick(e) {
+				var str = $("#student-accountId").val();
+				var root = '/account-management/search?id=' + str
+						+ '&ajax=true';
+				$("#student-account-table").load(root);
+			}
+		</script>
 		<div>
 			<div class="row border-bottom bd-lightGray m-3">
 				<div class="cell-md-4 text-center text-left-md">
@@ -80,8 +80,9 @@
 												<form action="javascript:"
 													onsubmit="searchAccountStudentClick(event)">
 													<input type="text" data-prepend="Nhập ID cần tìm: "
-														id="student-accountId" onkeyup="searchAccountStudent(event)"
-														data-role="input" data-search-button="true">
+														id="student-accountId"
+														onkeyup="searchAccountStudent(event)" data-role="input"
+														data-search-button="true">
 												</form>
 											</div>
 											<div class="p-1 p-6-lg bg-white mt-3">
@@ -101,9 +102,12 @@
 													<span class="mif-user mif-lg fg-red"></span> <span
 														class="caption">Quản lý</span>
 												</button>
-												<div th:fragment="student-account-table" id="student-account-table">
+												<div th:fragment="student-account-table"
+													id="student-account-table">
 													<table class="table striped table-border mt-4"
-														data-rows="10" data-show-rows-steps="false" data-show-search="false" data-show-pagination="false" data-horizontal-scroll="true" data-role="table">
+														data-rows="10" data-show-rows-steps="false"
+														data-show-search="false" data-show-pagination="false"
+														data-horizontal-scroll="true" data-role="table">
 														<thead>
 															<tr>
 																<th>Tài khoản</th>
@@ -164,12 +168,12 @@
 									<div id="parent-tab">
 										<div id="parent-accounts">
 											<div class="p-1 p-6-lg bg-white mt-3">
-											<!-- <form action="javascript:"
+												<form action="javascript:"
 													onsubmit="searchAccountParentClick(event)">
 													<input type="text" data-prepend="Nhập ID cần tìm: "
 														id="parent-accountId" onkeyup="searchAccountParent(event)"
 														data-role="input" data-search-button="true">
-												</form> -->	
+												</form>
 											</div>
 											<div class="p-1 p-6-lg bg-white mt-3">
 												<button class="image-button">
@@ -191,7 +195,9 @@
 												<div th:fragment="parent-account-table"
 													id="parent-account-table">
 													<table class="table striped table-border mt-4"
-														data-rows="10" data-show-rows-steps="false" data-show-search="false" data-show-pagination="false" data-horizontal-scroll="true" data-role="table">
+														data-rows="10" data-show-rows-steps="false"
+														data-show-search="false" data-show-pagination="false"
+														data-horizontal-scroll="true" data-role="table">
 														<thead>
 															<tr>
 																<th>Tài khoản</th>
