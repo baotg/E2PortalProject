@@ -10,7 +10,7 @@ import se.iuh.e2portal.model.UserAccount;
 
 @RepositoryRestResource(itemResourceRel = "user", collectionResourceRel = "users", path = "users")
 public interface UserAccountRepository extends CrudRepository<UserAccount, String> {
-
+	@Query("select a from UserAccount a where a.accountId not like '0%' ")
 	Page<UserAccount> findAll(Pageable pageable);
 	@Query("select a from UserAccount a where a.accountId like %:id%")
 	Page<UserAccount> findAll(Pageable pageable,@Param("id") String id);
