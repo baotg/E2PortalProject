@@ -123,9 +123,10 @@ $(document).ajaxStart(function() {
 }).ajaxStop(function() {
     Metro.dialog.close("#loading-dialog");
 });
-function goToPageAjax(id,el_id){
+
+function goToPageAjax(id,el_id,type){
 	var href=document.location.href;
 	window.history.pushState(href, href, id);
-	var url = id += '&ajax=true'
+	var url = id += '&ajax=true' + type;
 	$(el_id).load(id);
 }

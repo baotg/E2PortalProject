@@ -95,7 +95,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="timetable : ${timetables}">
+                                        <tr th:each="timetable : ${timetables}" th:if="${timetable.classRoom!=''}">
                                             <td th:text="${timetable.dayOfWeek}"></td>
                                             <td th:text="${timetable.period}"></td>
                                             <td th:text="${timetable.moduleClass.moduleClassName}"></td>

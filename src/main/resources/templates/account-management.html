@@ -144,7 +144,7 @@
 																th:if="${pageStudent.hasPrevious()}"><a
 																class="page-link"
 																th:id="@{/account-management(page=${pageStudent.number - 1},size=${pageStudent.size})}"
-																onclick="goToPage(this.id)">Trang trước</a></li>
+																onclick="goToPageAjax(this.id,'#student-account-table','&type=student')">Trang trước</a></li>
 															<th:block
 																th:each="i: ${#numbers.sequence(0, pageStudent.totalPages - 1)}">
 																<li th:if="${pageStudent.number == i}"
@@ -153,12 +153,12 @@
 																	th:unless="${pageStudent.number == i}"><a
 																	class="page-link"
 																	th:id="@{/account-management(page=${i},size=${pageStudent.size})}"
-																	onclick="goToPage(this.id)">[[${i}+1]]</a></li>
+																	onclick="goToPageAjax(this.id,'#student-account-table','&type=student')">[[${i}+1]]</a></li>
 															</th:block>
 															<li class="page-item" th:if="${pageStudent.hasNext()}"><a
 																class="page-link"
 																th:id="@{/account-management(page=${pageStudent.number+1},size=${pageStudent.size})}"
-																onclick="goToPage(this.id)">Trang sau</a></li>
+																onclick="goToPageAjax(this.id,'#student-account-table','&type=student')">Trang sau</a></li>
 														</ul>
 													</div>
 												</div>
@@ -233,7 +233,7 @@
 															<li class="page-item" th:if="${pageParent.hasPrevious()}"><a
 																class="page-link"
 																th:id="@{/account-management(page=${pageParent.number - 1},size=${pageParent.size})}"
-																onclick="goToPage(this.id)">Trang trước</a></li>
+																onclick="goToPageAjax(this.id,'#parent-account-table','&type=parent')">Trang trước</a></li>
 															<th:block
 																th:each="i: ${#numbers.sequence(0, pageParent.totalPages - 1)}">
 																<li th:if="${pageParent.number == i}"
@@ -242,12 +242,12 @@
 																	th:unless="${pageParent.number == i}"><a
 																	class="page-link"
 																	th:id="@{/account-management(page=${i},size=${pageParent.size})}"
-																	onclick="goToPage(this.id)">[[${i}+1]]</a></li>
+																	onclick="goToPageAjax(this.id,'#parent-account-table','&type=parent')">[[${i}+1]]</a></li>
 															</th:block>
 															<li class="page-item" th:if="${pageParent.hasNext()}"><a
 																class="page-link"
 																th:id="@{/account-management(page=${pageParent.number+1},size=${pageParent.size})}"
-																onclick="goToPage(this.id)">Trang sau</a></li>
+																onclick="goToPageAjax(this.id,'#parent-account-table','&type=parent')">Trang sau</a></li>
 														</ul>
 													</div>
 												</div>

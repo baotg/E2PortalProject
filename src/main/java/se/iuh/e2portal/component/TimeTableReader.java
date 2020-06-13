@@ -75,6 +75,7 @@ public class TimeTableReader {
 			}
 			TimeTable timeTable = getTimeTable(currentRow);
 			timeTable.setModuleClass(moduleClass);
+			if(!timeTable.getClassRoom().isEmpty())
 			timeTableList.add(timeTable);
 		}
 		return timeTableList;

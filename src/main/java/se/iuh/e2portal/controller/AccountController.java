@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import se.iuh.e2portal.config.Message;
+import se.iuh.e2portal.model.Role;
 import se.iuh.e2portal.model.UserAccount;
 import se.iuh.e2portal.model.UserAccountDetails;
 import se.iuh.e2portal.service.UserAccountService;
@@ -27,13 +28,19 @@ public class AccountController {
 	private UserAccountService accountService;
 
 	@GetMapping("")
-	public String getAllAccount(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax) {
+	public String getAllAccount(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax,@Param("type")String type) {
 		Page<UserAccount> pageStudent = accountService.findAllStudent(pageable);
 		Page<UserAccount> pageParent = accountService.findAllParent(pageable);
 		  model.addAttribute("pageStudent", pageStudent);
 		  model.addAttribute("pageParent", pageParent);
-		if(ajax!=null)
+		if(ajax!=null) {
+			if(type!=null && type.equalsIgnoreCase(Role.PARENT))
+				return "account-management::parent-account-table";
+			if(type!=null && type.equalsIgnoreCase(Role.STUDENT))
+				return "account-management::student-account-table";
 			return "account-management::account-management";
+		}
+			
 		return "account-management";
 	}
 	@GetMapping("/search")

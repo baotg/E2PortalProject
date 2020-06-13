@@ -28,12 +28,12 @@ public class TimeTable {
     
     public String getFormatedStartDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDateFormat.format(startDate);
+        return startDate!=null?simpleDateFormat.format(startDate):"";
     }
     
     public String getFormatedEndDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDateFormat.format(endDate);
+        return endDate!=null?simpleDateFormat.format(endDate):"";
     }
 
     public String getModuleClassId(){
