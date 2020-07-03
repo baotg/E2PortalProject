@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/mainlayout :: header">
+<title>Opps!</title>
+<meta charset="UTF-8">
+</head>
+<body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center" id="main-content">
+<div class="container text-center">
+    <div class="display4 fg-red mt-0" >403</div>
+    <div class="h1 text-center m-8">Tiếc thật!<br>Dường như bạn không có quyền truy cập vào trang này.</div>
+    <div class="h5 text-center m-8">Bạn sẽ được chuyển hướng trong<br> <span id="countdown">10</span>s</div>
+</div>
+</body>
+<div th:replace="layout/mainlayout :: script"></div>
+<script>
+var i = 10;
+setInterval(function(){
+	$("#countdown").text(i);i--;}, 1000);
+	setTimeout(function(){window.location.href = "/logout";},10500);
+</script>
+</html>

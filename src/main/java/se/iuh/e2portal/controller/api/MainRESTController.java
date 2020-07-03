@@ -78,7 +78,7 @@ public class MainRESTController {
     @GetMapping("/user/parent")
     ResponseEntity<List<Student>> getParent(){
         List<Student> listStudent = studentService.getByParent();
-        if(!listStudent.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if(listStudent.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok(listStudent);
     }
 

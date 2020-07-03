@@ -56,7 +56,10 @@ public class MainController {
 		
 		return "home";
 	}
-
+	@GetMapping("/403")
+	public String getAllAccount(){
+		return "403";
+	}
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile) throws IOException {
 

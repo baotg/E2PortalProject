@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="main-fragment(title, mainContent)">
 
-<head>
+<head th:fragment="header">
     <title>E2Portal</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -180,15 +180,17 @@
                         <div class="user-block shadow-1" data-role="collapse" data-collapsed="true">
                             <div class="bg-darkCyan fg-white p-2 text-center">
                                 <div class="h4 mb-0" sec:authentication="principal"></div>
-                                <div class="text-medium">Được phép truy cập</div>
+                                <div class="text-medium"  th:if="${#request.userPrincipal.name} == 'admin'">Được phép truy cập</div>
                                 <div class="inline-list">
                                     <th:block th:each="role:${#authentication.getAuthorities()}">
+                                     <div class="text-medium"  th:if="${role.toString()} == 'STUDENT'" style="color:red;">Không được phép truy cập</div>
                                         <div class="items-list">
                                             <button th:utext="${role}" class="button after-bg-lightIndigo ml-0"></button>
                                         </div>
                                     </th:block>
                                 </div>
                             </div>
+                            
                             <div class="bg-white d-flex flex-justify-between flex-equal-items p-2 bg-light">
                                 <button class="button mr-1" onclick="Metro.dialog.open('#change-password-dialog')">Đổi mật khẩu</button>
                                 <button class="button ml-1 ">

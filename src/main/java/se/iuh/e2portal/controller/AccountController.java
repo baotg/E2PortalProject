@@ -26,7 +26,6 @@ public class AccountController {
 
 	@Autowired
 	private UserAccountService accountService;
-
 	@GetMapping("")
 	public String getAllAccount(@PageableDefault(size = 10) Pageable pageable, Model model,@Param("ajax")String ajax,@Param("type")String type) {
 		Page<UserAccount> pageStudent = accountService.findAllStudent(pageable);

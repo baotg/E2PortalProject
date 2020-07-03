@@ -81,8 +81,10 @@ public class MultiHttpSecurityConfig {
             http
                     .authorizeRequests()
                     .antMatchers("/login").permitAll().and().csrf().disable().authorizeRequests()
-                    .antMatchers("/home").hasAnyAuthority(Role.ADMIN)
+                    .antMatchers("/*").hasAnyAuthority(Role.ADMIN)
                     .anyRequest().authenticated()
+                    .and()
+                    .exceptionHandling().accessDeniedPage("/403")
                     .and()
                     .formLogin()
                     .loginPage("/login")
